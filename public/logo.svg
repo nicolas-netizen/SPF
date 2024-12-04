@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M40 10L60 30L40 50L20 30L40 10Z" fill="#FF6B00"/>
+  <path d="M20 30L40 10L30 20L20 30Z" fill="#FF8A3D"/>
+  <path d="M40 50L60 30L50 40L40 50Z" fill="#FF8A3D"/>
+  <text x="80" y="35" fill="white" font-family="Arial" font-weight="bold" font-size="24">SPARKTECH</text>
+</svg>
