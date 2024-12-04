@@ -1,34 +1,45 @@
-import React from 'react';
-import { Shield, Target, Users, Award } from 'lucide-react';
-
-const stats = [
-  {
-    icon: Shield,
-    value: "100%",
-    label: "Seguridad Garantizada",
-    gradient: "from-[#FF6B00] to-[#FF8A3D]"
-  },
-  {
-    icon: Target,
-    value: "24/7",
-    label: "Monitoreo Continuo",
-    gradient: "from-blue-400 to-cyan-300"
-  },
-  {
-    icon: Users,
-    value: "500+",
-    label: "Clientes Satisfechos",
-    gradient: "from-purple-400 to-pink-300"
-  },
-  {
-    icon: Award,
-    value: "10+",
-    label: "Años de Experiencia",
-    gradient: "from-green-400 to-emerald-300"
-  }
-];
+import React, { useState, useEffect } from 'react';
+import { Shield, Target, Users } from 'lucide-react';
 
 const About: React.FC = () => {
+  const [stats, setStats] = useState<{ title: string; value: string; label: string }[]>([]);
+
+  useEffect(() => {
+    fetch('/aboutData.txt')
+      .then(response => response.text())
+      .then(content => {
+        const data = content.split('\n').slice(0, 3).map(line => {
+          const [title, value, label] = line.split(',');
+          return { title, value, label };
+        });
+        setStats(data);
+      })
+      .catch(error => console.error('Error loading data:', error));
+  }, []);
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const content = e.target?.result as string;
+      const data = content.split('\n').slice(0, 3).map(line => {
+        const [title, value, label] = line.split(',');
+        return { title, value, label };
+      });
+      setStats(data);
+    };
+    reader.readAsText(file);
+  };
+
+  const icons = [Shield, Target, Users];
+
+  useEffect(() => {
+    const updatedStats = stats.map(stat => ({ ...stat, value: stat.value }));
+    setStats(updatedStats);
+  }, []);
+
   return (
     <section id="about" className="py-20">
       <div className="container mx-auto px-4">
@@ -41,19 +52,23 @@ const About: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="bg-black/30 backdrop-blur-md rounded-xl p-6 text-center transform hover:scale-105 transition-all duration-300 border border-gray-800"
-            >
-              <div className={`w-16 h-16 mx-auto rounded-lg bg-gradient-to-r ${stat.gradient} p-4 mb-6`}>
-                <stat.icon className="w-full h-full text-white" />
+        <input type="file" accept=".txt" onChange={handleFileUpload} className="hidden" />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {stats.map((stat, index) => {
+            const Icon = icons[index % icons.length];
+            return (
+              <div
+                key={index}
+                className="bg-blue-500/70 backdrop-blur-sm rounded-xl p-6 text-center transform hover:scale-105 transition-all duration-300 shadow-2xl border border-gray-700"
+              >
+                <Icon className="w-10 h-10 text-white mx-auto mb-4" />
+                <h3 className="text-2xl font-semibold text-white mb-2 drop-shadow-lg">{stat.title}</h3>
+                <p className="text-xl text-white drop-shadow-md">{stat.value}</p>
+                <p className="text-sm text-gray-200 drop-shadow-md">{stat.label}</p>
               </div>
-              <h3 className="text-3xl font-bold text-white mb-2">{stat.value}</h3>
-              <p className="text-gray-400">{stat.label}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

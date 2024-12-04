@@ -1,0 +1,3 @@
+log manage,99%,Gestión de Registros
+edr,98%,Detección y Respuesta de Endpoint
+total asset,1500,Activos Totales
