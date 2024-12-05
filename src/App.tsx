@@ -1,8 +1,6 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home.tsx';
-import Contacto from './pages/Contacto.tsx';
-import SpaceBackground from './components/SpaceBackground.tsx';
+import About from './components/sections/About';
+import SpaceBackground from './components/SpaceBackground';
 
 const App: React.FC = () => {
   return (
@@ -12,10 +10,7 @@ const App: React.FC = () => {
       
       {/* Contenido principal */}
       <div className="relative z-10">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/contacto" element={<Contacto />} />
-        </Routes>
+        <About />
       </div>
     </div>
   );

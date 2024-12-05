@@ -4,6 +4,11 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import compression from 'vite-plugin-compression';
 
 export default defineConfig({
+  server: {
+    port: 3000,
+    strictPort: true,
+    cors: true,
+  },
   plugins: [
     react(),
     compression(),
@@ -18,6 +23,7 @@ export default defineConfig({
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
+      input: './src/main.tsx',
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
@@ -27,10 +33,5 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['react-router-dom', 'lucide-react'],
-  },
-  server: {
-    port: 3000,
-    strictPort: true,
-    cors: true,
   },
 });

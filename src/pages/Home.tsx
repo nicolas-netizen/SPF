@@ -1,13 +1,11 @@
 import React from 'react';
-import About from '../components/sections/About.tsx';
+import About from '../components/sections/About';
 
 const Home: React.FC = () => {
   return (
-    <main className="relative">
-      <div className="space-y-24 pb-24">
-        <About />
-      </div>
-    </main>
+    <div className="min-h-screen">
+      <About />
+    </div>
   );
 };
 
