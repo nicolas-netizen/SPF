@@ -90,8 +90,10 @@ nginx -t || handle_error "Configuración de Nginx inválida"
 # Instalar PM2 para gestión de procesos
 npm install -g pm2 || handle_error "Fallo en instalación de PM2"
 
-# Iniciar aplicación con PM2
-pm2 start npm --name "spf-app" -- start
+# Iniciar aplicación en modo desarrollo con PM2
+pm2 start npm --name "spf-dev" -- run dev
+# O en modo producción
+# pm2 start npm --name "spf-prod" -- run preview
 pm2 startup systemd
 pm2 save
 
