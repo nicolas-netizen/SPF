@@ -1,128 +1,64 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Shield, Target, Users } from 'lucide-react';
-
-interface CounterProps {
-  end: number;
-}
-
-const Counter: React.FC<CounterProps> = ({ end }) => {
-  const [count, setCount] = useState(0);
-  const countRef = useRef<number>(0);
-  const rafRef = useRef<number>();
-  const ANIMATION_DURATION = 10000;
-
-  const animateCounter = () => {
-    const startTime = Date.now();
-    const startValue = 0;
-
-    const animate = () => {
-      const now = Date.now();
-      const progress = Math.min((now - startTime) / ANIMATION_DURATION, 1);
-      const easeOutQuad = progress * (2 - progress);
-      countRef.current = Math.floor(startValue + easeOutQuad * (end - startValue));
-      setCount(countRef.current);
-
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(animate);
-      }
-    };
-
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    setCount(0);
-    rafRef.current = requestAnimationFrame(animate);
-  };
-
-  useEffect(() => {
-    animateCounter();
-  }, [end]);
-
-  return (
-    <span className="counter-value font-bold text-4xl glow-orange">
-      {count.toLocaleString()}
-    </span>
-  );
-};
+import React from 'react';
 
 const About: React.FC = () => {
-  const [stats, setStats] = useState<{ title: string; value: string; label: string }[]>([]);
-  const icons = [Shield, Target, Users];
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/aboutData.txt');
-        const content = await response.text();
-        const data = content
-          .split('\n')
-          .filter((line) => line.trim())
-          .map((line) => {
-            const [title, value, label] = line.split(',');
-            return {
-              title: title.trim(),
-              value: value.trim(),
-              label: label.trim(),
-            };
-          });
-        setStats(data);
-      } catch (error) {
-        console.error('Error loading data:', error);
-        setStats([
-          { title: 'Log Management', value: '3000', label: 'Assets' },
-          { title: 'Endpoint Detection', value: '1200', label: 'Devices' },
-          { title: 'Total Assets', value: '1500', label: 'Monitored' },
-        ]);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
-    <section id="about" className="min-h-screen py-20 relative overflow-hidden">
+    <section id="about" className="h-screen w-screen flex items-center justify-center bg-gradient-to-b from-[#1a1a1a] via-[#2d1f4d] to-[#462818] overflow-hidden fixed top-0 left-0">
       <div className="stars-overlay absolute inset-0 pointer-events-none"></div>
-      <div className="container mx-auto px-8 relative z-10 max-w-[1800px]">
-        <div className="text-center mb-20">
-          <h1 className="text-6xl lg:text-7xl font-extrabold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-purple-500 to-orange-500 animate-gradient drop-shadow-lg">
-            Monitored Assets Overview
-          </h1>
+      
+      <div className="container relative z-10 max-w-[1800px] h-full px-4">
+        <div className="flex h-full items-center justify-between gap-8 lg:gap-16">
+          {/* Logo Column */}
+          <div className="w-full lg:w-1/2 flex items-center justify-center animate-fadeIn">
+            <img 
+              src="/SPF.png" 
+              alt="SPF Logo" 
+              className="w-auto h-40 md:h-48 lg:h-64 xl:h-72 animate-float shadow-orange"
+            />
+          </div>
 
-          <p className="text-4xl lg:text-5xl font-extrabold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-purple-500 to-orange-500 animate-gradient drop-shadow-lg">
-            Security Operations Control Panel
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
-          {stats.map((stat, index) => {
-            const Icon = icons[index];
-            const value = parseFloat(stat.value);
-
-            return (
-              <div
-                key={stat.title}
-                className="stat-card transform hover:scale-105 transition-all duration-500 bg-gradient-to-br from-[#8B5CF6]/20 via-[#A78BFA]/20 to-[#C084FC]/20 rounded-3xl p-12 backdrop-blur-xl border border-[#8B5CF6]/30 shadow-2xl flex flex-col items-center justify-between min-h-[300px] hover:shadow-glow"
-              >
-                <div className="text-center">
-                  <div className="icon-wrapper mb-6">
-                    <Icon className="w-16 h-16 mx-auto text-[#8B5CF6] opacity-90 hover:scale-110 transition-transform duration-300" />
-                  </div>
-                  <h3 className="text-2xl lg:text-3xl font-semibold mb-6 text-white">
-                    {stat.label}
-                  </h3>
-                </div>
-                <div className="w-full text-center">
-                  <p className="text-5xl lg:text-6xl font-bold text-[#8B5CF6]">
-                    <Counter end={value} />
-                  </p>
-                </div>
+          {/* Content Column */}
+          <div className="w-full lg:w-1/2 flex flex-col">
+            <div className="backdrop-blur-lg bg-gradient-to-br from-[#FF6B35]/5 via-[#8B5CF6]/5 to-[#FF8C4B]/5 rounded-3xl p-8 border border-white/10 shadow-glow-orange animate-slideUp">
+              <h2 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600 mb-6 text-center lg:text-left animate-pulse-soft">
+                Términos y Condiciones
+              </h2>
+              
+              <div className="mb-8 space-y-4">
+                <p className="text-white/90 text-base md:text-lg leading-relaxed animate-fadeIn opacity-0" style={{ animationDelay: '0.3s' }}>
+                  Al aceptar los términos y condiciones, usted reconoce y acepta que toda la información proporcionada será utilizada de acuerdo con nuestra política de privacidad.
+                </p>
+                <p className="text-white/80 text-base md:text-lg leading-relaxed animate-fadeIn opacity-0" style={{ animationDelay: '0.6s' }}>
+                  Nos comprometemos a proteger y salvaguardar sus datos personales, utilizándolos únicamente para los fines específicos detallados en nuestros términos de servicio.
+                </p>
               </div>
-            );
-          })}
+
+              <div className="flex justify-center lg:justify-start space-x-4 animate-fadeIn opacity-0" style={{ animationDelay: '0.9s' }}>
+                <button 
+                  className="px-6 py-2.5 bg-gradient-to-r from-orange-500/90 to-orange-600/90 hover:from-green-500 hover:to-green-600 text-white rounded-lg font-medium transform hover:scale-105 transition-all duration-300"
+                >
+                  Aceptar
+                </button>
+                <button 
+                  className="px-6 py-2.5 bg-white/10 hover:bg-red-600/90 text-white rounded-lg font-medium transform hover:scale-105 transition-all duration-300 border border-white/20 hover:border-transparent"
+                >
+                  Rechazar
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-4 text-white/50 text-sm animate-fadeIn opacity-0 lg:text-left text-center" style={{ animationDelay: '1.2s' }}>
+              &copy; 2024 SPF. Todos los derechos reservados.
+            </div>
+          </div>
         </div>
       </div>
+
       <style jsx>{`
         .stars-overlay {
           background-image: url('/stars.svg');
           background-size: 200% 200%;
           animation: moveStars 30s linear infinite;
+          opacity: 0.5;
         }
 
         @keyframes moveStars {
@@ -134,62 +70,66 @@ const About: React.FC = () => {
           }
         }
 
-        .stat-card {
-          animation: fadeIn 1.5s ease-out;
+        .animate-fadeIn {
+          animation: fadeIn 1s ease-out forwards;
+        }
+
+        .animate-slideUp {
+          animation: slideUp 1s ease-out;
+        }
+
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-pulse-soft {
+          animation: pulseSoft 3s ease-in-out infinite;
         }
 
         @keyframes fadeIn {
           0% {
             opacity: 0;
-            transform: translateY(40px) scale(0.95);
           }
           100% {
             opacity: 1;
-            transform: translateY(0) scale(1);
           }
         }
 
-        .hover\:shadow-glow {
-          box-shadow: 0 0 20px 8px rgba(139, 92, 246, 0.3);
-        }
-
-        .glow-orange {
-          color: #FF6B35;
-          text-shadow: 
-            0px 0px 10px rgba(255, 107, 53, 0.7), 
-            0px 0px 20px rgba(255, 107, 53, 0.5),
-            0px 0px 30px rgba(255, 107, 53, 0.3);
-          animation: pulse-orange 2s infinite alternate;
-        }
-
-        @keyframes pulse-orange {
-          0% {
-            text-shadow: 
-              0px 0px 10px rgba(255, 107, 53, 0.7), 
-              0px 0px 20px rgba(255, 107, 53, 0.5),
-              0px 0px 30px rgba(255, 107, 53, 0.3);
-          }
-          100% {
-            text-shadow: 
-              0px 0px 15px rgba(255, 107, 53, 0.9), 
-              0px 0px 25px rgba(255, 107, 53, 0.7),
-              0px 0px 35px rgba(255, 107, 53, 0.5);
-          }
-        }
-
-        .animate-title {
-          animation: slideDown 1.2s ease-out;
-        }
-
-        @keyframes slideDown {
+        @keyframes slideUp {
           0% {
             opacity: 0;
-            transform: translateY(-50px);
+            transform: translateY(20px);
           }
           100% {
             opacity: 1;
             transform: translateY(0);
           }
+        }
+
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+
+        @keyframes pulseSoft {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.8;
+          }
+        }
+
+        .shadow-glow-orange {
+          box-shadow: 0 0 50px rgba(255, 107, 53, 0.1);
+        }
+
+        .shadow-orange {
+          filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.3));
         }
       `}</style>
     </section>
