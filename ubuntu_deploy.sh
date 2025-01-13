@@ -33,8 +33,8 @@ apt install -y curl git nginx nodejs npm build-essential
 echo -e "${YELLOW}Instalando NVM...${NC}"
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+[ -s "$NVM_DIR/nvm.sh" ] && \ . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \ . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Instalar Node.js LTS
 nvm install --lts
@@ -69,12 +69,12 @@ server {
         try_files \$uri \$uri/ /index.html;
     }
 
-    # Configuraciones de seguridad
+    # Security headers
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-XSS-Protection "1; mode=block";
     add_header X-Content-Type-Options "nosniff";
 
-    # Compresión gzip
+    # Gzip compression
     gzip on;
     gzip_vary on;
     gzip_proxied any;
@@ -90,10 +90,8 @@ nginx -t || handle_error "Configuración de Nginx inválida"
 # Instalar PM2 para gestión de procesos
 npm install -g pm2 || handle_error "Fallo en instalación de PM2"
 
-# Iniciar aplicación en modo desarrollo con PM2
-pm2 start npm --name "spf-dev" -- run dev
-# O en modo producción
-# pm2 start npm --name "spf-prod" -- run preview
+# Iniciar aplicación en modo producción con PM2
+pm2 start npm --name "spf-prod" -- run preview
 pm2 startup systemd
 pm2 save
 
