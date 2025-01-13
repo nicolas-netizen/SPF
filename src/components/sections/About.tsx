@@ -34,12 +34,12 @@ const About: React.FC = () => {
 
               <div className="flex justify-center lg:justify-start space-x-4 animate-fadeIn opacity-0" style={{ animationDelay: '0.9s' }}>
                 <button 
-                  className="px-6 py-2.5 bg-gradient-to-r from-orange-500/90 to-orange-600/90 hover:from-green-500 hover:to-green-600 text-white rounded-lg font-medium transform hover:scale-105 transition-all duration-300"
+                  className="px-6 py-2.5 bg-gradient-to-r from-green-500/90 to-green-600/90 hover:from-green-600 hover:to-green-700 text-white rounded-lg font-medium transform hover:scale-105 transition-all duration-300"
                 >
                   Aceptar
                 </button>
                 <button 
-                  className="px-6 py-2.5 bg-white/10 hover:bg-red-600/90 text-white rounded-lg font-medium transform hover:scale-105 transition-all duration-300 border border-white/20 hover:border-transparent"
+                  className="px-6 py-2.5 bg-gradient-to-r from-red-500/90 to-red-600/90 hover:from-red-600 hover:to-red-700 text-white rounded-lg font-medium transform hover:scale-105 transition-all duration-300"
                 >
                   Rechazar
                 </button>
