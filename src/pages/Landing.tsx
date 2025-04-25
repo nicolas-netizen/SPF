@@ -200,18 +200,25 @@ const Landing: React.FC = () => {
         
         <div className="container mx-auto px-4 relative z-10 py-16">
           <div className={`text-center mb-8 transform transition-all duration-1000 ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-            <div className="inline-block bg-gradient-to-r from-orange-500/20 via-pink-500/20 to-orange-600/20 px-4 py-1 rounded-full mb-4 animate-gradient-x">
-              <span className="text-orange-400 font-medium">¡OFERTA EXCLUSIVA 2025!</span>
+            <div className="inline-block bg-gradient-to-r from-orange-500/30 via-purple-500/30 to-blue-500/30 px-6 py-2 rounded-full mb-6 backdrop-blur-sm border border-orange-500/20">
+              <span className="text-orange-400 font-semibold tracking-wider text-sm md:text-base">SERVICIO PREMIUM</span>
             </div>
             
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 leading-tight">
-              TU EMPRESA <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B00] via-[#FF4F8B] to-[#FF8A3D] animate-gradient-x">PROTEGIDA</span>
-              <br/>
-              CON <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B00] via-[#FF4F8B] to-[#FF8A3D] animate-gradient-x">CIBERSEGURIDAD AVANZADA</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-8 leading-tight">
+              <div className="mb-2">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B00] via-[#FF4F8B] to-[#FF8A3D] animate-gradient-x">Ciberseguridad</span>
+              </div>
+              <div className="mb-2">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B00] via-[#FF4F8B] to-[#FF8A3D] animate-gradient-x">gestionada 24/7</span>
+              </div>
+              <div>
+                <span className="text-white">adaptada a tu empresa</span>
+              </div>
             </h1>
             
-            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-              Protección completa para tu empresa con <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B00] to-[#FF8A3D] font-bold">40% de descuento</span> en todos nuestros servicios premium
+            <p className="text-xl text-gray-100 mb-8 max-w-3xl mx-auto leading-relaxed backdrop-blur-sm py-4 px-6 rounded-lg bg-black/30 border border-gray-800/50">
+              <span className="font-medium text-white">Protegé</span> tus activos digitales con <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF6B00] to-[#FF8A3D] font-bold">Sparkfound</span>: 
+              tecnología de vanguardia y monitoreo constante, <span className="font-bold text-white">sin inversiones iniciales</span>.
             </p>
           </div>
           
