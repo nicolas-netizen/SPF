@@ -1,8 +1,6 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar.tsx';
-import Home from './pages/Home.tsx';
-import Contacto from './pages/Contacto.tsx';
+import Landing from './pages/Landing.tsx';
 import SpaceBackground from './components/SpaceBackground.tsx';
 import Footer from './components/Footer.tsx';
 
@@ -15,10 +13,7 @@ const App: React.FC = () => {
       {/* Contenido principal */}
       <div className="relative z-10">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/contacto" element={<Contacto />} />
-        </Routes>
+        <Landing />
         <Footer />
       </div>
     </div>
