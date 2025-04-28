@@ -28,7 +28,7 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between">
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center space-x-2">
-              <img src="/SPF.png" alt="SPF Logo" className="h-20 w-auto transition-transform duration-300 hover:scale-105" />
+              <img src="/SPF.png" alt="SPF Logo" className="h-24 w-auto transition-transform duration-300 hover:scale-105" />
             </Link>
           </div>
           

@@ -29,15 +29,15 @@ const ContactForm: React.FC = () => {
   };
 
   return (
-    <section className="py-20 bg-transparent">
-      <div className="container mx-auto px-4">
+    <section id="contacto" className="py-20 bg-transparent">
+      <div className="container mx-auto px-4 max-w-6xl">
         <div className="grid md:grid-cols-2 gap-12">
           <div>
-            <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-[#FF6B00] to-[#FF8A3D] bg-clip-text text-transparent">
-              Contacta con nosotros
+            <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-[#FF6B00] to-[#FF8A3D] bg-clip-text text-transparent fade-in-up">
+              Contactá con nosotros
             </h2>
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6 fade-in-up delay-200">
               <div>
                 <label htmlFor="name" className="block text-white mb-2">Nombre</label>
                 <input
@@ -103,7 +103,7 @@ const ContactForm: React.FC = () => {
             </form>
           </div>
           
-          <div className="flex flex-col justify-center">
+          <div className="flex flex-col justify-center fade-in-up delay-100">
             <h3 className="text-2xl font-bold mb-6 text-white">Conoce más sobre Sparkfound</h3>
             <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden">
               <video 

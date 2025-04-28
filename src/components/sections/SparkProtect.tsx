@@ -25,19 +25,19 @@ const SparkProtect: React.FC = () => {
     <section className="py-20 bg-transparent">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-[#FF6B00] to-[#FF8A3D] bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-[#FF6B00] to-[#FF8A3D] bg-clip-text text-transparent fade-in-up">
             SparkProtect
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto fade-in-up delay-100 px-4">
             Nuestra solución principal de ciberseguridad con protección avanzada.
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-12 mb-12">
+        <div className="flex flex-wrap justify-center items-center gap-12 mt-16 mb-12 max-w-5xl mx-auto">
           {components.map((component, index) => (
-            <div key={index} className="relative group">
+            <div key={index} className="relative group fade-in-up delay-200">
               {/* Hexagon shape using clip-path */}
-              <div className="w-64 h-72 flex items-center justify-center transform transition-transform duration-300 group-hover:scale-105">
+              <div className="w-72 h-80 flex items-center justify-center transform transition-transform duration-300 group-hover:scale-105 mx-auto">
                 <div className="w-full h-full absolute bg-gradient-to-r from-[#FF6B00] to-[#FF8A3D] opacity-20 clip-hexagon"></div>
                 <div className="w-[98%] h-[98%] absolute bg-gray-800 clip-hexagon"></div>
                 <div className="relative z-10 text-center px-4">
@@ -52,8 +52,8 @@ const SparkProtect: React.FC = () => {
           ))}
         </div>
         
-        <div className="text-center mt-12">
-          <p className="text-lg text-[#FF6B00] font-medium">
+        <div className="text-center mt-12 max-w-4xl mx-auto">
+          <p className="text-lg text-[#FF6B00] font-medium fade-in-up delay-300">
             Gestionado 24/7 por el equipo de Sparkfound desde su NG-NSOC.
           </p>
         </div>
