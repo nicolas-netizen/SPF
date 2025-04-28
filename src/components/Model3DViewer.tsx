@@ -39,6 +39,8 @@ const Model3DViewer: React.FC<Model3DViewerProps> = ({
   }, []);
   
   const createModelViewer = () => {
+    // Detectar si es dispositivo móvil
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     if (!containerRef.current) return;
     
     // Mostrar un loader mientras carga
@@ -97,6 +99,15 @@ const Model3DViewer: React.FC<Model3DViewerProps> = ({
     modelViewer.setAttribute('disable-pan', '');
     modelViewer.setAttribute('disable-zoom', '');
     modelViewer.setAttribute('interaction-prompt', 'none');
+    
+    // Desactivar completamente la interacción en móviles
+    if (isMobile) {
+      // Capturar y prevenir todos los eventos táctiles
+      modelViewer.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
+      modelViewer.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+      modelViewer.addEventListener('touchend', (e) => e.preventDefault(), { passive: false });
+      modelViewer.style.pointerEvents = 'none'; // Desactivar completamente la interacción
+    }
     
     // Aplicar estilos
     modelViewer.style.width = '100%';
