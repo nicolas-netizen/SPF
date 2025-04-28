@@ -505,9 +505,42 @@ body {
       transform: scale(1.05);
     }
   }
+  
+  /* Estilos para partículas cibernéticas */
+  .cyber-particle {
+    position: absolute;
+    border-radius: 50%;
+    background: #FF6B00;
+    pointer-events: none;
+    z-index: 0;
+    transform: translate(0, 0);
+    animation: particleFloat 10s infinite linear;
+  }
+  
+  @keyframes particleFloat {
+    0% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(calc(var(--speed-x) * 25), calc(var(--speed-y) * 25));
+    }
+    50% {
+      transform: translate(calc(var(--speed-x) * 50), calc(var(--speed-y) * 50));
+    }
+    75% {
+      transform: translate(calc(var(--speed-x) * 75), calc(var(--speed-y) * 75));
+    }
+    100% {
+      transform: translate(calc(var(--speed-x) * 100), calc(var(--speed-y) * 100));
+    }
+  }
 
   .bg-radial-gradient-to-b {
     background: radial-gradient(circle at center, #0F1015 0%, #000000 100%);
+  }
+  
+  .bg-gradient-radial {
+    background: radial-gradient(circle at center, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 100%);
   }
 
   .animate-gradient {

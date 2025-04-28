@@ -1,69 +1,211 @@
-import React from 'react';
-import { Shield, TrendingUp, Clock, Globe } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { Shield, TrendingUp, Clock, Globe, CheckCircle, Code, Server, Lock } from 'lucide-react';
 
-const reasons = [
+// Datos de nuestras capacidades
+const capabilities = [
   {
     icon: Shield,
     title: "Protección integral",
     description: "Servicios de ciberseguridad adaptables y personalizados.",
-    gradient: "from-[#FF6B00] to-[#FF8A3D]"
+    gradient: "from-[#FF6B00] to-[#FF8A3D]",
+    delay: 100
   },
   {
     icon: TrendingUp,
     title: "Escalabilidad",
     description: "Modelo de suscripción flexible, sin inversiones iniciales.",
-    gradient: "from-blue-400 to-cyan-300"
+    gradient: "from-[#0066CC] to-[#0099FF]",
+    delay: 200
   },
   {
     icon: Clock,
     title: "Monitoreo constante",
-    description: "Vigilancia activa 24/7 desde su centro NG-NSOC en Buenos Aires.",
-    gradient: "from-purple-400 to-pink-300"
+    description: "Vigilancia activa 24/7 desde nuestro centro de operaciones.",
+    gradient: "from-[#FF6B00] to-[#FF8A3D]",
+    delay: 300
   },
   {
     icon: Globe,
     title: "Cobertura global",
-    description: "Operan en toda América Latina y se están expandiendo a nivel internacional.",
-    gradient: "from-green-400 to-emerald-300"
+    description: "Operamos en toda América Latina con expansión internacional.",
+    gradient: "from-[#0066CC] to-[#0099FF]",
+    delay: 400
+  }
+];
+
+// Datos de nuestros servicios principales
+const services = [
+  {
+    icon: Lock,
+    title: "Gestión de Vulnerabilidades",
+    highlights: [
+      "Escaneo automatizado",
+      "Análisis de riesgos",
+      "Corrección priorizada"
+    ]
+  },
+  {
+    icon: Server,
+    title: "Monitoreo de Infraestructura",
+    highlights: [
+      "Detección de amenazas",
+      "Análisis de tráfico",
+      "Alerta temprana"
+    ]
+  },
+  {
+    icon: Code,
+    title: "Seguridad de Aplicaciones",
+    highlights: [
+      "Pruebas de penetración",
+      "Auditoría de código",
+      "Protección contra ataques"
+    ]
   }
 ];
 
 const About: React.FC = () => {
+  // Referencia para efectos de animación
+  const gridRef = useRef<HTMLDivElement>(null);
+  
+  // Efecto para animación de líneas de conexión
+  useEffect(() => {
+    if (!gridRef.current) return;
+    
+    // Creamos estilos para las animaciones
+    const styleSheet = document.createElement('style');
+    styleSheet.textContent = `
+      @keyframes grid-pulse {
+        0%, 100% { opacity: 0.1; }
+        50% { opacity: 0.3; }
+      }
+      
+      @keyframes data-flow {
+        0% { stroke-dashoffset: 1000; }
+        100% { stroke-dashoffset: 0; }
+      }
+    `;
+    document.head.appendChild(styleSheet);
+    
+    return () => {
+      // Limpieza al desmontar
+      document.head.removeChild(styleSheet);
+    };
+  }, []);
+  
   return (
-    <section id="about" className="py-20">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="text-center mb-16 relative animate-float">
-          <div className="absolute w-48 h-48 bg-[#FF6B00]/10 rounded-full blur-3xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse-slow"></div>
-          <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-[#FF6B00] to-[#FF8A3D] bg-clip-text text-transparent fade-in-up">
-            ¿Quiénes somos?
-          </h2>
-          <p className="text-lg text-gray-300 max-w-3xl mx-auto mb-16 fade-in-up delay-100">
-            Somos expertos en cibervigilancia y ofrecemos soluciones personalizadas para proteger tu empresa. Nuestra modalidad como servicio te brinda una protección continua y eficiente.
+    <section id="about" className="py-20 relative overflow-hidden">
+      {/* Fondo técnico */}
+      <div className="absolute inset-0 z-0 opacity-5">
+        <svg width="100%" height="100%" className="absolute inset-0">
+          <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+            <rect width="50" height="50" fill="none" stroke="#0066CC" strokeWidth="0.5" opacity="0.3" className="animate-pulse-slow" />
+          </pattern>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+          
+          {/* Líneas diagonales animadas */}
+          <line x1="0" y1="0" x2="100%" y2="100%" stroke="#FF6B00" strokeWidth="0.5" strokeDasharray="5,10" opacity="0.2" className="animate-pulse-slow" style={{animationDuration: '15s'}} />
+          <line x1="100%" y1="0" x2="0" y2="100%" stroke="#0066CC" strokeWidth="0.5" strokeDasharray="5,10" opacity="0.2" className="animate-pulse-slow" style={{animationDuration: '20s'}} />
+        </svg>
+      </div>
+      
+      <div className="container mx-auto px-4 max-w-6xl relative z-10">
+        {/* Encabezado de la sección */}
+        <div className="text-center mb-20 relative">
+          {/* Círculos de fondo */}
+          <div className="absolute w-64 h-64 bg-gradient-to-r from-[#FF6B00]/10 to-transparent rounded-full blur-3xl -top-20 -left-20 animate-pulse-slow" style={{animationDuration: '8s'}}></div>
+          <div className="absolute w-80 h-80 bg-gradient-to-r from-[#0066CC]/10 to-transparent rounded-full blur-3xl -bottom-40 -right-20 animate-pulse-slow" style={{animationDuration: '10s'}}></div>
+          
+          {/* Título principal con efecto */}
+          <div className="relative inline-block">
+            <h2 className="text-5xl font-bold mb-8 bg-gradient-to-r from-[#FF6B00] to-[#FF8A3D] bg-clip-text text-transparent relative z-10">
+              ¿Quiénes somos?
+            </h2>
+            <span className="absolute -bottom-3 left-0 w-full h-1 bg-gradient-to-r from-[#FF6B00] to-[#0066CC] rounded-full transform scale-x-50 opacity-70 animate-pulse-slow"></span>
+          </div>
+          
+          {/* Descripción con mejora visual */}
+          <p className="text-xl text-white/80 max-w-3xl mx-auto mt-8 leading-relaxed">
+            Somos un equipo de <span className="text-[#FF6B00] font-medium">expertos en ciberseguridad</span> enfocados en proteger 
+            infraestructuras críticas con soluciones adaptadas a las necesidades de cada cliente.
           </p>
         </div>
-
-        <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
-          {reasons.map((reason, index) => (
-            <div
+        
+        {/* Primera sección: Capacidades con tarjetas modernas */}
+        <div ref={gridRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+          {capabilities.map((item, index) => (
+            <div 
               key={index}
-              className={`border-[#FF6B00] bg-black/30 backdrop-blur-sm rounded-xl p-6 flex items-start transform hover:scale-105 hover:bg-black/40 transition-all duration-500 border shadow-lg hover:shadow-[#FF6B00]/20 hover:shadow-xl fade-in-up delay-${index * 100 + 200}`}
-              style={{
-                animationDelay: `${index * 0.2 + 0.4}s`
-              }}
+              className="relative group overflow-hidden"
+              style={{animationDelay: `${item.delay}ms`}}
             >
-              <div className="w-12 h-12 flex-shrink-0 rounded-lg bg-[#FF6B00] p-3 mr-4 transform transition-all duration-500 hover:rotate-12 relative overflow-hidden shadow-inner animate-pulse-slow"
-                style={{
-                  boxShadow: '0 0 15px 2px rgba(255, 107, 0, 0.4)'
-                }}
-              >
-                <reason.icon className="w-full h-full text-white" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold bg-gradient-to-r from-white to-gray-100 bg-clip-text text-transparent mb-2 transition-all duration-300 hover:from-[#FF6B00] hover:to-white">{reason.title}</h3>
-                <p className="text-gray-300 hover:text-white transition-colors duration-500">{reason.description}</p>
+              <div className="relative z-10 bg-black/40 backdrop-blur-md rounded-xl p-8 h-full flex flex-col border border-white/5 transition-all duration-500 group-hover:border-[#FF6B00]/30 group-hover:bg-black/50 transform group-hover:-translate-y-2">
+                {/* Icono con fondo de gradiente */}
+                <div className={`w-16 h-16 rounded-xl mb-5 flex items-center justify-center bg-gradient-to-br ${item.gradient} transform transition-transform duration-500 group-hover:rotate-3 group-hover:scale-110 shadow-lg`}>
+                  <item.icon className="w-8 h-8 text-white" />
+                </div>
+                
+                {/* Título y descripción */}
+                <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-[#FF6B00] transition-colors duration-300">
+                  {item.title}
+                </h3>
+                <p className="text-gray-300 group-hover:text-white transition-colors duration-300">
+                  {item.description}
+                </p>
+                
+                {/* Decoración de esquina */}
+                <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden">
+                  <div className={`absolute transform rotate-45 translate-x-8 -translate-y-8 w-16 h-16 bg-gradient-to-r ${item.gradient} opacity-20 group-hover:opacity-40 transition-opacity duration-300`}></div>
+                </div>
               </div>
             </div>
           ))}
+        </div>
+        
+        {/* Segunda sección: Servicios con diseño técnico */}
+        <div className="mt-20 relative">
+          <h3 className="text-3xl font-bold mb-12 text-center">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#0066CC] to-[#0099FF]">Servicios Especializados</span>
+          </h3>
+          
+          <div className="grid md:grid-cols-3 gap-10">
+            {services.map((service, index) => (
+              <div key={index} className="relative bg-gradient-to-b from-black/60 to-black/40 backdrop-blur-md p-8 rounded-xl border border-white/5 hover:border-[#0066CC]/30 transition-all duration-500 group transform hover:-translate-y-2">
+                {/* Elemento decorativo */}
+                <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-transparent via-[#0066CC] to-transparent opacity-30 group-hover:opacity-60 transition-opacity duration-300"></div>
+                
+                {/* Icono con efecto */}
+                <div className="mb-6 relative">
+                  <div className="w-16 h-16 flex items-center justify-center bg-gradient-to-br from-[#0066CC]/20 to-[#0099FF]/10 rounded-2xl group-hover:from-[#0066CC]/30 group-hover:to-[#0099FF]/20 transition-colors duration-300">
+                    <service.icon className="w-8 h-8 text-[#0099FF] group-hover:text-white transition-colors duration-300" />
+                  </div>
+                  <div className="absolute inset-0 bg-[#0066CC]/30 rounded-2xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+                </div>
+                
+                {/* Título */}
+                <h4 className="text-xl font-bold mb-4 text-white group-hover:text-[#0099FF] transition-colors duration-300">
+                  {service.title}
+                </h4>
+                
+                {/* Características */}
+                <ul className="space-y-2">
+                  {service.highlights.map((highlight, idx) => (
+                    <li key={idx} className="flex items-center">
+                      <CheckCircle className="w-5 h-5 text-[#FF6B00] mr-2 flex-shrink-0" />
+                      <span className="text-gray-300 group-hover:text-white transition-colors duration-300">{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+                
+                {/* Decoración de código binario */}
+                <div className="absolute bottom-4 right-4 text-[8px] opacity-20 font-mono text-[#0066CC] group-hover:text-[#FF6B00] transition-colors duration-300">
+                  {"101001".split('').map((char, i) => (
+                    <span key={i} style={{ animationDelay: `${i * 0.5}s` }} className="animate-pulse">{char}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

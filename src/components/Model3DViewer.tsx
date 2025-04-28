@@ -86,8 +86,9 @@ const Model3DViewer: React.FC<Model3DViewerProps> = ({
     // Eliminamos la precarga que causaba advertencias
     // y confiamos en la carga integrada del model-viewer
     
-    modelViewer.src = '/base.obj.glb';
-    modelViewer.alt = '3D Model';
+    // Usar setAttribute en lugar de asignación directa para evitar errores de tipo
+    modelViewer.setAttribute('src', '/base.obj.glb');
+    modelViewer.setAttribute('alt', '3D Model');
     modelViewer.setAttribute('auto-rotate', '');
     modelViewer.setAttribute('rotation-per-second', '30deg');
     modelViewer.setAttribute('exposure', '1.5');

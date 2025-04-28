@@ -22,7 +22,6 @@ export default {
         'twinkling': 'twinkling 8s ease-in-out infinite',
         'rotate-3d': 'rotate-3d 8s ease-in-out infinite',
         'slide-in': 'slide-in 1s ease-out forwards',
-        'fade-in': 'fade-in 1.5s ease-out forwards',
         'data-flow': 'data-flow 15s linear infinite',
       },
       keyframes: {
@@ -63,10 +62,6 @@ export default {
         'slide-in': {
           '0%': { transform: 'translateY(50px)', opacity: 0 },
           '100%': { transform: 'translateY(0)', opacity: 1 },
-        },
-        'fade-in': {
-          '0%': { opacity: 0 },
-          '100%': { opacity: 1 },
         },
         'data-flow': {
           '0%': { strokeDashoffset: 1000 },
