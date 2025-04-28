@@ -93,8 +93,58 @@ const About: React.FC = () => {
     };
   }, []);
   
+  // Efecto para animar elementos al hacer scroll
+  useEffect(() => {
+    const animateOnScroll = () => {
+      const section = document.getElementById('about');
+      if (!section) return;
+      
+      const sectionTop = section.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+      
+      // Si la sección está visible en el viewport
+      if (sectionTop < windowHeight * 0.75) {
+        section.classList.add('about-visible');
+      }
+    };
+    
+    // Verificar al cargar la página
+    animateOnScroll();
+    
+    // Verificar al hacer scroll
+    window.addEventListener('scroll', animateOnScroll);
+    return () => window.removeEventListener('scroll', animateOnScroll);
+  }, []);
+  
   return (
-    <section id="about" className="py-20 relative overflow-hidden">
+    <section id="about" className="py-20 relative overflow-hidden transition-all duration-1000 opacity-0">
+      {/* Añadimos estilos CSS internos para las animaciones */}
+      <style jsx>{`
+        /* Estilo base */
+        #about {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        
+        /* Cuando es visible */
+        #about.about-visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
+        /* Animación de elementos internos */
+        #about.about-visible .animate-item {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
+        /* Configuración de retrasos */
+        #about .animate-item:nth-child(1) { transition-delay: 0.2s; }
+        #about .animate-item:nth-child(2) { transition-delay: 0.4s; }
+        #about .animate-item:nth-child(3) { transition-delay: 0.6s; }
+        #about .animate-item:nth-child(4) { transition-delay: 0.8s; }
+      `}</style>
       {/* Fondo técnico */}
       <div className="absolute inset-0 z-0 opacity-5">
         <svg width="100%" height="100%" className="absolute inset-0">
@@ -111,12 +161,12 @@ const About: React.FC = () => {
       
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         {/* Encabezado de la sección */}
-        <div className="text-center mb-20 relative">
+        <div className="text-center mb-20 relative animate-item transition-all duration-700 opacity-0 transform translate-y-6">
           {/* Círculos de fondo */}
           <div className="absolute w-64 h-64 bg-gradient-to-r from-[#FF6B00]/10 to-transparent rounded-full blur-3xl -top-20 -left-20 animate-pulse-slow" style={{animationDuration: '8s'}}></div>
           <div className="absolute w-80 h-80 bg-gradient-to-r from-[#0066CC]/10 to-transparent rounded-full blur-3xl -bottom-40 -right-20 animate-pulse-slow" style={{animationDuration: '10s'}}></div>
           
-          {/* Título principal con efecto */}
+          {/* Título principal con efecto revelado por la estrella */}
           <div className="relative inline-block">
             <h2 className="text-5xl font-bold mb-8 bg-gradient-to-r from-[#FF6B00] to-[#FF8A3D] bg-clip-text text-transparent relative z-10">
               ¿Quiénes somos?
@@ -163,12 +213,12 @@ const About: React.FC = () => {
         </div>
         
         {/* Segunda sección: Servicios con diseño técnico */}
-        <div className="mt-20 relative">
+        <div className="mt-20 relative animate-item transition-all duration-700 opacity-0 transform translate-y-6">
           <h3 className="text-3xl font-bold mb-12 text-center">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#0066CC] to-[#0099FF]">Servicios Especializados</span>
           </h3>
           
-          <div className="grid md:grid-cols-3 gap-10">
+          <div className="grid md:grid-cols-3 gap-10 animate-item transition-all duration-700 opacity-0 transform translate-y-6">
             {services.map((service, index) => (
               <div key={index} className="relative bg-gradient-to-b from-black/60 to-black/40 backdrop-blur-md p-8 rounded-xl border border-white/5 hover:border-[#0066CC]/30 transition-all duration-500 group transform hover:-translate-y-2">
                 {/* Elemento decorativo */}

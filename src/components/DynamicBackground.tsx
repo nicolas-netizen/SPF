@@ -36,15 +36,18 @@ const DynamicBackground: React.FC = () => {
     const stars: Star[] = [];
     const neonColors = ['#0affe9', '#f837ff', '#ccff00', '#FF6B00', '#0066CC'];
     
-    for (let i = 0; i < 150; i++) {
+    // Reduciendo la cantidad de estrellas para mejor rendimiento
+    for (let i = 0; i < 120; i++) {
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         size: Math.random() * 2 + 0.5,
         opacity: Math.random() * 0.5 + 0.3,
-        speed: Math.random() * 0.05 + 0.01,
+        // Velocidad reducida significativamente para movimiento más lento
+        speed: Math.random() * 0.02 + 0.004, // Reducido de 0.05 a 0.02
         color: neonColors[Math.floor(Math.random() * neonColors.length)],
-        twinkleSpeed: Math.random() * 0.01 + 0.005,
+        // Velocidad de parpadeo reducida para un efecto más sutil
+        twinkleSpeed: Math.random() * 0.005 + 0.002, // Reducido para parpadeo más lento
         twinklePhase: Math.random() * Math.PI * 2,
       });
     }
@@ -104,8 +107,8 @@ const DynamicBackground: React.FC = () => {
         }
       });
       
-      // Incrementar fase de animación
-      animationPhase += 1;
+      // Incrementar fase de animación (reducida para movimiento más lento)
+      animationPhase += 0.6; // Reducido de 1 a 0.6 para una animación más lenta
       
       // Solicitar siguiente cuadro
       rafRef.current = requestAnimationFrame(draw);
