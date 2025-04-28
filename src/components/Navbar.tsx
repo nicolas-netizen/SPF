@@ -62,7 +62,7 @@ const Navbar: React.FC = () => {
                 <img 
                   src="/SPF.png" 
                   alt="SPF Logo" 
-                  className="h-12 w-auto transition-transform duration-500 group-hover:scale-105 relative z-10" 
+                  className="h-16 sm:h-18 md:h-20 w-auto transition-transform duration-500 group-hover:scale-105 relative z-10" 
                 />
                 <div className="absolute -inset-1 bg-gradient-to-r from-neon-cyan/0 via-neon-cyan/30 to-neon-cyan/0 rounded-full blur-xl group-hover:opacity-75 opacity-0 transition-opacity duration-500 z-0"></div>
               </div>
