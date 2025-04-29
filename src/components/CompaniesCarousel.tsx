@@ -68,11 +68,28 @@ const CompaniesCarousel: React.FC = () => {
     /* Animación para las tarjetas */
     .company-card {
       transition: all 0.3s ease;
+      position: relative;
     }
     
     .company-card:hover {
       transform: scale(1.05);
       border-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    /* Efecto de brillo en hover - más sutil */
+    .company-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.03), rgba(6, 182, 212, 0.03));
+      border-radius: inherit;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .company-card:hover::after {
+      opacity: 1;
     }
     
     /* Ocultar cualquier scrollbar */
@@ -107,16 +124,21 @@ const CompaniesCarousel: React.FC = () => {
       {/* Estilos para el carrusel */}
       <style dangerouslySetInnerHTML={{ __html: carouselStyles }} />
       
-      {/* Título de la sección */}
+      {/* Separador superior minimalista */}
+      <div className="w-full max-w-lg mx-auto h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent mb-16"></div>
+      
+      {/* Título de la sección - diseño más limpio */}
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 fade-up" style={{ opacity: 0 }}>
-        <span className="relative">
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 text-4xl tracking-tight">Empresas que confían en nosotros</span>
-          <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500/80 to-cyan-400/50 transform scale-x-0 transition-transform group-hover:scale-x-100 mx-auto w-1/2"></span>
+        <span className="relative inline-block">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400 tracking-tight">Empresas que confían en nosotros</span>
+          <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full"></span>
         </span>
       </h2>
       
       {/* Contenedor principal */}
       <div className="relative max-w-6xl mx-auto px-4 overflow-hidden fade-up" style={{ opacity: 0, animationDelay: '0.2s', background: 'transparent' }}>
+        {/* Efecto de fondo sutil */}
+        <div className="absolute -z-10 -inset-10 bg-blue-900/5 rounded-full blur-3xl opacity-30"></div>
 
         
         {/* Los efectos de fundido en los bordes han sido eliminados */}
@@ -132,9 +154,9 @@ const CompaniesCarousel: React.FC = () => {
             {allCompanies.map((company, index) => (
               <div 
                 key={`${company.name}-${index}`}
-                className={`company-card flex-shrink-0 w-44 h-32 mx-3 bg-white/10 backdrop-blur-lg border ${index % companies.length === activeIndex ? 'border-blue-400/40' : 'border-white/10'} 
+                className={`company-card flex-shrink-0 w-44 h-32 mx-3 backdrop-blur-md border ${index % companies.length === activeIndex ? 'bg-white/8 border-blue-500/30' : 'bg-white/5 border-white/5'} 
                           rounded-xl flex flex-col items-center justify-center 
-                          transition-all duration-500`}
+                          transition-all duration-300 hover:bg-white/10 hover:border-blue-400/20 hover:shadow-blue-500/5`}
               >
                 {/* Logo de la empresa */}
                 <div className="h-14 w-14 mb-2 flex items-center justify-center opacity-90 transition-all duration-300 hover:opacity-100 transform hover:-translate-y-1">
@@ -187,9 +209,12 @@ const CompaniesCarousel: React.FC = () => {
         </div>
       </div>
       
-      <p className="mt-8 text-center text-cyan-200/60 font-light fade-up" style={{ opacity: 0, animationDelay: '0.4s' }}>
-        Más de <span className="text-orange-400 font-semibold">200+ empresas</span> confían en SparkFound para su ciberseguridad
+      <p className="mt-10 text-center text-white/60 text-sm tracking-wide fade-up" style={{ opacity: 0, animationDelay: '0.4s' }}>
+        Más de <span className="text-blue-400 font-medium">200+ empresas</span> confían en SparkFound para su ciberseguridad
       </p>
+      
+      {/* Separador inferior minimalista */}
+      <div className="w-full max-w-lg mx-auto h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent mt-12"></div>
     </section>
   );
 };
