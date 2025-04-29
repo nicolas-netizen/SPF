@@ -1,6 +1,7 @@
 import React from 'react';
 import Hero from '../components/sections/Hero.tsx';
 import About from '../components/sections/About.tsx';
+import StrategicAlliances from '../components/sections/StrategicAlliances.tsx';
 import TechnologyCards from '../components/sections/TechnologyCards';
 import ContactForm from '../components/sections/ContactForm.tsx';
 
@@ -69,7 +70,10 @@ const Landing: React.FC = () => {
         {/* About Section - Bloque 2 */}
         <About />
 
-        {/* Technology Cards Section - Bloque 3 */}
+        {/* Strategic Alliances Section - Bloque 3 */}
+        <StrategicAlliances />
+
+        {/* Technology Cards Section - Bloque 4 */}
         <TechnologyCards />
 
         {/* Contact Form with Video - Bloque 5 */}

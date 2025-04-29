@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 
 interface Model3DViewerProps {
   width?: string;
@@ -10,40 +10,34 @@ const Model3DViewer: React.FC<Model3DViewerProps> = ({
   height = '450px' 
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isMobileDevice = useRef<boolean>(
+    typeof navigator !== 'undefined' && 
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+  );
 
   useEffect(() => {
-    // Verificar si el script ya está cargado
     const hasScript = document.querySelector('script[src*="model-viewer.min.js"]');
     
     if (!hasScript) {
-      // Cargar el script de model-viewer
       const script = document.createElement('script');
       script.type = 'module';
       script.src = 'https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js';
       document.head.appendChild(script);
-      
-      script.onload = () => {
-        createModelViewer();
-      };
+      script.onload = createModelViewer;
     } else {
-      // Si ya está cargado, crear el visor
       createModelViewer();
     }
     
     return () => {
-      // Limpiar al desmontar
       if (containerRef.current) {
         containerRef.current.innerHTML = '';
       }
     };
   }, []);
   
-  const createModelViewer = () => {
-    // Detectar si es dispositivo móvil
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  const createModelViewer = useCallback(() => {
     if (!containerRef.current) return;
     
-    // Mostrar un loader mientras carga
     containerRef.current.innerHTML = `
       <div class="loading-container" style="
         width: 100%; height: 100%;
@@ -51,11 +45,11 @@ const Model3DViewer: React.FC<Model3DViewerProps> = ({
         position: relative;
       ">
         <div class="spinner" style="
-          width: 80px; height: 80px;
-          border: 4px solid rgba(255,107,0,0.1);
+          width: 70px; height: 70px;
+          border: 3px solid rgba(255,107,0,0.1);
           border-radius: 50%;
           border-left-color: #FF6B00;
-          animation: spin 1s linear infinite;
+          animation: spin 0.8s linear infinite;
         "></div>
         <div style="
           position: absolute;
@@ -69,65 +63,71 @@ const Model3DViewer: React.FC<Model3DViewerProps> = ({
       </div>
     `;
 
-    // Crear una regla de estilo para la animación del spinner
-    const styleSheet = document.createElement('style');
-    styleSheet.textContent = `
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-    `;
-    document.head.appendChild(styleSheet);
-    
-    // Crear elemento model-viewer
-    const modelViewer = document.createElement('model-viewer');
-    
-    // Configurar atributos
-    // Eliminamos la precarga que causaba advertencias
-    // y confiamos en la carga integrada del model-viewer
-    
-    // Usar setAttribute en lugar de asignación directa para evitar errores de tipo
-    modelViewer.setAttribute('src', '/base.obj.glb');
-    modelViewer.setAttribute('alt', '3D Model');
-    modelViewer.setAttribute('auto-rotate', '');
-    modelViewer.setAttribute('rotation-per-second', '30deg');
-    modelViewer.setAttribute('exposure', '1.5');
-    modelViewer.setAttribute('environment-image', 'neutral');
-    modelViewer.setAttribute('shadow-intensity', '1.0');
-    modelViewer.setAttribute('background-color', 'transparent');
-    modelViewer.setAttribute('camera-controls', 'false');
-    modelViewer.setAttribute('disable-tap', '');
-    modelViewer.setAttribute('disable-pan', '');
-    modelViewer.setAttribute('disable-zoom', '');
-    modelViewer.setAttribute('interaction-prompt', 'none');
-    
-    // Desactivar completamente la interacción en móviles
-    if (isMobile) {
-      // Capturar y prevenir todos los eventos táctiles
-      modelViewer.addEventListener('touchstart', (e) => e.preventDefault(), { passive: false });
-      modelViewer.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
-      modelViewer.addEventListener('touchend', (e) => e.preventDefault(), { passive: false });
-      modelViewer.style.pointerEvents = 'none'; // Desactivar completamente la interacción
+    if (!document.querySelector('style#model-viewer-styles')) {
+      const styleSheet = document.createElement('style');
+      styleSheet.id = 'model-viewer-styles';
+      styleSheet.textContent = `
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `;
+      document.head.appendChild(styleSheet);
     }
     
-    // Aplicar estilos
-    modelViewer.style.width = '100%';
-    modelViewer.style.height = '100%';
-    modelViewer.style.backgroundColor = 'transparent';
-    modelViewer.style.setProperty('--poster-color', 'transparent');
-    modelViewer.style.setProperty('--progress-bar-color', '#FF6B00');
-    modelViewer.style.setProperty('--progress-mask', 'linear-gradient(to right, #FF6B00, #FF8A3D)');
+    const modelViewer = document.createElement('model-viewer');
     
-    // Escuchar eventos de carga
+    const modelAttributes = {
+      'src': '/base.obj.glb',
+      'alt': '3D Model',
+      'auto-rotate': '',
+      'rotation-per-second': '30deg',
+      'exposure': '1.5',
+      'environment-image': 'neutral',
+      'shadow-intensity': '1.0',
+      'background-color': 'transparent',
+      'camera-controls': 'false',
+      'disable-tap': '',
+      'disable-pan': '',
+      'disable-zoom': '',
+      'interaction-prompt': 'none',
+      'reveal': 'auto',
+      'loading': 'eager',
+      'poster': '/shield-logo.png'
+    };
+    
+    Object.entries(modelAttributes).forEach(([key, value]) => {
+      modelViewer.setAttribute(key, value);
+    });
+    
+    if (isMobileDevice.current) {
+      const preventTouch = (e: Event) => e.preventDefault();
+      modelViewer.addEventListener('touchstart', preventTouch, { passive: false });
+      modelViewer.addEventListener('touchmove', preventTouch, { passive: false });
+      modelViewer.addEventListener('touchend', preventTouch, { passive: false });
+      modelViewer.style.pointerEvents = 'none';
+    }
+    
+    const modelStyles = {
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'transparent',
+      '--poster-color': 'transparent',
+      '--progress-bar-color': '#FF6B00',
+      '--progress-mask': 'linear-gradient(to right, #FF6B00, #FF8A3D)'
+    };
+    
+    Object.entries(modelStyles).forEach(([key, value]) => {
+      modelViewer.style.setProperty(key, value as string);
+    });
+    
     modelViewer.addEventListener('load', () => {
-      console.log('Modelo 3D cargado exitosamente');
       if (containerRef.current) {
         containerRef.current.querySelector('.loading-container')?.remove();
       }
     });
     
-    modelViewer.addEventListener('error', (error) => {
-      console.error('Error cargando modelo 3D:', error);
+    modelViewer.addEventListener('error', () => {
       if (containerRef.current) {
         containerRef.current.innerHTML = `
           <div style="
@@ -142,66 +142,50 @@ const Model3DViewer: React.FC<Model3DViewerProps> = ({
       }
     });
     
-    // Optimizar rendimiento
-    modelViewer.setAttribute('reveal', 'auto');
-    modelViewer.setAttribute('loading', 'eager');
-    modelViewer.setAttribute('poster', '/shield-logo.png');
-    
-    // Agregar al contenedor
     containerRef.current.appendChild(modelViewer);
     
-    // Aplicar colores al modelo
-    const style = document.createElement('style');
-    style.textContent = `
-      model-viewer::part(default-material) {
-        --material-color: #FF6B00;
-        --material-metalness: 0.8;
-        --material-roughness: 0.2;
-      }
-      
-      model-viewer::part(material-1) {
-        --material-color: #0066CC;
-        --material-metalness: 0.8;
-        --material-roughness: 0.2;
-      }
-    `;
-    document.head.appendChild(style);
-    
-    // Cargar configuración desde SPF3D.json
-    try {
-      fetch('/SPF3D.json')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then(config => {
-          console.log('Configuración cargada:', config);
-          
-          // Aplicar la configuración al modelo
-          if (config.color) {
-            modelViewer.style.setProperty('--material-color', config.color);
-          }
-          if (config.exposure) modelViewer.setAttribute('exposure', config.exposure.toString());
-          if (config.rotationSpeed) modelViewer.setAttribute('rotation-per-second', config.rotationSpeed);
-          if (config.autoRotate !== undefined) {
-            if (config.autoRotate) {
-              modelViewer.setAttribute('auto-rotate', '');
-            } else {
-              modelViewer.removeAttribute('auto-rotate');
-            }
-          }
-        })
-        .catch(error => {
-          console.log('Error cargando configuración:', error);
-          // Valores por defecto si hay error
-          modelViewer.style.setProperty('--material-color', '#FF6B00');
-        });
-    } catch (err) {
-      console.log('Error en fetch:', err);
+    if (!document.querySelector('style#model-materials')) {
+      const materialStyle = document.createElement('style');
+      materialStyle.id = 'model-materials';
+      materialStyle.textContent = `
+        model-viewer::part(default-material) {
+          --material-color: #FF6B00;
+          --material-metalness: 0.8;
+          --material-roughness: 0.2;
+        }
+        
+        model-viewer::part(material-1) {
+          --material-color: #0066CC;
+          --material-metalness: 0.8;
+          --material-roughness: 0.2;
+        }
+      `;
+      document.head.appendChild(materialStyle);
     }
-  };
+    
+    fetch('/SPF3D.json')
+      .then(response => response.ok ? response.json() : Promise.reject('Error HTTP'))
+      .then(config => {
+        if (config.color) {
+          modelViewer.style.setProperty('--material-color', config.color);
+        }
+        if (config.exposure) {
+          modelViewer.setAttribute('exposure', config.exposure.toString());
+        }
+        if (config.rotationSpeed) {
+          modelViewer.setAttribute('rotation-per-second', config.rotationSpeed);
+        }
+        if (config.autoRotate !== undefined) {
+          config.autoRotate ? 
+            modelViewer.setAttribute('auto-rotate', '') : 
+            modelViewer.removeAttribute('auto-rotate');
+        }
+      })
+      .catch(() => {
+        modelViewer.style.setProperty('--material-color', '#FF6B00');
+      });
+  }, []);
+  
 
   return (
     <div ref={containerRef} style={{ width, height, position: 'relative' }}></div>
