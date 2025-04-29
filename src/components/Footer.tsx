@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
             </Link>
             <span className="mx-4 text-gray-500">|</span>
             <p className="text-sm text-gray-400">
-              &copy; {new Date().getFullYear()} Sparkfound
+              &copy; {new Date().getFullYear()} SparkFound
             </p>
           </div>
 

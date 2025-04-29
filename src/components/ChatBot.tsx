@@ -13,7 +13,7 @@ const ChatBot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "👋 ¡Hola! Soy el asistente virtual de Sparkfound. ¿En qué puedo ayudarte hoy?",
+      text: "👋 ¡Hola! Soy el asistente virtual de SparkFound. ¿En qué puedo ayudarte hoy?",
       isBot: true,
       timestamp: new Date()
     }
@@ -110,7 +110,7 @@ const ChatBot: React.FC = () => {
                 <Shield className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h3 className="text-white font-medium">Asistente Sparkfound</h3>
+                <h3 className="text-white font-medium">Asistente SparkFound</h3>
                 <p className="text-white/70 text-xs">Atención 24/7</p>
               </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 
 interface Threat {
   id: number;
@@ -8,6 +8,8 @@ interface Threat {
   origin: string;
   target: string;
   timestamp: Date;
+  severity: 'low' | 'medium' | 'high';
+  isBlocked: boolean;
 }
 
 interface ThreatMapProps {
@@ -49,8 +51,31 @@ const ThreatMap: React.FC<ThreatMapProps> = ({
     'intrusion': '#3633ff',  // blue
   };
   
+  const severityColors = {
+    'low': '#00ff00',     // verde
+    'medium': '#ffff00',  // amarillo
+    'high': '#ff0000',    // rojo
+  };
+  
+  // Usar useMemo para almacenar estadísticas de las amenazas
+  const stats = useMemo(() => {
+    return {
+      total: threats.length,
+      blocked: threats.filter(t => t.isBlocked).length,
+      bySeverity: {
+        low: threats.filter(t => t.severity === 'low').length,
+        medium: threats.filter(t => t.severity === 'medium').length,
+        high: threats.filter(t => t.severity === 'high').length,
+      },
+      byType: threatTypes.reduce((acc, type) => {
+        acc[type] = threats.filter(t => t.type === type).length;
+        return acc;
+      }, {} as Record<string, number>)
+    };
+  }, [threats, threatTypes]);
+  
   // Generar una nueva amenaza aleatoria
-  const generateThreat = (): Threat => {
+  const generateThreat = useCallback((): Threat => {
     const origin = countries[Math.floor(Math.random() * countries.length)];
     let target;
     do {
@@ -59,6 +84,15 @@ const ThreatMap: React.FC<ThreatMapProps> = ({
     
     const type = threatTypes[Math.floor(Math.random() * threatTypes.length)] as Threat['type'];
     
+    // Determinar severidad aleatoria con mayor probabilidad para niveles bajos
+    const severityRand = Math.random();
+    let severity: 'low' | 'medium' | 'high' = 'low';
+    if (severityRand > 0.8) severity = 'high';
+    else if (severityRand > 0.5) severity = 'medium';
+    
+    // Determinar si está bloqueado (20% de probabilidad)
+    const isBlocked = Math.random() > 0.8;
+    
     return {
       id: Date.now(),
       lat: (locations as any)[target].lat,
@@ -66,9 +100,11 @@ const ThreatMap: React.FC<ThreatMapProps> = ({
       type,
       origin,
       target,
-      timestamp: new Date()
+      timestamp: new Date(),
+      severity,
+      isBlocked
     };
-  };
+  }, [countries, threatTypes]);
   
   // Inicializar y animar el mapa
   useEffect(() => {
@@ -128,23 +164,55 @@ const ThreatMap: React.FC<ThreatMapProps> = ({
         // Dibujar amenazas
         threats.forEach(threat => {
           // Convertir coordenadas lat/lng a coordenadas del canvas
+          // Usar severityColors para el brillo exterior y el tamaño según la severidad
           const x = ((threat.lng + 180) / 360) * canvas.width;
           const y = ((90 - threat.lat) / 180) * canvas.height;
           
-          // Dibujar resplandor
-          const gradient = ctx.createRadialGradient(x, y, 0, x, y, 20);
-          gradient.addColorStop(0, (typeColors as any)[threat.type]);
-          gradient.addColorStop(1, 'transparent');
+          // Tamaño variable según severidad
+          const baseRadius = threat.severity === 'high' ? 30 : 
+                            threat.severity === 'medium' ? 25 : 20;
+          const pulseRadius = baseRadius;
+          const pulseStrength = threat.severity === 'high' ? 0.8 : 
+                               threat.severity === 'medium' ? 0.7 : 0.6;
           
+          // Añadir efecto visual para amenazas bloqueadas
+          if (threat.isBlocked) {
+            // Dibujar un anillo rojo para indicar que fue bloqueado
+            ctx.beginPath();
+            ctx.strokeStyle = '#ff2233';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([2, 2]); // Línea punteada
+            ctx.arc(x, y, pulseRadius + 5, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+          }
+          
+          // Gradiente radial para efecto de pulso con color de severidad
+          const gradient = ctx.createRadialGradient(x, y, 1, x, y, pulseRadius);
+          gradient.addColorStop(0, (typeColors as any)[threat.type]);
+          gradient.addColorStop(0.7, (typeColors as any)[threat.type]);
+          gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+          
+          // Añadir brillo exterior según severidad
+          ctx.shadowColor = (severityColors as any)[threat.severity];
+          ctx.shadowBlur = threat.severity === 'high' ? 15 : 
+                         threat.severity === 'medium' ? 10 : 5;
+          
+          // Dibujar pulso
           ctx.beginPath();
           ctx.fillStyle = gradient;
-          ctx.arc(x, y, 20, 0, Math.PI * 2);
+          ctx.globalAlpha = pulseStrength;
+          ctx.arc(x, y, pulseRadius, 0, Math.PI * 2);
           ctx.fill();
+          ctx.globalAlpha = 1;
+          ctx.shadowBlur = 0; // Restablecer sombra
           
           // Dibujar punto central
           ctx.beginPath();
           ctx.fillStyle = (typeColors as any)[threat.type];
-          ctx.arc(x, y, 3, 0, Math.PI * 2);
+          const centerRadius = threat.severity === 'high' ? 4 : 
+                              threat.severity === 'medium' ? 3 : 2;
+          ctx.arc(x, y, centerRadius, 0, Math.PI * 2);
           ctx.fill();
           
           // Dibujar línea desde origen a destino si es la amenaza activa
@@ -251,6 +319,7 @@ const ThreatMap: React.FC<ThreatMapProps> = ({
       
       {/* Panel de información */}
       <div className="p-4 border-t border-neon-blue/20 bg-cyber-dark/50">
+        {/* Sección superior con tipos de amenazas */}
         <div className="flex justify-between items-center">
           <div className="flex space-x-4">
             {threatTypes.map(type => (
@@ -264,27 +333,72 @@ const ThreatMap: React.FC<ThreatMapProps> = ({
             ))}
           </div>
           
-          <div className="text-white/70 text-xs">
+          <div className="text-white/70 text-xs flex items-center">
             {activeThreat ? (
-              <span className="animate-pulse">Nuevo ataque detectado</span>
+              <span className="animate-pulse text-neon-orange font-semibold">Nuevo ataque detectado</span>
             ) : (
-              <span>Monitoreo activo</span>
+              <span className="flex items-center">
+                <span className="w-2 h-2 rounded-full bg-neon-green animate-ping mr-2"></span>
+                Monitoreo activo
+              </span>
             )}
+          </div>
+        </div>
+
+        {/* Panel de estadísticas */}
+        <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+          <div className="rounded-md bg-white/5 p-2 text-center">
+            <div className="text-neon-blue font-medium">Total amenazas</div>
+            <div className="text-white text-lg">{stats.total}</div>
+          </div>
+          <div className="rounded-md bg-white/5 p-2 text-center">
+            <div className="text-neon-blue font-medium">Bloqueadas</div>
+            <div className="text-white text-lg">{stats.blocked} 
+              <span className="text-xs text-white/50">({Math.round((stats.blocked / stats.total || 0) * 100)}%)</span>
+            </div>
+          </div>
+          <div className="rounded-md bg-white/5 p-2 text-center">
+            <div className="text-neon-orange font-medium">Alta severidad</div>
+            <div className="text-white text-lg">{stats.bySeverity.high}</div>
+          </div>
+          <div className="rounded-md bg-white/5 p-2 text-center">
+            <div className="text-neon-green font-medium">Ubicaciones</div>
+            <div className="text-white text-lg">{new Set(threats.map(t => t.target)).size}</div>
           </div>
         </div>
         
         {/* Información de amenaza activa */}
         {activeThreat && (
           <div className="mt-3 p-3 rounded-lg bg-white/5 border border-white/10 text-white/90 text-sm">
-            <div className="flex justify-between">
-              <span className="font-medium capitalize" style={{ color: (typeColors as any)[activeThreat.type] }}>
-                {activeThreat.type}
-              </span>
+            <div className="flex justify-between items-center">
+              <div className="flex items-center space-x-2">
+                <span className="font-medium capitalize" style={{ color: (typeColors as any)[activeThreat.type] }}>
+                  {activeThreat.type}
+                </span>
+                <span className="px-2 py-0.5 rounded text-xs" 
+                      style={{ backgroundColor: (severityColors as any)[activeThreat.severity] + '20', 
+                               color: (severityColors as any)[activeThreat.severity] }}>
+                  {activeThreat.severity.toUpperCase()}
+                </span>
+                {activeThreat.isBlocked && (
+                  <span className="bg-red-900/30 text-red-300 px-2 py-0.5 rounded text-xs">BLOQUEADO</span>
+                )}
+              </div>
               <span className="text-xs opacity-70">{formatTime(activeThreat.timestamp)}</span>
             </div>
-            <div className="mt-1">
-              Origen: <span className="font-mono text-neon-lime">{activeThreat.origin}</span> → 
-              Destino: <span className="font-mono text-neon-orange">{activeThreat.target}</span>
+            <div className="mt-2">
+              <div className="flex items-center space-x-1">
+                <span className="text-white/70">Origen:</span> 
+                <span className="font-mono text-neon-lime">{activeThreat.origin}</span>
+                <span className="text-white/50">→</span>
+                <span className="text-white/70">Destino:</span> 
+                <span className="font-mono text-neon-orange">{activeThreat.target}</span>
+              </div>
+              <div className="mt-1 text-xs text-white/70 italic">
+                {activeThreat.isBlocked ? 
+                  "Amenaza interceptada por el sistema de protección proactiva" : 
+                  "Analizando respuesta de seguridad..."}
+              </div>
             </div>
           </div>
         )}

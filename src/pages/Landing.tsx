@@ -1,7 +1,7 @@
 import React from 'react';
 import Hero from '../components/sections/Hero.tsx';
 import About from '../components/sections/About.tsx';
-import SparkProtect from '../components/sections/SparkProtect.tsx';
+import TechnologyCards from '../components/sections/TechnologyCards';
 import ContactForm from '../components/sections/ContactForm.tsx';
 
 /**
@@ -69,10 +69,10 @@ const Landing: React.FC = () => {
         {/* About Section - Bloque 2 */}
         <About />
 
-        {/* SparkProtect Section - Bloque 3 */}
-        <SparkProtect />
+        {/* Technology Cards Section - Bloque 3 */}
+        <TechnologyCards />
 
-        {/* Contact Form with Video - Bloque 4 */}
+        {/* Contact Form with Video - Bloque 5 */}
         <ContactForm />
       </main>
     </div>

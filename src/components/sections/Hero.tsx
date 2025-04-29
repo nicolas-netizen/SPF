@@ -251,7 +251,7 @@ function detectThreats() {
                     document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' });
                   }}
                 >
-                  Solicitar Demo Gratis
+                  Agenda tu reunión
                 </NeonButton>
                 
                 {/* Botón secundario */}
