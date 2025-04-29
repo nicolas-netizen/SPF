@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import Navbar from './components/Navbar.tsx';
-import Landing from './pages/Landing.tsx';
-import DynamicBackground from './components/DynamicBackground';
-import Footer from './components/Footer.tsx';
-import ChatBot from './components/ChatBot';
-import ThreatMap from './components/ThreatMap';
+
+// Importar componentes pesados con lazy loading
+const Landing = lazy(() => import('./pages/Landing.tsx'));
+const DynamicBackground = lazy(() => import('./components/DynamicBackground'));
+const Footer = lazy(() => import('./components/Footer.tsx'));
+const ChatBot = lazy(() => import('./components/ChatBot'));
+const ThreatMap = lazy(() => import('./components/ThreatMap'));
 
 // Importar variables CSS globales
 import './styles/variables.css';
@@ -53,17 +55,29 @@ const App: React.FC = () => {
   
   return (
     <div className="relative min-h-screen overflow-hidden bg-cyber-dark">
-      {/* Fondo espacial dinámico */}
-      <DynamicBackground />
+      {/* Fondo espacial dinámico con Suspense fallback */}
+      <Suspense fallback={<div className="absolute inset-0 bg-cyber-dark"></div>}>
+        <DynamicBackground />
+      </Suspense>
       
       {/* Contenido principal */}
       <div className="relative z-10">
         <Navbar />
-        <Landing />
-        <Footer />
+        <Suspense fallback={
+          <div className="flex items-center justify-center h-screen">
+            <div className="w-12 h-12 border-t-2 border-b-2 border-neon-cyan rounded-full animate-spin"></div>
+          </div>
+        }>
+          <Landing />
+        </Suspense>
+        <Suspense fallback={<div className="h-40 bg-cyber-dark"></div>}>
+          <Footer />
+        </Suspense>
         
         {/* Chatbot flotante */}
-        <ChatBot />
+        <Suspense fallback={<></>}>
+          <ChatBot />
+        </Suspense>
       </div>
       
       {/* Panel de amenazas flotante (minimizable) */}
@@ -110,9 +124,15 @@ const App: React.FC = () => {
             </svg>
           </button>
           
-          {/* Contenido del mapa */}
+          {/* Contenido del mapa con Suspense */}
           <div className={`overflow-hidden transition-all duration-500 ${isMinimized ? 'opacity-0 h-0' : 'opacity-100'}`}>
-            <ThreatMap title="Monitoreo" className="shadow-lg shadow-neon-blue/10 scale-[0.95] origin-bottom-left" />
+            <Suspense fallback={
+              <div className="h-[160px] w-full bg-cyber-dark-blue/50 rounded-lg border border-neon-cyan/20 flex items-center justify-center">
+                <div className="w-8 h-8 border-t-2 border-neon-cyan rounded-full animate-spin"></div>
+              </div>
+            }>
+              <ThreatMap title="Monitoreo" className="shadow-lg shadow-neon-blue/10 scale-[0.95] origin-bottom-left" />
+            </Suspense>
           </div>
           
           {/* Indicador minimizado */}

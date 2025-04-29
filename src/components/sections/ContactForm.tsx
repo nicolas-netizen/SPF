@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Send, Lock, CheckCircle, XCircle, ArrowRight, AlertCircle } from 'lucide-react';
+import React, { useState, useEffect, useRef, memo } from 'react';
+import { Send, CheckCircle, XCircle, ArrowRight, Lock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ContactForm: React.FC = () => {
@@ -404,4 +404,5 @@ const ContactForm: React.FC = () => {
   );
 };
 
-export default ContactForm;
+// Memorizamos el componente para evitar re-renderizados innecesarios
+export default memo(ContactForm);
