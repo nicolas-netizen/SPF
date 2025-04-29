@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Send, Lock, CheckCircle, XCircle, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Send, Lock, CheckCircle, XCircle, ArrowRight, AlertCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -10,42 +11,69 @@ const ContactForm: React.FC = () => {
   });
   
   const [validation, setValidation] = useState({
-    name: { valid: false, touched: false },
-    email: { valid: false, touched: false },
-    company: { valid: false, touched: false }
+    name: { valid: false, touched: false, message: '' },
+    email: { valid: false, touched: false, message: '' },
+    company: { valid: false, touched: false, message: '' }
   });
   
   const [formVisible, setFormVisible] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const formRef = useRef<HTMLFormElement>(null);
   
-  // Efecto para la animación de entrada
+  // Efecto para la animación de entrada y observar cuando el formulario es visible
   useEffect(() => {
     const timer = setTimeout(() => {
       setFormVisible(true);
-    }, 500);
+    }, 300);
     
-    return () => clearTimeout(timer);
+    // Crear un IntersectionObserver para detectar cuando el formulario es visible
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setFormVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+    
+    // Observar el formulario
+    if (formRef.current) {
+      observer.observe(formRef.current);
+    }
+    
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
-    // Validación en tiempo real
-    validateField(name, value);
+    // Validación en tiempo real con un pequeño retraso para mejor UX
+    setTimeout(() => {
+      validateField(name, value);
+    }, 200);
   };
   
   const validateField = (name: string, value: string) => {
     let isValid = false;
+    let message = '';
     
     switch (name) {
       case 'name':
         isValid = value.length >= 3;
+        message = isValid ? '' : 'El nombre debe tener al menos 3 caracteres';
         break;
       case 'email':
         isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        message = isValid ? '' : 'Ingresa un correo electrónico válido';
         break;
       case 'company':
         isValid = value.length >= 2;
+        message = isValid ? '' : 'Ingresa el nombre de tu empresa';
         break;
       default:
         isValid = true;
@@ -53,7 +81,7 @@ const ContactForm: React.FC = () => {
     
     setValidation(prev => ({
       ...prev,
-      [name]: { valid: isValid, touched: true }
+      [name]: { valid: isValid, touched: true, message }
     }));
   };
   
@@ -62,51 +90,120 @@ const ContactForm: React.FC = () => {
     validateField(name, value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would handle the form submission, like sending to a backend
-    console.log('Form submitted:', formData);
-    // Show success message or reset form
-    alert('¡Gracias por contactarnos! Nos comunicaremos a la brevedad.');
-    setFormData({
-      name: '',
-      email: '',
-      company: '',
-      phone: ''
+    
+    // Validar todos los campos antes de enviar
+    const allFieldsValid = ['name', 'email', 'company'].every(field => {
+      const value = formData[field as keyof typeof formData];
+      validateField(field, value);
+      return validation[field as keyof typeof validation].valid;
     });
+    
+    if (!allFieldsValid) {
+      return;
+    }
+    
+    // Cambiar estado a enviando
+    setSubmitStatus('submitting');
+    
+    try {
+      // Simulamos una API call con un timeout
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Aquí se haría el fetch real a la API
+      console.log('Form submitted:', formData);
+      
+      // Cambiar estado a éxito y resetear el formulario
+      setSubmitStatus('success');
+      setFormSubmitted(true);
+      
+      // Esperar 3 segundos antes de resetear el formulario
+      setTimeout(() => {
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          phone: ''
+        });
+        setFormSubmitted(false);
+        setSubmitStatus('idle');
+      }, 3000);
+      
+    } catch (error) {
+      console.error('Error al enviar el formulario:', error);
+      setSubmitStatus('error');
+    }
   };
 
-  // La declaración de clientLogos ha sido eliminada
-
   return (
-    <section id="contacto" className="py-20 bg-transparent relative overflow-hidden">
+    <section id="contacto" className="py-20 bg-transparent relative overflow-hidden" ref={formRef}>
       {/* Estilos para animaciones */}
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes slideIn {
           0% { opacity: 0; transform: translateX(-20px); }
           100% { opacity: 1; transform: translateX(0); }
         }
+        @keyframes slideInUp {
+          0% { opacity: 0; transform: translateY(20px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
         .animated-form {
           opacity: 0;
-          animation: slideIn 0.5s ease-out forwards;
+          animation: slideIn var(--transition-normal) forwards;
+        }
+        .animated-up {
+          opacity: 0;
+          animation: slideInUp var(--transition-normal) forwards;
         }
         @keyframes pulse-glow {
-          0%, 100% { box-shadow: 0 0 0 rgba(255, 107, 0, 0); }
-          50% { box-shadow: 0 0 15px rgba(255, 107, 0, 0.3); }
+          0% { box-shadow: 0 0 0 rgba(255, 107, 0, 0); }
+          50% { box-shadow: 0 0 15px var(--color-primary-transparent); }
+          100% { box-shadow: 0 0 0 rgba(255, 107, 0, 0); }
+        }
+        .input-error {
+          border-color: rgb(239, 68, 68) !important;
+          animation: shake 0.5s ease-in-out;
+        }
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          20%, 60% { transform: translateX(-5px); }
+          40%, 80% { transform: translateX(5px); }
+        }
+        .ripple {
+          position: absolute;
+          border-radius: 50%;
+          transform: scale(0);
+          background: rgba(255, 255, 255, 0.2);
+          animation: ripple-animation 0.6s linear forwards;
+        }
+        @keyframes ripple-animation {
+          to { transform: scale(2); opacity: 0; }
         }
       `}} />
       
-      {/* Efectos visuales de fondo */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 right-0 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl"></div>
+      {/* Efectos visuales de fondo mejorados */}
+      <div className="absolute top-0 left-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl animate-pulse" style={{animationDuration: '8s'}}></div>
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl animate-pulse" style={{animationDuration: '10s', animationDelay: '1s'}}></div>
+      <div className="absolute top-1/2 -translate-y-1/2 right-1/4 w-40 h-40 bg-orange-500/3 rounded-full blur-2xl animate-pulse" style={{animationDuration: '7s', animationDelay: '0.5s'}}></div>
       
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
-        {/* Título principal centrado */}
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-[#FF6B00] to-[#FF8A3D] bg-clip-text text-transparent">
+        {/* Título principal centrado con animación */}
+        <motion.h2 
+          className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] bg-clip-text text-transparent"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
           Contáctanos
-        </h2>
+        </motion.h2>
         
-        <div className="bg-black/20 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-xl">
+        <motion.div 
+          className="bg-black/20 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-xl"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <div className="grid md:grid-cols-2 gap-0">
             {/* Columna izquierda: Formulario */}
             <div className="p-8 md:p-10">
@@ -115,7 +212,7 @@ const ContactForm: React.FC = () => {
                   <span className="text-orange-400">¿Listo</span> para mejorar tu seguridad?
                 </h3>
                 
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-5" ref={formRef}>
                   <p className="text-sm text-white/70 mb-4">Complete el formulario y un especialista se comunicará contigo.</p>
                   
                   <div className="relative">
@@ -186,33 +283,77 @@ const ContactForm: React.FC = () => {
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="relative">
+                    <label htmlFor="phone" className="block text-sm font-medium text-white/80 mb-1 flex items-center">
+                      Teléfono (opcional)
+                    </label>
                     <input
                       type="tel"
                       id="phone"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-white/10 backdrop-blur-md border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-white placeholder:text-white/60 transition-all"
-                      placeholder="Teléfono (opcional)"
+                      className="w-full px-4 py-3 bg-white/10 backdrop-blur-md border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] text-white placeholder:text-white/60 transition-all"
+                      placeholder="Ingresa tu número de teléfono"
                     />
                   </div>
-                  
-                  <button 
-                    type="submit"
-                    className="mt-6 w-full flex items-center justify-center gap-2 py-3 px-6 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-400 hover:to-orange-300 text-white font-semibold rounded-xl transition-all hover:shadow-lg hover:shadow-orange-500/20 group overflow-hidden relative"
-                    style={{animation: 'pulse-glow 2s infinite'}}
-                  >
-                    <span>Enviar mensaje</span>
-                    <Send className="w-4 h-4 transition-transform group-hover:translate-x-1 animate-pulse" style={{animationDuration: '2s'}} />
-                  </button>
+
+                  <AnimatePresence>
+                    {formSubmitted && submitStatus === 'success' ? (
+                      <motion.div 
+                        className="mt-6 w-full flex items-center justify-center gap-2 py-3 px-6 bg-green-500/90 text-white font-semibold rounded-xl shadow-lg shadow-green-500/20"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        <CheckCircle className="w-5 h-5 mr-2" />
+                        <span>¡Mensaje enviado con éxito!</span>
+                      </motion.div>
+                    ) : submitStatus === 'error' ? (
+                      <motion.div 
+                        className="mt-6 w-full flex items-center justify-center gap-2 py-3 px-6 bg-red-500/90 text-white font-semibold rounded-xl shadow-lg shadow-red-500/20"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                      >
+                        <XCircle className="w-5 h-5 mr-2" />
+                        <span>Error al enviar. Intenta nuevamente.</span>
+                      </motion.div>
+                    ) : (
+                      <motion.button 
+                        type="submit"
+                        className="mt-6 w-full flex items-center justify-center gap-2 py-3 px-6 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] hover:from-[var(--color-primary-light)] hover:to-[var(--color-primary)] text-white font-semibold rounded-xl transition-all hover:shadow-lg hover:shadow-[var(--color-primary-transparent)] group overflow-hidden relative"
+                        style={{animation: 'pulse-glow 2s infinite'}}
+                        disabled={submitStatus === 'submitting'}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        {submitStatus === 'submitting' ? (
+                          <>
+                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                            <span>Enviando...</span>
+                          </>
+                        ) : (
+                          <>
+                            <span>Enviar mensaje</span>
+                            <Send className="w-4 h-4 transition-transform group-hover:translate-x-1 animate-pulse" style={{animationDuration: '2s'}} />
+                          </>
+                        )}
+                      </motion.button>
+                    )}
+                  </AnimatePresence>
                   
                   {/* Nota de seguridad */}
-                  <div className="mt-4 text-xs text-white/60 flex items-center gap-1.5 justify-center">
-                    <Lock size={12} className="text-orange-500" />
+                  <motion.div 
+                    className="mt-4 text-xs text-white/60 flex items-center gap-1.5 justify-center"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <Lock size={12} className="text-[var(--color-primary)]" />
                     <span>Tus datos están protegidos por nuestra política de privacidad.</span>
-                  </div>
+                  </motion.div>
                 </form>
               </div>
             </div>
@@ -257,7 +398,7 @@ const ContactForm: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -6,6 +6,9 @@ import Footer from './components/Footer.tsx';
 import ChatBot from './components/ChatBot';
 import ThreatMap from './components/ThreatMap';
 
+// Importar variables CSS globales
+import './styles/variables.css';
+
 const App: React.FC = () => {
   // Cargar fuentes adicionales
   useEffect(() => {

@@ -86,6 +86,7 @@ const Navbar: React.FC = memo(() => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.15 }}
+                    onMouseEnter={() => setIsServicesOpen(true)}
                   >
                     <div className="py-1">
                       {[
@@ -130,12 +131,13 @@ const Navbar: React.FC = memo(() => {
 
               <AnimatePresence>
                 {isAboutOpen && (
-                  <motion.div
+                  <motion.div 
                     className="absolute left-0 mt-2 w-56 bg-gray-900/95 backdrop-blur-md border border-gray-800 rounded-md overflow-hidden shadow-lg z-50"
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.15 }}
+                    onMouseEnter={() => setIsAboutOpen(true)}
                   >
                     <div className="py-1">
                       {[

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { MessageCircle, X, Send } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { MessageCircle, X, Send, User, ShieldCheck } from 'lucide-react';
 
 interface Message {
   id: number;
@@ -21,13 +21,42 @@ const ChatBot: React.FC = () => {
   const [newMessage, setNewMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   
-  // Respuestas preestablecidas para la demo
-  const botResponses = [
-    "¿Te gustaría más información sobre nuestra solución de monitoreo 24/7?",
-    "Podemos agendar una demo personalizada para tu empresa. ¿Te interesa?",
-    "Nuestros expertos pueden realizar un análisis de vulnerabilidades sin costo. ¿Quieres que te contactemos?",
-    "Entiendo tu preocupación. La seguridad de tu infraestructura es nuestra prioridad.",
-    "¡Excelente! Un asesor te contactará en breve para coordinar los siguientes pasos.",
+  const messageEndRef = useRef<HTMLDivElement>(null);
+
+  // Base de conocimiento de la empresa
+  const knowledgeBase = {
+    servicios: [
+      { name: "Ciberseguridad", description: "Protección completa contra amenazas digitales con monitoreo 24/7, detección de intrusiones y respuesta a incidentes." },
+      { name: "Consultoría", description: "Asesoramiento estratégico personalizado para fortalecer la postura de seguridad de tu empresa." },
+      { name: "Seguridad en la Nube", description: "Protección específica para entornos cloud, asegurando la integridad de datos y aplicaciones." },
+      { name: "Pentesting", description: "Pruebas de penetración para identificar vulnerabilidades antes que los atacantes." },
+      { name: "SOC como Servicio", description: "Centro de Operaciones de Seguridad gestionado por expertos para monitoreo continuo." }
+    ],
+    empresa: {
+      nombre: "SparkFound",
+      ubicacion: "Buenos Aires, Argentina",
+      mision: "Proteger el futuro digital de las empresas con soluciones de ciberseguridad avanzadas y personalizadas.",
+      vision: "Ser líderes en innovación y protección digital, contribuyendo a un ciberespacio más seguro."
+    },
+    contacto: {
+      email: "contacto@sparkfound.com",
+      telefono: "+51 999 999 999",
+      horario: "Lunes a Viernes, 9:00 - 18:00"
+    },
+    preguntas_frecuentes: [
+      { pregunta: "¿Qué hace SparkFound?", respuesta: "Somos una empresa especializada en ciberseguridad que ofrece servicios de protección digital, consultoría y monitoreo de seguridad para empresas de todos los tamaños." },
+      { pregunta: "¿Cómo puedo contratar sus servicios?", respuesta: "Puedes contactarnos a través del formulario en nuestra web, por email a contacto@sparkfound.com o llamando al +51 999 999 999. Te ofreceremos una evaluación inicial sin costo." },
+      { pregunta: "¿Ofrecen servicios para pequeñas empresas?", respuesta: "Sí, tenemos planes adaptados a empresas de todos los tamaños, desde startups hasta grandes corporaciones." },
+      { pregunta: "¿Qué es el SOC como servicio?", respuesta: "Es nuestro Centro de Operaciones de Seguridad que monitorea tu infraestructura 24/7, detectando y respondiendo a amenazas en tiempo real." }
+    ]
+  };
+  
+  // Categorías de preguntas para clasificación
+  const categories = [
+    { name: 'servicios', keywords: ['servicio', 'ciberseguridad', 'hacking', 'protección', 'monitoreo', 'soc', 'nube', 'cloud', 'pentesting', 'consultoría', 'ofrecen', 'tienen'] },
+    { name: 'empresa', keywords: ['empresa', 'compañía', 'sparkfound', 'quienes', 'historia', 'donde', 'ubicación', 'misión', 'visión', 'valores'] },
+    { name: 'contacto', keywords: ['contacto', 'email', 'correo', 'teléfono', 'llamar', 'ubicación', 'dirección', 'demo', 'reunión', 'agendar', 'cita'] },
+    { name: 'costos', keywords: ['precio', 'costo', 'tarifa', 'pago', 'inversión', 'mensual', 'anual', 'presupuesto', 'cotización', 'plan'] },
   ];
   
   // Efecto para animación de entrada
@@ -43,17 +72,113 @@ const ChatBot: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
   
-  // Simular respuesta del bot
-  const simulateBotResponse = () => {
+  // Desplazar al final de los mensajes cuando se añade uno nuevo
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
+
+  // Clasificar tipo de pregunta
+  const classifyQuestion = (question: string): string => {
+    // Convertir a minúsculas y eliminar caracteres especiales para mejor coincidencia
+    const normalizedQuestion = question.toLowerCase().replace(/[¿?.,;:!]/g, '');
+    
+    // Para cada categoría, contamos coincidencias de palabras clave
+    const scores = categories.map(category => {
+      const matchCount = category.keywords.filter(keyword => 
+        normalizedQuestion.includes(keyword)
+      ).length;
+      return { name: category.name, score: matchCount };
+    });
+    
+    // Ordenar por puntuación de mayor a menor
+    scores.sort((a, b) => b.score - a.score);
+    
+    // Si la pregunta es una respuesta afirmativa o negativa simple
+    if (/^(si|sí|claro|ok|vale|por supuesto|no|nope)/i.test(normalizedQuestion)) {
+      return 'confirmation';
+    }
+    
+    // Si hay saludo
+    if (/^(hola|buenas|saludos|hey|buenos dias|buen dia|buenas tardes|buenas noches)/i.test(normalizedQuestion)) {
+      return 'greeting';
+    }
+    
+    // Si es agradecimiento
+    if (/^(gracias|muchas gracias|genial|excelente|perfecto|buenisimo)/i.test(normalizedQuestion)) {
+      return 'thanks';
+    }
+    
+    // Si hay alguna categoría con coincidencias, usamos esa
+    if (scores[0].score > 0) {
+      return scores[0].name;
+    }
+    
+    // Por defecto, categoría general
+    return 'general';
+  };
+  
+  // Generar respuesta basada en el tipo de pregunta
+  const generateResponse = (question: string): string => {
+    const category = classifyQuestion(question);
+    
+    switch (category) {
+      case 'servicios':
+        // Identificar si se pregunta por un servicio específico
+        const service = knowledgeBase.servicios.find(s => 
+          question.toLowerCase().includes(s.name.toLowerCase())
+        );
+        
+        if (service) {
+          return `${service.name}: ${service.description} ¿Deseas más información sobre este servicio?`;
+        } else {
+          return `En SparkFound ofrecemos varios servicios de ciberseguridad, incluyendo: ${knowledgeBase.servicios.map(s => s.name).join(', ')}. ¿Sobre cuál te gustaría más información?`;
+        }
+      
+      case 'empresa':
+        return `SparkFound es una empresa especializada en ciberseguridad, ubicada en ${knowledgeBase.empresa.ubicacion}. Nuestra misión es ${knowledgeBase.empresa.mision} ¿Hay algo específico que quieras saber sobre nosotros?`;
+      
+      case 'contacto':
+        return `Puedes contactarnos por email a ${knowledgeBase.contacto.email} o por teléfono al ${knowledgeBase.contacto.telefono}. También puedes agendar una reunión a través del formulario de contacto. ¿Te gustaría que coordinemos una reunión con nuestro equipo de ventas?`;
+      
+      case 'costos':
+        return `Nuestros precios varían según las necesidades específicas de cada empresa. Ofrecemos planes personalizados adaptados a tu infraestructura. ¿Te gustaría que te contactemos para brindarte una cotización personalizada?`;
+      
+      case 'greeting':
+        return `¡Hola! Gracias por contactar con SparkFound. Soy el asistente virtual y estoy aquí para ayudarte. ¿En qué puedo asistirte hoy?`;
+      
+      case 'confirmation':
+        return `¡Perfecto! Un especialista se pondrá en contacto contigo pronto. Mientras tanto, ¿hay algo más en lo que pueda ayudarte?`;
+      
+      case 'thanks':
+        return `¡De nada! Estamos para ayudarte. Si tienes más preguntas en el futuro, no dudes en contactarnos nuevamente.`;
+      
+      default:
+        // Buscar en preguntas frecuentes
+        const faq = knowledgeBase.preguntas_frecuentes.find(item => 
+          question.toLowerCase().includes(item.pregunta.toLowerCase().split(' ').slice(1).join(' '))
+        );
+        
+        if (faq) {
+          return faq.respuesta;
+        }
+        
+        return `Gracias por tu pregunta. Para brindarte la mejor asistencia, ¿podrías darme más detalles sobre lo que necesitas? Puedo ayudarte con información sobre nuestros servicios, la empresa, o agendar una reunión con nuestros especialistas.`;
+    }
+  };
+
+  // Procesar respuesta del bot
+  const getBotResponse = (userMessage: string) => {
     setIsTyping(true);
     
-    // Simular tiempo de respuesta
+    // Simular tiempo de respuesta para más naturalidad
     setTimeout(() => {
-      const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
+      const botResponse = generateResponse(userMessage);
       
       setMessages(prev => [...prev, {
         id: Date.now(),
-        text: randomResponse,
+        text: botResponse,
         isBot: true,
         timestamp: new Date()
       }]);
@@ -68,18 +193,20 @@ const ChatBot: React.FC = () => {
     
     if (!newMessage.trim()) return;
     
+    const userMessageText = newMessage.trim();
+    
     // Agregar mensaje del usuario
     setMessages(prev => [...prev, {
       id: Date.now(),
-      text: newMessage,
+      text: userMessageText,
       isBot: false,
       timestamp: new Date()
     }]);
     
     setNewMessage('');
     
-    // Simular respuesta del bot
-    simulateBotResponse();
+    // Obtener respuesta del bot basada en el mensaje del usuario
+    getBotResponse(userMessageText);
   };
   
   // Formatear hora
@@ -107,7 +234,7 @@ const ChatBot: React.FC = () => {
           <div className="bg-gradient-to-r from-neon-cyan to-neon-blue p-4 flex justify-between items-center">
             <div className="flex items-center">
               <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center mr-3">
-                <Shield className="h-5 w-5 text-white" />
+                <ShieldCheck className="h-5 w-5 text-white" />
               </div>
               <div>
                 <h3 className="text-white font-medium">Asistente SparkFound</h3>
@@ -130,6 +257,11 @@ const ChatBot: React.FC = () => {
                 key={message.id} 
                 className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
               >
+                {message.isBot && (
+                  <div className="w-8 h-8 rounded-full bg-neon-cyan/20 flex items-center justify-center mr-2 flex-shrink-0">
+                    <ShieldCheck className="h-4 w-4 text-neon-cyan" />
+                  </div>
+                )}
                 <div className={`max-w-[80%] rounded-lg p-3 ${
                   message.isBot 
                     ? 'bg-neon-cyan/10 text-white border border-neon-cyan/30' 
@@ -140,8 +272,16 @@ const ChatBot: React.FC = () => {
                     {formatTime(message.timestamp)}
                   </p>
                 </div>
+                {!message.isBot && (
+                  <div className="w-8 h-8 rounded-full bg-neon-magenta/20 flex items-center justify-center ml-2 flex-shrink-0">
+                    <User className="h-4 w-4 text-neon-magenta" />
+                  </div>
+                )}
               </div>
             ))}
+            
+            {/* Referencia para desplazar al final */}
+            <div ref={messageEndRef}></div>
             
             {/* Indicador de escritura */}
             {isTyping && (
@@ -157,6 +297,32 @@ const ChatBot: React.FC = () => {
             )}
           </div>
           
+          {/* Sugerencias de preguntas */}
+          {messages.length < 3 && (
+            <div className="px-4 pb-2">
+              <p className="text-xs text-neon-cyan mb-2">Preguntas frecuentes:</p>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  "¿Qué servicios ofrecen?",
+                  "¿Cómo puedo contactarlos?",
+                  "¿Qué es el SOC?",
+                ].map((question, index) => (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      setNewMessage(question);
+                      // Pequeño delay para que el usuario vea la pregunta seleccionada
+                      setTimeout(() => handleSendMessage(new Event('submit') as any), 100);
+                    }}
+                    className="text-xs bg-neon-cyan/10 text-white border border-neon-cyan/30 rounded-full px-3 py-1 hover:bg-neon-cyan/20 transition-colors"
+                  >
+                    {question}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          
           {/* Formulario */}
           <form onSubmit={handleSendMessage} className="p-4 border-t border-white/10 bg-cyber-dark">
             <div className="flex space-x-2">
@@ -169,7 +335,8 @@ const ChatBot: React.FC = () => {
               />
               <button 
                 type="submit"
-                className="bg-neon-cyan hover:bg-neon-cyan/90 text-cyber-dark rounded-full p-2 transition-colors"
+                disabled={!newMessage.trim()}
+                className={`${newMessage.trim() ? 'bg-neon-cyan hover:bg-neon-cyan/90' : 'bg-gray-600'} text-cyber-dark rounded-full p-2 transition-colors`}
                 aria-label="Enviar mensaje"
               >
                 <Send className="h-5 w-5" />
@@ -183,22 +350,3 @@ const ChatBot: React.FC = () => {
 };
 
 export default ChatBot;
-
-function Shield(props: any) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-    </svg>
-  );
-}
