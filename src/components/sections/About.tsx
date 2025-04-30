@@ -1,41 +1,8 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import SectionSeparator from '../SectionSeparator';
-import { Shield, TrendingUp, Clock, Globe } from 'lucide-react';
-import CompaniesCarousel from '../CompaniesCarousel';
-
-const capabilities = [
-  {
-    title: 'Seguridad Avanzada',
-    icon: Shield,
-    description: 'Implementamos soluciones de última generación para proteger tus activos críticos contra amenazas emergentes.'
-  },
-  {
-    title: 'Eficiencia Optimizada',
-    icon: TrendingUp,
-    description: 'Mejoramos tu postura de seguridad sin comprometer el rendimiento o la productividad de tu empresa.'
-  },
-  {
-    title: 'Monitoreo 24/7',
-    icon: Clock,
-    description: 'Nuestro centro de operaciones de seguridad trabaja ininterrumpidamente para identificar y neutralizar amenazas.'
-  },
-  {
-    title: 'Alcance Global',
-    icon: Globe,
-    description: 'Ofrecemos protección unificada para organizaciones con presencia internacional y múltiples sucursales.'
-  },
-  {
-    title: 'Cumplimiento Normativo',
-    icon: Shield,
-    description: 'Aseguramos que tus sistemas cumplan con los requisitos regulatorios más exigentes del sector.'
-  },
-  {
-    title: 'Respuesta a Incidentes',
-    icon: Clock,
-    description: 'Contamos con protocolos rápidos y efectivos para minimizar el impacto de cualquier brecha de seguridad.'
-  }
-];
+import { Clock, Globe, Lock, BarChart } from 'lucide-react';
+import { section } from 'framer-motion/client';
 
 const About: React.FC = () => {
   // Definimos variantes para animaciones
@@ -137,26 +104,75 @@ const About: React.FC = () => {
     <section id="about-section" className="py-32 relative overflow-hidden">
       {/* Estilos para animaciones */}
       <style dangerouslySetInnerHTML={{ __html: starAnimations }} />
-      
-      {/* Fondo técnico */}
+  
+      {/* Fondo técnico de ciberseguridad */}
       <div className="absolute inset-0 z-0 opacity-5">
         <svg width="100%" height="100%" className="absolute inset-0">
           <defs>
             <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
               <path d="M 50 0 L 0 0 0 50" fill="none" stroke="white" strokeWidth="0.5" opacity="0.3" />
             </pattern>
+            <pattern id="circuitPattern" width="200" height="200" patternUnits="userSpaceOnUse">
+              <path d="M10 10 L50 10 L50 50 L90 50 L90 90 L130 90 L130 130 L170 130 L170 170" fill="none" stroke="white" strokeWidth="1" opacity="0.4" />
+              <circle cx="10" cy="10" r="5" fill="white" opacity="0.2" />
+              <circle cx="50" cy="50" r="5" fill="white" opacity="0.2" />
+              <circle cx="90" cy="90" r="5" fill="white" opacity="0.2" />
+              <circle cx="130" cy="130" r="5" fill="white" opacity="0.2" />
+              <circle cx="170" cy="170" r="5" fill="white" opacity="0.2" />
+            </pattern>
+            <pattern id="hexPattern" width="100" height="100" patternUnits="userSpaceOnUse">
+              <path d="M50 10 L90 30 L90 70 L50 90 L10 70 L10 30 Z" fill="none" stroke="white" strokeWidth="1" opacity="0.3" />
+            </pattern>
+            <pattern id="networkPattern" width="200" height="200" patternUnits="userSpaceOnUse">
+              <circle cx="25" cy="25" r="5" fill="white" opacity="0.3" />
+              <circle cx="75" cy="75" r="5" fill="white" opacity="0.3" />
+              <circle cx="125" cy="25" r="5" fill="white" opacity="0.3" />
+              <circle cx="175" cy="75" r="5" fill="white" opacity="0.3" />
+              <circle cx="25" cy="125" r="5" fill="white" opacity="0.3" />
+              <circle cx="75" cy="175" r="5" fill="white" opacity="0.3" />
+              <circle cx="125" cy="175" r="5" fill="white" opacity="0.3" />
+              <circle cx="175" cy="125" r="5" fill="white" opacity="0.3" />
+              <line x1="25" y1="25" x2="75" y2="75" stroke="white" strokeWidth="1" opacity="0.2" />
+              <line x1="125" y1="25" x2="175" y2="75" stroke="white" strokeWidth="1" opacity="0.2" />
+              <line x1="25" y1="125" x2="75" y2="175" stroke="white" strokeWidth="1" opacity="0.2" />
+              <line x1="125" y1="175" x2="175" y2="125" stroke="white" strokeWidth="1" opacity="0.2" />
+            </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)" />
+          <rect width="100%" height="100%" fill="url(#circuitPattern)" opacity="0.2" />
+          <rect width="100%" height="100%" fill="url(#hexPattern)" opacity="0.1" />
+          <rect width="100%" height="100%" fill="url(#networkPattern)" opacity="0.15" />
         </svg>
       </div>
       
+      {/* Elementos gráficos flotantes de ciberseguridad */}
+      <div className="absolute inset-0 z-0 overflow-hidden opacity-10">
+        <div className="absolute top-20 left-[10%] w-24 h-24 rounded-full border border-blue-400 animate-pulse opacity-30"></div>
+        <div className="absolute top-[30%] right-[15%] w-32 h-32 rounded-full border border-cyan-300 animate-pulse opacity-20" style={{animationDelay: '1s'}}></div>
+        <div className="absolute bottom-[20%] left-[20%] w-20 h-20 rounded-full border border-yellow-400 animate-pulse opacity-25" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-[60%] right-[25%] w-16 h-16 rounded-full border-2 border-orange-400 animate-pulse opacity-20" style={{animationDelay: '1.5s'}}></div>
+        
+        {/* Iconos estilizados de ciberseguridad */}
+        <div className="absolute top-[15%] right-[10%] opacity-15">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <div className="absolute top-[70%] left-[5%] opacity-15">
+          <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+      </div>
+  
       {/* Separador superior sutil */}
       <SectionSeparator type="wave" className="-mt-32" />
-      
+  
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         {/* Título principal */}
         <motion.h2 
-          className="text-4xl md:text-5xl font-bold mb-16 text-center"
+          className="text-4xl md:text-5xl font-bold mb-6 text-center"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -165,163 +181,105 @@ const About: React.FC = () => {
           <span className="bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">¿Quiénes somos?</span>
         </motion.h2>
         
-        {/* Grid de capacidades */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-          {capabilities.map((capability, index) => (
-            <motion.div
-              key={capability.title}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              variants={fadeInScale}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300"
-            >
-              {/* Icono con efecto de resplandor */}
-              <div className={`text-2xl mb-3 relative ${index % 2 === 0 ? 'text-orange-400' : 'text-blue-400'}`}>
-                <div className="absolute -inset-1 opacity-20 rounded-full blur-sm bg-gradient-to-r from-orange-400 to-blue-500"></div>
-                <capability.icon className="w-8 h-8 relative z-10" />
-              </div>
-              
-              {/* Título y descripción */}
-              <h3 className="text-white font-bold text-lg mb-2">
-                {capability.title}
-              </h3>
-              <p className="text-white/70 text-sm leading-relaxed">
-                {capability.description}
-              </p>
-            </motion.div>
-          ))}
-        </div>
+        {/* Descripción principal */}
+        <motion.div
+          className="text-center max-w-3xl mx-auto mb-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <p className="text-white/80 text-lg mb-4">
+            Somos expertos en <span className="text-cyan-400 font-medium">cibervigilancia</span> y ofrecemos soluciones personalizadas para proteger tu empresa.
+          </p>
+          <p className="text-white/70 text-lg">
+            Nuestra modalidad como servicio te brinda una protección continua y eficiente.
+          </p>
+        </motion.div>
+
+        {/* Subtítulo - Por qué elegirnos */}
+        <motion.h3
+          className="text-3xl md:text-4xl font-bold mb-10 text-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <span className="bg-gradient-to-r from-orange-400 to-red-300 bg-clip-text text-transparent">¿Por qué elegir Sparkfound?</span>
+        </motion.h3>
         
-        {/* Separador entre secciones */}
-        <SectionSeparator type="line" className="my-16" />
-        
-        {/* Sección: Nuestra misión */}
-        <div className="mb-24 relative">
-          {/* Efecto de fondo */}
-          <div className="absolute -z-10 -left-20 top-20 w-96 h-96 bg-gradient-to-br from-blue-500/10 to-purple-500/5 rounded-full blur-3xl opacity-60"></div>
-          <div className="absolute -z-10 right-0 bottom-0 w-80 h-80 bg-gradient-to-tl from-orange-500/10 to-transparent rounded-full blur-3xl opacity-40"></div>
-          
-          {/* Elemento decorativo - línea horizontal con nodos */}
-          <div className="w-full flex items-center justify-center mb-16">
-            <div className="h-px w-24 bg-gradient-to-r from-transparent to-blue-400/40"></div>
-            <div className="w-3 h-3 rounded-full bg-blue-400/40 mx-2"></div>
-            <motion.div 
-              className="w-5 h-5 rounded-full bg-gradient-to-r from-blue-400 to-cyan-400 mx-2"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            ></motion.div>
-            <div className="w-3 h-3 rounded-full bg-blue-400/40 mx-2"></div>
-            <div className="h-px w-24 bg-gradient-to-l from-transparent to-blue-400/40"></div>
-          </div>
-          
-          {/* Título estilizado */}
-          <motion.div 
-            className="text-center max-w-3xl mx-auto mb-16"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-          >
-            <h3 className="inline-block text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#FF6B00] to-[#FF8A3D] bg-clip-text text-transparent relative">
-              <span className="absolute -top-8 left-0 text-xs text-orange-400/70 font-mono uppercase tracking-widest">Nuestra misión</span>
-              Definiendo el futuro de la ciberseguridad
-            </h3>
-            <div className="w-32 h-1 bg-gradient-to-r from-[#FF6B00] to-[#0066CC] rounded-full mx-auto mt-4 opacity-70"></div>
-          </motion.div>
-          
-          {/* Cards con contenido */}
-          <div className="grid md:grid-cols-3 gap-6 mt-12">
-            {/* Card 1 */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInScale}
-              transition={{ delay: 0.1 }}
-              className="rounded-2xl bg-gradient-to-b from-white/5 to-white/0 backdrop-blur-sm border border-white/10 p-8 hover:border-orange-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/5 group"
-            >
-              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-orange-500/20 to-orange-500/5 mb-5 group-hover:scale-110 transition-transform duration-300">
-                <Shield className="w-6 h-6 text-orange-400" />
-              </div>
-              <h4 className="text-xl font-medium text-white mb-3">Empresa especializada</h4>
-              <p className="text-white/70 leading-relaxed">
-                Somos expertos en ciberseguridad para proteger infraestructuras críticas y empresas de primer nivel con tecnología de vanguardia.
-              </p>
-            </motion.div>
-            
-            {/* Card 2 */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInScale}
-              transition={{ delay: 0.2 }}
-              className="rounded-2xl bg-gradient-to-b from-white/5 to-white/0 backdrop-blur-sm border border-white/10 p-8 hover:border-blue-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/5 group"
-            >
-              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-blue-500/20 to-blue-500/5 mb-5 group-hover:scale-110 transition-transform duration-300">
-                <Clock className="w-6 h-6 text-blue-400" />
-              </div>
-              <h4 className="text-xl font-medium text-white mb-3">Protección continua</h4>
-              <p className="text-white/70 leading-relaxed">
-                Vigilancia 24/7 con tecnología avanzada y sistemas de detección temprana para neutralizar amenazas antes de que afecten tu organización.
-              </p>
-            </motion.div>
-            
-            {/* Card 3 */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeInScale}
-              transition={{ delay: 0.3 }}
-              className="rounded-2xl bg-gradient-to-b from-white/5 to-white/0 backdrop-blur-sm border border-white/10 p-8 hover:border-cyan-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/5 group"
-            >
-              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 mb-5 group-hover:scale-110 transition-transform duration-300">
-                <Globe className="w-6 h-6 text-cyan-400" />
-              </div>
-              <h4 className="text-xl font-medium text-white mb-3">Soluciones a medida</h4>
-              <p className="text-white/70 leading-relaxed">
-                Estrategias personalizadas para cada tipo de organización, identificando vulnerabilidades específicas y adaptando protocolos a tus necesidades.
-              </p>
-            </motion.div>
-          </div>
-          
-          {/* Panel de estadísticas */}
+        {/* Grid de ventajas */}
+        <div className="grid md:grid-cols-2 gap-8 mb-20">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            className="mt-16 grid grid-cols-3 gap-4 max-w-3xl mx-auto"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={fadeInScale}
+            className="bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300"
           >
-            <div className="text-center p-4 rounded-lg backdrop-blur-sm bg-white/5 border border-white/10">
-              <h5 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">100%</h5>
-              <p className="text-xs text-white/60 uppercase tracking-wider mt-1">Clientes satisfechos</p>
+            <div className="text-2xl mb-3 relative text-yellow-400">
+              <div className="absolute -inset-1 opacity-20 rounded-full blur-sm bg-gradient-to-r from-yellow-400 to-orange-500"></div>
+              <Lock className="w-8 h-8 relative z-10" />
             </div>
-            <div className="text-center p-4 rounded-lg backdrop-blur-sm bg-white/5 border border-white/10">
-              <h5 className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">24/7</h5>
-              <p className="text-xs text-white/60 uppercase tracking-wider mt-1">Monitoreo activo</p>
+            <h3 className="text-white font-bold text-lg mb-2">Protección integral</h3>
+            <p className="text-white/70 text-sm leading-relaxed">Contamos con una malla de servicios de ciberseguridad que se adapta a las necesidades de cada empresa, brindando una defensa completa y personalizada.</p>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={fadeInScale}
+            transition={{ delay: 0.1 }}
+            className="bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+          >
+            <div className="text-2xl mb-3 relative text-blue-400">
+              <div className="absolute -inset-1 opacity-20 rounded-full blur-sm bg-gradient-to-r from-blue-400 to-cyan-500"></div>
+              <BarChart className="w-8 h-8 relative z-10" />
             </div>
-            <div className="text-center p-4 rounded-lg backdrop-blur-sm bg-white/5 border border-white/10">
-              <h5 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">+200</h5>
-              <p className="text-xs text-white/60 uppercase tracking-wider mt-1">Amenazas bloqueadas</p>
+            <h3 className="text-white font-bold text-lg mb-2">Escalabilidad</h3>
+            <p className="text-white/70 text-sm leading-relaxed">Modelo de suscripción flexible que se ajusta al crecimiento de tu negocio sin necesidad de inversiones iniciales.</p>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={fadeInScale}
+            transition={{ delay: 0.2 }}
+            className="bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+          >
+            <div className="text-2xl mb-3 relative text-orange-400">
+              <div className="absolute -inset-1 opacity-20 rounded-full blur-sm bg-gradient-to-r from-orange-400 to-red-500"></div>
+              <Clock className="w-8 h-8 relative z-10" />
             </div>
+            <h3 className="text-white font-bold text-lg mb-2">Monitoreo constante</h3>
+            <p className="text-white/70 text-sm leading-relaxed">Vigilancia activa 24/7 desde nuestro NG-NSOC en Buenos Aires.</p>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={fadeInScale}
+            transition={{ delay: 0.3 }}
+            className="bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300"
+          >
+            <div className="text-2xl mb-3 relative text-cyan-400">
+              <div className="absolute -inset-1 opacity-20 rounded-full blur-sm bg-gradient-to-r from-cyan-400 to-blue-500"></div>
+              <Globe className="w-8 h-8 relative z-10" />
+            </div>
+            <h3 className="text-white font-bold text-lg mb-2">Cobertura global</h3>
+            <p className="text-white/70 text-sm leading-relaxed">Presencia en América Latina y expansión en mercados internacionales.</p>
           </motion.div>
         </div>
-        
         {/* Separador inferior */}
         <SectionSeparator type="gradient" className="mt-24" />
-        
-        {/* Segunda sección: Empresas que confían en nosotros - Carrusel */}
-        <div className="mt-12 text-center">
-          {/* Carrusel de empresas con temática espacial */}
-          <CompaniesCarousel />
-        </div>
-      </div>
+      </div> {/* Este cierre es el correcto del div.container */}
     </section>
   );
+  
 };
+
 
 export default About;

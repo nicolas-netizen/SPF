@@ -1,12 +1,48 @@
 import React, { useEffect, useRef } from 'react';
 import { Search, Cog, Shield } from 'lucide-react';
 
+// Estilos CSS para los hexágonos
+const hexagonStyles = `
+  .hexagon-card {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+  }
+
+  /* Usando pseudo-elementos para crear bordes */
+.hexagon-shape {
+  /* clip-path: polygon(...); */
+
+  position: absolute;
+  inset: 0;
+  z-index: 0; /* Esto permite que el borde esté detrás del contenido, pero se mantenga visible */
+  border: 20px solid rgba(255, 140, 0, 0.9); /* Más grosor y opacidad */
+  background: linear-gradient(to bottom, rgba(10, 15, 30, 0.6), rgba(15, 20, 40, 0.6));
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+
+}
+
+  
+.technology-card:hover .hexagon-shape {
+  backdrop-filter: blur(12px);
+  background: rgba(20, 30, 50, 0.8);
+  border-color: rgba(255, 165, 0, 1);
+  box-shadow: 0 0 25px rgba(255, 165, 0, 0.6);
+}
+
+
+`;
+
 interface TechnologyCardProps {
   title: string;
   description: string;
   icon: React.ElementType;
   color: string;
-  gradient: string;
   delay: number;
 }
 
@@ -15,7 +51,6 @@ const TechnologyCard: React.FC<TechnologyCardProps> = ({
   description, 
   icon: Icon, 
   color, 
-  gradient,
   delay 
 }) => {
   return (
@@ -23,22 +58,10 @@ const TechnologyCard: React.FC<TechnologyCardProps> = ({
       className="technology-card relative group"
       style={{ animationDelay: `${delay}ms` }}
     >
-      {/* Card background with glassmorphism effect */}
-      <div className={`relative overflow-hidden h-full flex flex-col items-center justify-start p-8 rounded-2xl backdrop-blur-xl border transition-all duration-500 
-        bg-opacity-5 bg-white
-        ${color === 'orange' ? 'border-orange-500/20 hover:border-orange-500/50' : 
-          color === 'blue' ? 'border-blue-500/20 hover:border-blue-500/50' : 
-          'border-red-500/20 hover:border-red-500/50'}
-        transform hover:scale-105 hover:-translate-y-2
-        ${color === 'orange' ? 'shadow-[0_5px_15px_rgba(255,165,0,0.15)]' : 
-          color === 'blue' ? 'shadow-[0_5px_15px_rgba(0,122,255,0.15)]' : 
-          'shadow-[0_5px_15px_rgba(255,59,48,0.15)]'}
-        hover:${color === 'orange' ? 'shadow-[0_10px_25px_rgba(255,165,0,0.25)]' : 
-          color === 'blue' ? 'shadow-[0_10px_25px_rgba(0,122,255,0.25)]' : 
-          'shadow-[0_10px_25px_rgba(255,59,48,0.25)]'}
-      `}>
-        {/* Background glow */}
-        <div className={`absolute inset-0 ${gradient} opacity-5 group-hover:opacity-10 transition-opacity duration-500`}></div>
+      {/* Hexagon card with orange border */}
+      <div className="hexagon-card transform hover:scale-105 hover:-translate-y-2 transition-all duration-500">
+        {/* Hexagon con borde */}
+        <div className="hexagon-shape"></div>
         
         {/* Animated orbiting elements */}
         <div className="absolute inset-0 pointer-events-none hidden md:block">
@@ -46,51 +69,47 @@ const TechnologyCard: React.FC<TechnologyCardProps> = ({
           <div className={`absolute w-1 h-1 rounded-full ${color === 'orange' ? 'bg-orange-300' : color === 'blue' ? 'bg-blue-300' : 'bg-red-300'} orbit-particle-2`}></div>
           <div className={`absolute w-1.5 h-1.5 rounded-full ${color === 'orange' ? 'bg-yellow-400' : color === 'blue' ? 'bg-cyan-400' : 'bg-pink-400'} orbit-particle-3`}></div>
         </div>
-        
-        {/* Card header with icon */}
-        <div className={`w-20 h-20 mb-6 flex items-center justify-center rounded-full 
-          ${color === 'orange' ? 'bg-gradient-to-br from-orange-500/20 to-yellow-500/10' : 
-            color === 'blue' ? 'bg-gradient-to-br from-blue-500/20 to-cyan-500/10' : 
-            'bg-gradient-to-br from-red-500/20 to-pink-500/10'}
-          transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12
-          ${color === 'orange' ? 'shadow-[0_0_15px_rgba(255,165,0,0.2)]' : 
-            color === 'blue' ? 'shadow-[0_0_15px_rgba(0,122,255,0.2)]' : 
-            'shadow-[0_0_15px_rgba(255,59,48,0.2)]'}
-          group-hover:${color === 'orange' ? 'shadow-[0_0_20px_rgba(255,165,0,0.4)]' : 
-            color === 'blue' ? 'shadow-[0_0_20px_rgba(0,122,255,0.4)]' : 
-            'shadow-[0_0_20px_rgba(255,59,48,0.4)]'}
-        `}>
-          <Icon className={`w-10 h-10 
-            ${color === 'orange' ? 'text-orange-400' : 
-              color === 'blue' ? 'text-blue-400' : 
-              'text-red-400'} 
-            group-hover:${color === 'orange' ? 'text-orange-300' : 
-              color === 'blue' ? 'text-blue-300' : 
-              'text-red-300'} 
-            transition-colors duration-500`} />
+          
+          {/* Card content container */}
+          <div className="relative z-10 flex flex-col items-center px-4 pt-10">
+            {/* Card header with icon */}
+            <div className={`w-24 h-24 mb-6 flex items-center justify-center rounded-full 
+              ${color === 'orange' ? 'bg-gradient-to-br from-orange-500/40 to-yellow-500/20' : 
+                color === 'blue' ? 'bg-gradient-to-br from-blue-500/40 to-cyan-500/20' : 
+                'bg-gradient-to-br from-red-500/40 to-pink-500/20'}
+              transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6
+              ${color === 'orange' ? 'shadow-[0_0_15px_rgba(255,165,0,0.4)]' : 
+                color === 'blue' ? 'shadow-[0_0_15px_rgba(0,122,255,0.4)]' : 
+                'shadow-[0_0_15px_rgba(255,59,48,0.4)]'}
+              group-hover:${color === 'orange' ? 'shadow-[0_0_25px_rgba(255,165,0,0.6)]' : 
+                color === 'blue' ? 'shadow-[0_0_25px_rgba(0,122,255,0.6)]' : 
+                'shadow-[0_0_25px_rgba(255,59,48,0.6)]'}
+            `}>
+              <Icon className={`w-12 h-12 
+                ${color === 'orange' ? 'text-orange-300' : 
+                  color === 'blue' ? 'text-blue-300' : 
+                  'text-red-300'} 
+                group-hover:${color === 'orange' ? 'text-yellow-200' : 
+                  color === 'blue' ? 'text-cyan-200' : 
+                  'text-pink-200'} 
+                transition-colors duration-500`} />
+            </div>
+            
+            {/* Title with gradient text effect */}
+            <h3 className={`text-2xl font-bold mb-4 text-center
+                ${color === 'orange' ? 'text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300' : 
+                  color === 'blue' ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300' : 
+                  'text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-pink-300'}`}>
+                {title}
+            </h3>
+            
+            {/* Description */}
+            <p className="text-white/80 text-center text-sm md:text-base group-hover:text-white transition-colors duration-500 max-w-[280px]">
+                {description}
+            </p>
+          </div>
         </div>
-        
-        {/* Title with gradient text effect */}
-        <h3 className={`text-2xl font-bold mb-4 
-          ${color === 'orange' ? 'text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300' : 
-            color === 'blue' ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300' : 
-            'text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-pink-300'}`}>
-          {title}
-        </h3>
-        
-        {/* Description */}
-        <p className="text-white/70 text-center group-hover:text-white/90 transition-colors duration-500">
-          {description}
-        </p>
-        
-        {/* Bottom decorative element */}
-        <div className={`absolute bottom-0 left-0 w-full h-1 
-          ${color === 'orange' ? 'bg-gradient-to-r from-transparent via-orange-500 to-transparent' : 
-            color === 'blue' ? 'bg-gradient-to-r from-transparent via-blue-500 to-transparent' : 
-            'bg-gradient-to-r from-transparent via-red-500 to-transparent'} 
-          opacity-30 group-hover:opacity-60 transition-opacity duration-500`}></div>
       </div>
-    </div>
   );
 };
 
@@ -101,26 +120,23 @@ const TechnologyCards: React.FC = () => {
   const technologies = [
     {
       title: "SIEM",
-      description: "Sistema de Gestión de Eventos e Información de Seguridad que recopila y analiza registros en tiempo real desde toda la infraestructura.",
+      description: "Centraliza y analiza los eventos de seguridad de toda tu infraestructura para detectar amenazas en tiempo real.",
       icon: Search,
       color: "orange",
-      gradient: "bg-gradient-to-br from-orange-500 to-yellow-500",
       delay: 100
     },
     {
       title: "SOAR",
-      description: "Orquestación, Automatización y Respuesta de Seguridad que acelera el tiempo de reacción ante amenazas mediante flujos de trabajo predefinidos.",
+      description: "Automatiza la respuesta ante incidentes y acelera la mitigación con flujos inteligentes y eficientes.",
       icon: Cog,
       color: "blue",
-      gradient: "bg-gradient-to-br from-blue-500 to-cyan-500",
       delay: 200
     },
     {
       title: "EDR",
-      description: "Detección y Respuesta de Endpoint que monitorea continuamente todos los dispositivos finales para identificar y neutralizar amenazas avanzadas.",
+      description: "Protege tus dispositivos críticos con detección continua, aislamiento remoto y acciones de contención.",
       icon: Shield,
       color: "red",
-      gradient: "bg-gradient-to-br from-red-500 to-pink-500",
       delay: 300
     }
   ];
@@ -142,6 +158,7 @@ const TechnologyCards: React.FC = () => {
     const setupOrbitAnimations = () => {
       const style = document.createElement('style');
       style.textContent = `
+        ${hexagonStyles}
         @keyframes orbit1 {
           0% { transform: translateX(-50%) translateY(-50%) rotate(0deg) translateX(50px) rotate(0deg); }
           100% { transform: translateX(-50%) translateY(-50%) rotate(360deg) translateX(50px) rotate(-360deg); }
@@ -198,6 +215,56 @@ const TechnologyCards: React.FC = () => {
         .technology-cards-section.visible .technology-card {
           opacity: 1;
           transform: translateY(0);
+        }
+
+        /* Hexagon styles */
+        .hexagon-container {
+          width: 100%;
+          height: 100%;
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+        }
+
+        .hexagon {
+          clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+          width: 100%;
+          aspect-ratio: 0.86 / 1;
+          position: relative;
+          z-index: 1;
+          overflow: hidden;
+          transition: all 0.5s ease;
+          border: 2px solid rgba(255, 120, 0, 0.5);
+          min-height: 380px;
+        }
+        
+        /* Glow effect */
+        .hexagon:before {
+          content: '';
+          position: absolute;
+          top: -2px;
+          left: -2px;
+          right: -2px;
+          bottom: -2px;
+          z-index: -1;
+          background: linear-gradient(215deg, rgba(255,140,0,0.8), rgba(255,120,30,0.7), rgba(255,100,0,0.8));
+          background-size: 300% 300%;
+          clip-path: polygon(50% -2%, 101% 24%, 101% 76%, 50% 102%, -1% 76%, -1% 24%);
+          animation: borderGlow 10s ease infinite;
+          opacity: 0.5;
+          transition: opacity 0.3s ease;
+        }
+        
+        .hexagon:hover:before {
+          opacity: 0.8;
+        }
+        
+        @keyframes borderGlow {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
       `;
       document.head.appendChild(style);
@@ -294,7 +361,6 @@ const TechnologyCards: React.FC = () => {
               description={tech.description}
               icon={tech.icon}
               color={tech.color}
-              gradient={tech.gradient}
               delay={tech.delay}
             />
           ))}
