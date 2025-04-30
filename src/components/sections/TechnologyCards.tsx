@@ -15,16 +15,12 @@ const hexagonStyles = `
 
   /* Usando pseudo-elementos para crear bordes */
 .hexagon-shape {
-  /* clip-path: polygon(...); */
-
-  position: absolute;
-  inset: 0;
-  z-index: 0; /* Esto permite que el borde esté detrás del contenido, pero se mantenga visible */
-  border: 20px solid rgba(255, 140, 0, 0.9); /* Más grosor y opacidad */
-  background: linear-gradient(to bottom, rgba(10, 15, 30, 0.6), rgba(15, 20, 40, 0.6));
-  backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
-
+ clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+position: absolute;
+z-index: 0;
+inset: 0;
+background: linear-gradient(to bottom, rgba(10, 15, 30, 0.6), rgba(15, 20, 40, 0.6));
+transition: all 0.3s ease;
 }
 
   
@@ -216,51 +212,6 @@ const TechnologyCards: React.FC = () => {
           opacity: 1;
           transform: translateY(0);
         }
-
-        /* Hexagon styles */
-        .hexagon-container {
-          width: 100%;
-          height: 100%;
-          padding: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: relative;
-        }
-
-        .hexagon {
-          clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-          width: 100%;
-          aspect-ratio: 0.86 / 1;
-          position: relative;
-          z-index: 1;
-          overflow: hidden;
-          transition: all 0.5s ease;
-          border: 2px solid rgba(255, 120, 0, 0.5);
-          min-height: 380px;
-        }
-        
-        /* Glow effect */
-        .hexagon:before {
-          content: '';
-          position: absolute;
-          top: -2px;
-          left: -2px;
-          right: -2px;
-          bottom: -2px;
-          z-index: -1;
-          background: linear-gradient(215deg, rgba(255,140,0,0.8), rgba(255,120,30,0.7), rgba(255,100,0,0.8));
-          background-size: 300% 300%;
-          clip-path: polygon(50% -2%, 101% 24%, 101% 76%, 50% 102%, -1% 76%, -1% 24%);
-          animation: borderGlow 10s ease infinite;
-          opacity: 0.5;
-          transition: opacity 0.3s ease;
-        }
-        
-        .hexagon:hover:before {
-          opacity: 0.8;
-        }
-        
         @keyframes borderGlow {
           0% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
@@ -327,16 +278,16 @@ const TechnologyCards: React.FC = () => {
       {/* Main content */}
       <div ref={sectionRef} className="technology-cards-section container mx-auto px-4 relative z-10 max-w-6xl">
         {/* Section header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10">
           <h2 className="text-4xl font-bold relative inline-block">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
-              Tecnologías Avanzadas
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-blue-400 to-orange-400">
+              SparkProtect: El núcleo de nuestra defensa inteligente
             </span>
             <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent"></span>
           </h2>
           <p className="text-white/70 mt-6 max-w-3xl mx-auto">
-            Nuestra plataforma integra las tecnologías más potentes del mercado para brindarte una protección
-            completa y proactiva contra todo tipo de amenazas cibernéticas
+          La ciberseguridad moderna exige velocidad, visibilidad y respuesta automática.
+          SparkProtect combina tres tecnologías clave en una única solución gestionada:
           </p>
         </div>
         
@@ -365,13 +316,16 @@ const TechnologyCards: React.FC = () => {
             />
           ))}
         </div>
-        
+        <p className="text-white/100 mt-20 max-w-3xl mx-auto text-center">
+        Todo esto gestionado por nuestro equipo de expertos 24/7, desde el NG-NSOC de Sparkfound.
+          </p>
         {/* Bottom decorative elements */}
         <div className="flex justify-center mt-16 space-x-4">
           <div className="w-3 h-3 rounded-full bg-orange-500 opacity-70 animate-pulse"></div>
           <div className="w-3 h-3 rounded-full bg-blue-500 opacity-70 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
           <div className="w-3 h-3 rounded-full bg-red-500 opacity-70 animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
+        
       </div>
     </section>
   );

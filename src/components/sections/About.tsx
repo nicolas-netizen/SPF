@@ -218,8 +218,10 @@ const About: React.FC = () => {
             className="bg-white/5 backdrop-blur-md p-8 rounded-2xl border border-white/10 hover:bg-white/10 transition-all duration-300"
           >
             <div className="text-2xl mb-3 relative text-yellow-400">
+
+            <Lock className="w-8 h-8 relative z-10" />
               <div className="absolute -inset-1 opacity-20 rounded-full blur-sm bg-gradient-to-r from-yellow-400 to-orange-500"></div>
-              <Lock className="w-8 h-8 relative z-10" />
+              
             </div>
             <h3 className="text-white font-bold text-lg mb-2">Protección integral</h3>
             <p className="text-white/70 text-sm leading-relaxed">Contamos con una malla de servicios de ciberseguridad que se adapta a las necesidades de cada empresa, brindando una defensa completa y personalizada.</p>
@@ -273,8 +275,6 @@ const About: React.FC = () => {
             <p className="text-white/70 text-sm leading-relaxed">Presencia en América Latina y expansión en mercados internacionales.</p>
           </motion.div>
         </div>
-        {/* Separador inferior */}
-        <SectionSeparator type="gradient" className="mt-24" />
       </div> {/* Este cierre es el correcto del div.container */}
     </section>
   );

@@ -190,14 +190,14 @@ function detectThreats() {
                 <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight slide-in relative">
                   <span className="relative inline-block cursor-default">
                     <span className="relative z-10 block bg-clip-text text-transparent bg-gradient-to-r from-white to-white/90 font-inter">
-                      DETECCIÓN DE AMENAZAS
+                    Ciberseguridad gestionada 24/7
                     </span>
                     {/* Efecto glitch sutil en hover */}
                     <span className="absolute inset-0 z-0 hidden group-hover:block bg-clip-text text-transparent bg-gradient-to-r from-neon-cyan to-white/90 animate-glitch opacity-70">DETECCIÓN DE AMENAZAS</span>
                   </span>
                   <br/>
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#FF6B00] to-neon-orange drop-shadow-neon-orange inline-block">
-                    <AnimatedText>ANTES DE QUE TE AFECTEN</AnimatedText>
+                    <AnimatedText>adaptada a tu empresa.</AnimatedText>
                   </span>
                 </h1>
                 {/* Línea decorativa debajo del título */}
@@ -206,7 +206,7 @@ function detectThreats() {
               
               {/* Descripción mejorada con fuente moderna y efecto fade-in */}
               <p className="text-xl text-white/80 fade-in-up delay-100 leading-relaxed max-w-xl font-inter mt-6">
-                Nuestro sistema de <span className="text-neon-cyan font-semibold">vigilancia proactiva</span> detecta y neutraliza amenazas en tiempo real, protegiendo tus activos digitales antes de que se vean comprometidos.           
+                <AnimatedText>Protegé tus activos <span className="text-neon-cyan font-semibold">digitales</span> con Sparkfound: tecnología de vanguardia y monitoreo constante.</AnimatedText>           
               </p>
               
               {/* Features con tarjetas de vidrio y efectos neón */}
