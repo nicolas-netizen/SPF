@@ -376,7 +376,7 @@ const ContactForm: React.FC = () => {
                       <video
                         className="absolute top-0 left-0 w-full h-full object-contain"
                         src="/nsoc.mp4"
-                        title="Sparkfound Video"
+                        title="SparkFound Video"
                         autoPlay
                         muted
                         loop
@@ -405,7 +405,7 @@ const ContactForm: React.FC = () => {
                 <div className="bg-white/5 backdrop-blur-sm p-3 rounded-lg border border-blue-500/20 mb-4">
                   <p className="text-xs md:text-sm text-white/90 leading-relaxed">
                     En este video, te mostramos cómo <span className="font-semibold text-blue-300">SparkFound</span> puede ayudarte a prevenir ataques cibernéticos.
-                    <span className="block mt-1 text-blue-400 font-medium">🌐 Soluciones para empresas modernas</span>
+                    <span className="block mt-1 text-blue-400 font-medium">🌐 Soluciones para tu empresa</span>
                   </p>
                 </div>
                 

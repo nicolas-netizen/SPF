@@ -317,7 +317,7 @@ const TechnologyCards: React.FC = () => {
           ))}
         </div>
         <p className="text-white/100 mt-20 max-w-3xl mx-auto text-center">
-        Todo esto gestionado por nuestro equipo de expertos 24/7, desde el NG-NSOC de Sparkfound.
+        Todo esto gestionado por nuestro equipo de expertos 24/7, desde el NG-NSOC de SparkFound.
           </p>
         {/* Bottom decorative elements */}
         <div className="flex justify-center mt-16 space-x-4">

@@ -220,18 +220,18 @@ const ChatBot: React.FC = () => {
       <button
         id="chat-button"
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 bg-neon-cyan text-cyber-dark rounded-full p-4 shadow-lg hover:bg-neon-cyan/90 z-50 transition-all duration-500 opacity-0 translate-y-10 transform hover:scale-110"
+        className="fixed bottom-6 right-6 bg-orange-500 text-cyber-dark rounded-full p-4 shadow-lg hover:bg-orange-500/90 z-50 transition-all duration-500 opacity-0 translate-y-10 transform hover:scale-110"
         aria-label="Abrir chat de asistencia"
       >
         <MessageCircle className="h-6 w-6" />
-        <span className="absolute top-0 right-0 h-3 w-3 rounded-full bg-neon-magenta animate-pulse"></span>
+        <span className="absolute top-0 right-0 h-3 w-3 rounded-full bg-amber-400 animate-pulse"></span>
       </button>
       
       {/* Ventana de chat */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] bg-cyber-dark-blue border border-neon-cyan/20 rounded-lg shadow-2xl shadow-neon-cyan/10 z-50 flex flex-col overflow-hidden backdrop-blur-glass">
+        <div className="fixed bottom-6 right-6 w-80 sm:w-96 h-[500px] bg-cyber-dark-blue border border-orange-500/20 rounded-lg shadow-2xl shadow-orange-500/10 z-50 flex flex-col overflow-hidden backdrop-blur-glass">
           {/* Header */}
-          <div className="bg-gradient-to-r from-neon-cyan to-neon-blue p-4 flex justify-between items-center">
+          <div className="bg-gradient-to-r from-orange-500 to-amber-400 p-4 flex justify-between items-center">
             <div className="flex items-center">
               <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center mr-3">
                 <ShieldCheck className="h-5 w-5 text-white" />
@@ -258,14 +258,14 @@ const ChatBot: React.FC = () => {
                 className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
               >
                 {message.isBot && (
-                  <div className="w-8 h-8 rounded-full bg-neon-cyan/20 flex items-center justify-center mr-2 flex-shrink-0">
-                    <ShieldCheck className="h-4 w-4 text-neon-cyan" />
+                  <div className="w-8 h-8 rounded-full bg-orange-500/20 flex items-center justify-center mr-2 flex-shrink-0">
+                    <ShieldCheck className="h-4 w-4 text-orange-500" />
                   </div>
                 )}
                 <div className={`max-w-[80%] rounded-lg p-3 ${
                   message.isBot 
-                    ? 'bg-neon-cyan/10 text-white border border-neon-cyan/30' 
-                    : 'bg-neon-magenta/10 text-white border border-neon-magenta/30'
+                    ? 'bg-orange-500/10 text-white border border-orange-500/30' 
+                    : 'bg-amber-400/10 text-white border border-amber-400/30'
                 }`}>
                   <p className="text-sm">{message.text}</p>
                   <p className="text-xs text-white/50 text-right mt-1">
@@ -273,8 +273,8 @@ const ChatBot: React.FC = () => {
                   </p>
                 </div>
                 {!message.isBot && (
-                  <div className="w-8 h-8 rounded-full bg-neon-magenta/20 flex items-center justify-center ml-2 flex-shrink-0">
-                    <User className="h-4 w-4 text-neon-magenta" />
+                  <div className="w-8 h-8 rounded-full bg-amber-400/20 flex items-center justify-center ml-2 flex-shrink-0">
+                    <User className="h-4 w-4 text-amber-400" />
                   </div>
                 )}
               </div>
@@ -286,11 +286,11 @@ const ChatBot: React.FC = () => {
             {/* Indicador de escritura */}
             {isTyping && (
               <div className="flex justify-start">
-                <div className="max-w-[80%] rounded-lg p-3 bg-neon-cyan/10 text-white border border-neon-cyan/30">
+                <div className="max-w-[80%] rounded-lg p-3 bg-orange-500/10 text-white border border-orange-500/30">
                   <div className="flex space-x-1">
-                    <div className="w-2 h-2 rounded-full bg-neon-cyan animate-bounce" style={{animationDelay: '0ms'}}></div>
-                    <div className="w-2 h-2 rounded-full bg-neon-cyan animate-bounce" style={{animationDelay: '150ms'}}></div>
-                    <div className="w-2 h-2 rounded-full bg-neon-cyan animate-bounce" style={{animationDelay: '300ms'}}></div>
+                    <div className="w-2 h-2 rounded-full bg-orange-500 animate-bounce" style={{animationDelay: '0ms'}}></div>
+                    <div className="w-2 h-2 rounded-full bg-orange-500 animate-bounce" style={{animationDelay: '150ms'}}></div>
+                    <div className="w-2 h-2 rounded-full bg-orange-500 animate-bounce" style={{animationDelay: '300ms'}}></div>
                   </div>
                 </div>
               </div>
@@ -300,7 +300,7 @@ const ChatBot: React.FC = () => {
           {/* Sugerencias de preguntas */}
           {messages.length < 3 && (
             <div className="px-4 pb-2">
-              <p className="text-xs text-neon-cyan mb-2">Preguntas frecuentes:</p>
+              <p className="text-xs text-orange-500 mb-2">Preguntas frecuentes:</p>
               <div className="flex flex-wrap gap-2">
                 {[
                   "¿Qué servicios ofrecen?",
@@ -314,7 +314,7 @@ const ChatBot: React.FC = () => {
                       // Pequeño delay para que el usuario vea la pregunta seleccionada
                       setTimeout(() => handleSendMessage(new Event('submit') as any), 100);
                     }}
-                    className="text-xs bg-neon-cyan/10 text-white border border-neon-cyan/30 rounded-full px-3 py-1 hover:bg-neon-cyan/20 transition-colors"
+                    className="text-xs bg-orange-500/10 text-white border border-orange-500/30 rounded-full px-3 py-1 hover:bg-orange-500/20 transition-colors"
                   >
                     {question}
                   </button>
@@ -330,13 +330,13 @@ const ChatBot: React.FC = () => {
                 type="text"
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
-                className="flex-1 bg-white/10 text-white rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-neon-cyan/50"
+                className="flex-1 bg-white/10 text-white rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
                 placeholder="Escribe tu mensaje..."
               />
               <button 
                 type="submit"
                 disabled={!newMessage.trim()}
-                className={`${newMessage.trim() ? 'bg-neon-cyan hover:bg-neon-cyan/90' : 'bg-gray-600'} text-cyber-dark rounded-full p-2 transition-colors`}
+                className={`${newMessage.trim() ? 'bg-orange-500 hover:bg-orange-500/90' : 'bg-gray-600'} text-cyber-dark rounded-full p-2 transition-colors`}
                 aria-label="Enviar mensaje"
               >
                 <Send className="h-5 w-5" />

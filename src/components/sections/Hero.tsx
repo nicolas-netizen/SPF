@@ -206,7 +206,7 @@ function detectThreats() {
               
               {/* Descripción mejorada con fuente moderna y efecto fade-in */}
               <p className="text-xl text-white/80 fade-in-up delay-100 leading-relaxed max-w-xl font-inter mt-6">
-                <AnimatedText>Protegé tus activos <span className="text-neon-cyan font-semibold">digitales</span> con Sparkfound: tecnología de vanguardia y monitoreo constante.</AnimatedText>           
+                <AnimatedText>Protegé tus activos <span className="text-neon-cyan font-semibold">digitales</span> con SparkFound: tecnología de vanguardia y monitoreo constante.</AnimatedText>           
               </p>
               
               {/* Features con tarjetas de vidrio y efectos neón */}

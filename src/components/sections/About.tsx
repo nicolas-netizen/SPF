@@ -399,15 +399,7 @@ const About: React.FC = () => {
               <div className="bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 px-8 py-10 shadow-xl w-full transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
                 <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent">Expertos en seguridad</h3>
                 <p className="text-white/90 text-lg mb-4 leading-relaxed">
-                  Somos expertos en 
-                  <span className="relative inline-block group">
-                    <span className="text-cyan-400 font-semibold">cibervigilancia</span>
-                    <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-cyan-400/0 via-cyan-400/50 to-cyan-400/0"></div>
-                    {/* Tooltip de ciberseguridad */}
-                    <div className="absolute -top-2 -right-2 w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="w-full h-full rounded-full bg-cyan-400/20 animate-ping"></div>
-                    </div>
-                  </span> y ofrecemos 
+                  Somos expertos en <span className="text-cyan-400 font-semibold">cibervigilancia</span> y ofrecemos 
                   <span className="relative inline-block bg-gradient-to-r from-blue-400/10 to-cyan-400/10 px-1 rounded">
                     soluciones personalizadas
                     <svg className="inline-block ml-1 w-4 h-4 text-blue-400 animate-pulse" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -460,7 +452,7 @@ const About: React.FC = () => {
           </div>
         </div>
 
-        {/* Sección Por qué elegir Sparkfound - Mejorada */}
+        {/* Sección Por qué elegir SparkFound - Mejorada */}
         <div className="relative mb-20 mt-10">
           {/* Efectos de fondo cibernéticos */}
           <div className="absolute inset-0 -z-10 opacity-10">
@@ -505,7 +497,7 @@ const About: React.FC = () => {
                 <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-600/10 to-red-500/10 blur-xl opacity-80"></div>
                 <h3 className="relative z-10 text-3xl md:text-5xl font-bold text-center py-4">
                   <div className="relative inline-block">
-                    <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-red-400 bg-clip-text text-transparent">¿Por qué elegir Sparkfound?</span>
+                    <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-red-400 bg-clip-text text-transparent">¿Por qué elegir SparkFound?</span>
                     <div className="absolute -bottom-2 left-0 right-0 h-0.5 bg-gradient-to-r from-orange-500/0 via-orange-500/80 to-orange-500/0"></div>
                     
                     {/* Efecto de radar ciberseguridad */}
