@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, BarChart, Clock, Lock } from 'lucide-react';
+import CyberAtackMap from './CyberAtackMap';
 
 const About: React.FC = () => {
   // Configuración para animaciones compartidas
@@ -378,27 +379,12 @@ const About: React.FC = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              <div className="relative w-full max-w-md aspect-square">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-cyan-400/10 rounded-full blur-[30px] animate-pulse" style={{animationDuration: '8s'}}></div>
-                <div className="absolute inset-10 border-2 border-blue-400/30 rounded-full"></div>
-                <div className="absolute inset-20 border border-cyan-300/40 rounded-full animate-spin" style={{animationDuration: '12s'}}></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-40 h-40 bg-white/5 backdrop-blur-md rounded-full border border-white/10 flex items-center justify-center shadow-lg relative">
-                    {/* Efecto de escáner de seguridad */}
-                    <div className="absolute inset-0 rounded-full overflow-hidden">
-                      <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-blue-400/10 to-transparent animate-scan" style={{animationDuration: '3s', animationIterationCount: 'infinite'}}></div>
-                    </div>
-                    {/* Efecto hexagonal de ciberseguridad */}
-                    <div className="absolute inset-2 z-0">
-                      <svg viewBox="0 0 100 100" width="100%" height="100%" opacity="0.2">
-                        <polygon points="50,3 90,25 90,75 50,97 10,75 10,25" fill="none" stroke="#38bdf8" strokeWidth="1" className="animate-pulse"/>
-                      </svg>
-                    </div>
-                    <div className="text-4xl text-blue-400 font-bold tracking-wider relative z-10">SPF</div>
-                  </div>
+              <div className="relative flex justify-center items-center w-full mx-auto mb-8">
+                {/* Efectos de iluminación sutiles que no interfieren con la visibilidad */}
+                <div className="absolute inset-0 -left-4 -right-4 -top-4 -bottom-4 bg-gradient-to-br from-blue-600/5 to-orange-500/5 rounded-xl blur-md"></div>
+                <div className="relative z-0 w-full flex justify-center items-center">
+                  <CyberAtackMap />
                 </div>
-                <div className="absolute top-1/4 -right-5 w-12 h-12 bg-gradient-to-r from-blue-400 to-cyan-300 rounded-full blur-md opacity-70"></div>
-                <div className="absolute bottom-1/4 -left-5 w-10 h-10 bg-gradient-to-r from-cyan-300 to-blue-400 rounded-full blur-md opacity-70"></div>
               </div>
             </motion.div>
             
