@@ -113,7 +113,7 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section id="hero" className="min-h-screen relative overflow-hidden flex items-center pt-32">
+    <section id="hero" className="min-h-screen relative overflow-hidden flex items-center pt-32 pb-16">
       {/* Fondo dinámico con estrellas y gradiente */}
       <DynamicBackground />
       
