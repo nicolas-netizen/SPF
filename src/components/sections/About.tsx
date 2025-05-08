@@ -134,7 +134,7 @@ const About: React.FC = () => {
   }, []);
 
   return (
-    <section id="about-section" className="pt-0 pb-32 relative overflow-hidden" style={{background: 'none', margin: '-32px 0 0 0'}}>
+    <section id="about-section" className="pt-0 pb-32 relative overflow-hidden" style={{background: 'none', margin: '-70px 0 0 0', padding: 0, position: 'relative', zIndex: 2}}>
       {/* Estilos para animaciones */}
       <style dangerouslySetInnerHTML={{ __html: starAnimations }} />
   
