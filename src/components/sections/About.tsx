@@ -134,133 +134,40 @@ const About: React.FC = () => {
   }, []);
 
   return (
-    <section id="about-section" className="py-32 relative overflow-hidden">
+    <section id="about-section" className="pt-0 pb-32 relative overflow-hidden" style={{background: 'none', margin: '-32px 0 0 0'}}>
       {/* Estilos para animaciones */}
       <style dangerouslySetInnerHTML={{ __html: starAnimations }} />
   
-      {/* Fondo técnico de ciberseguridad */}
-      <div className="absolute inset-0 z-0 opacity-5">
-        <svg width="100%" height="100%" className="absolute inset-0">
-          <defs>
-            <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
-              <path d="M 50 0 L 0 0 0 50" fill="none" stroke="white" strokeWidth="0.5" opacity="0.3" />
-            </pattern>
-            <pattern id="circuitPattern" width="200" height="200" patternUnits="userSpaceOnUse">
-              <path d="M10 10 L50 10 L50 50 L90 50 L90 90 L130 90 L130 130 L170 130 L170 170" fill="none" stroke="white" strokeWidth="1" opacity="0.4" />
-              <circle cx="10" cy="10" r="5" fill="white" opacity="0.2" />
-              <circle cx="50" cy="50" r="5" fill="white" opacity="0.2" />
-              <circle cx="90" cy="90" r="5" fill="white" opacity="0.2" />
-              <circle cx="130" cy="130" r="5" fill="white" opacity="0.2" />
-              <circle cx="170" cy="170" r="5" fill="white" opacity="0.2" />
-            </pattern>
-            <pattern id="hexPattern" width="100" height="100" patternUnits="userSpaceOnUse">
-              <path d="M50 10 L90 30 L90 70 L50 90 L10 70 L10 30 Z" fill="none" stroke="white" strokeWidth="1" opacity="0.3" />
-            </pattern>
-            <pattern id="networkPattern" width="200" height="200" patternUnits="userSpaceOnUse">
-              <circle cx="25" cy="25" r="5" fill="white" opacity="0.3" />
-              <circle cx="75" cy="75" r="5" fill="white" opacity="0.3" />
-              <circle cx="125" cy="25" r="5" fill="white" opacity="0.3" />
-              <circle cx="175" cy="75" r="5" fill="white" opacity="0.3" />
-              <circle cx="25" cy="125" r="5" fill="white" opacity="0.3" />
-              <circle cx="75" cy="175" r="5" fill="white" opacity="0.3" />
-              <circle cx="125" cy="175" r="5" fill="white" opacity="0.3" />
-              <circle cx="175" cy="125" r="5" fill="white" opacity="0.3" />
-              <line x1="25" y1="25" x2="75" y2="75" stroke="white" strokeWidth="1" opacity="0.2" />
-              <line x1="125" y1="25" x2="175" y2="75" stroke="white" strokeWidth="1" opacity="0.2" />
-              <line x1="25" y1="125" x2="75" y2="175" stroke="white" strokeWidth="1" opacity="0.2" />
-              <line x1="125" y1="175" x2="175" y2="125" stroke="white" strokeWidth="1" opacity="0.2" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-          <rect width="100%" height="100%" fill="url(#circuitPattern)" opacity="0.2" />
-          <rect width="100%" height="100%" fill="url(#hexPattern)" opacity="0.1" />
-          <rect width="100%" height="100%" fill="url(#networkPattern)" opacity="0.15" />
-        </svg>
-      </div>
+      {/* Fondo técnico eliminado */}
       
-      {/* Elementos gráficos ampliados de ciberseguridad */}
-      <div className="absolute inset-0 z-0 overflow-hidden opacity-10">
-        {/* Círculos pulsantes para representar señales de radar/detección */}
-        <div className="absolute top-20 left-[10%] w-24 h-24 rounded-full border border-blue-400 animate-pulse opacity-30"></div>
-        <div className="absolute top-[30%] right-[15%] w-32 h-32 rounded-full border border-cyan-300 animate-pulse opacity-20" style={{animationDelay: '1s'}}></div>
-        <div className="absolute bottom-[20%] left-[20%] w-20 h-20 rounded-full border border-yellow-400 animate-pulse opacity-25" style={{animationDelay: '2s'}}></div>
-        <div className="absolute top-[60%] right-[25%] w-16 h-16 rounded-full border-2 border-orange-400 animate-pulse opacity-20" style={{animationDelay: '1.5s'}}></div>
-        
-        {/* Sistema de seguridad simulado - anillos concéntricos con rotación */}
-        <div className="absolute top-[40%] left-[30%] opacity-20">
-          <div className="relative w-48 h-48">
-            <div className="absolute inset-0 border border-blue-400/30 rounded-full animate-spin" style={{animationDuration: '15s'}}></div>
-            <div className="absolute inset-4 border border-cyan-400/40 rounded-full animate-spin" style={{animationDuration: '12s', animationDirection: 'reverse'}}></div>
-            <div className="absolute inset-8 border border-blue-400/50 rounded-full animate-spin" style={{animationDuration: '20s'}}></div>
-            <div className="absolute inset-12 border border-cyan-400/60 rounded-full animate-spin" style={{animationDuration: '10s', animationDirection: 'reverse'}}></div>
-            <div className="absolute inset-16 border border-blue-400/70 rounded-full animate-pulse" style={{animationDuration: '4s'}}></div>
-          </div>
-        </div>
-        
-        {/* Matriz digital - puntos de datos */}
-        <div className="absolute inset-0 opacity-10">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div key={`data-point-${i}`} 
-                 className="absolute bg-blue-400 rounded-full w-1.5 h-1.5 animate-pulse"
-                 style={{
-                   top: `${Math.random() * 100}%`,
-                   left: `${Math.random() * 100}%`,
-                   animationDelay: `${Math.random() * 5}s`,
-                   animationDuration: `${Math.random() * 3 + 2}s`
-                 }}>
-            </div>
-          ))}
-        </div>
-        
-        {/* Iconos estilizados de ciberseguridad */}
-        <div className="absolute top-[15%] right-[10%] opacity-15">
-          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-          </svg>
-        </div>
-        <div className="absolute top-[70%] left-[5%] opacity-15">
-          <svg width="70" height="70" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-          </svg>
-        </div>
-        
-        {/* Nuevos iconos de ciberseguridad */}
-        <div className="absolute bottom-[10%] right-[8%] opacity-15">
-          <svg width="65" height="65" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <circle cx="12" cy="12" r="4"></circle>
-            <line x1="21.17" y1="8" x2="12" y2="8"></line>
-            <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
-            <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
-          </svg>
-        </div>
-        <div className="absolute top-[45%] left-[15%] opacity-15">
-          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-          </svg>
-        </div>
-        
-        {/* Código binario animado */}
-        <div className="absolute bottom-[30%] right-[20%] font-mono text-xs opacity-20 whitespace-nowrap overflow-hidden" style={{width: '150px'}}>
-          <div className="animate-marquee" style={{animationDuration: '15s'}}>
-            10101010100101010101001010100101010100101
-          </div>
-        </div>
-        <div className="absolute top-[25%] left-[25%] font-mono text-xs opacity-20 whitespace-nowrap overflow-hidden" style={{width: '120px'}}>
-          <div className="animate-marquee" style={{animationDuration: '12s'}}>
-            01001001110010101010110101001010101
-          </div>
-        </div>
-      </div>
+      {/* Elementos gráficos de ciberseguridad eliminados */}
   
-      {/* NUEVO SEPARADOR DISTINTIVO */}
-      <div className="w-full bg-gradient-to-b from-transparent to-[#1e0b4c] h-24 -mt-24 relative overflow-hidden">
+      {/* SEPARADOR DISTINTIVO MEJORADO */}
+      <div className="w-full bg-gradient-to-b from-transparent to-[#1e0b4c] h-32 -mt-24 relative overflow-hidden">
+        {/* Línea cortante superior */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent"></div>
+        
         {/* Elementos de seguridad en el separador */}
         <div className="absolute inset-0 flex justify-center items-end pb-4">
           <div className="relative">
+            {/* Efecto de corte con doble línea */}
             <div className="w-3 h-3 bg-indigo-400/50 rounded-full mb-2 mx-auto animate-pulse"></div>
-            <div className="w-32 h-px bg-gradient-to-r from-transparent via-indigo-400/30 to-transparent"></div>
+            <div className="w-48 h-px bg-gradient-to-r from-transparent via-indigo-400/50 to-transparent"></div>
+            <div className="w-32 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent mt-1"></div>
+            
+            {/* Elementos decorativos laterales */}
+            <div className="absolute -left-24 top-1/2 -translate-y-1/2 w-16 h-[1px] bg-gradient-to-r from-cyan-500/30 to-transparent"></div>
+            <div className="absolute -right-24 top-1/2 -translate-y-1/2 w-16 h-[1px] bg-gradient-to-l from-cyan-500/30 to-transparent"></div>
+          </div>
+        </div>
+        
+        {/* Patrón de puntos para reforzar el corte */}
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center">
+          <div className="flex space-x-1">
+            {Array.from({ length: 7 }).map((_, i) => (
+              <div key={`dot-${i}`} className="w-1 h-1 bg-indigo-400/40 rounded-full" 
+                  style={{ opacity: i === 3 ? 0.8 : 0.4 - Math.abs(3-i) * 0.1 }}></div>
+            ))}
           </div>
         </div>
       </div>
@@ -301,7 +208,17 @@ const About: React.FC = () => {
         </div>
         
         {/* Contenedor del contenido */}
-        <div className="container mx-auto px-4 relative z-10">
+          {/* Separador superior fino */}
+          <div className="w-full flex justify-center mb-10">
+            <div className="relative w-32">
+              <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-indigo-400/40 to-transparent"></div>
+              <div className="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-1/2">
+                <div className="w-2 h-2 bg-indigo-400/50 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="container mx-auto px-4 relative z-10">
             {/* Círculos decorativos */}
             <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-radial from-indigo-400/20 to-transparent opacity-40 blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-radial from-blue-400/20 to-transparent opacity-30 blur-3xl"></div>
@@ -402,9 +319,6 @@ const About: React.FC = () => {
                   Somos expertos en <span className="text-cyan-400 font-semibold">cibervigilancia</span> y ofrecemos 
                   <span className="relative inline-block bg-gradient-to-r from-blue-400/10 to-cyan-400/10 px-1 rounded">
                     soluciones personalizadas
-                    <svg className="inline-block ml-1 w-4 h-4 text-blue-400 animate-pulse" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="1" />
-                    </svg>
                   </span> para proteger tu empresa.
                 </p>
               </div>
@@ -435,16 +349,17 @@ const About: React.FC = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.2 }}
             >
-              <div className="relative w-full max-w-sm aspect-video">
-                <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-blue-400/10 rounded-2xl blur-[20px]"></div>
-                <div className="absolute inset-0 border border-blue-400/20 rounded-2xl flex items-center justify-center overflow-hidden">
-                  <div className="absolute inset-0 flex flex-wrap gap-3 p-4 opacity-40">
-                    {Array.from({ length: 20 }).map((_, i) => (
-                      <div key={i} className="w-3 h-3 bg-blue-400/30 rounded-full animate-pulse" style={{ animationDelay: `${i * 0.1}s` }}></div>
-                    ))}
-                  </div>
-                  <div className="relative z-10 bg-white/5 backdrop-blur-lg px-5 py-3 rounded-xl border border-white/10 shadow-lg">
-                    <p className="text-cyan-300 font-medium text-center text-sm">Seguridad como servicio</p>
+              <div className="relative w-full max-w-xl aspect-video transform scale-110">
+                {/* Borde exterior con resplandor */}
+                <div className="absolute -inset-4 bg-gradient-to-tr from-cyan-500/30 to-blue-400/20 rounded-3xl blur-[20px]"></div>
+                
+                {/* Borde adicional separado */}
+                <div className="absolute -inset-2 border border-blue-400/40 rounded-2xl shadow-lg shadow-blue-500/10"></div>
+                
+                {/* Contenedor principal con la imagen */}
+                <div className="absolute inset-0 border-2 border-blue-500/30 rounded-xl flex items-center justify-center overflow-hidden">
+                  <div className="absolute inset-2 flex items-center justify-center rounded-lg overflow-hidden">
+                    <img src="/Soc.jpg" alt="Centro de Operaciones de Seguridad" className="object-cover w-full h-full opacity-90" />
                   </div>
                 </div>
               </div>
@@ -452,8 +367,27 @@ const About: React.FC = () => {
           </div>
         </div>
 
+        {/* SEPARADOR ENTRE SECCIONES PRINCIPALES */}
+        <div className="relative py-10 overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-orange-500/30 to-transparent"></div>
+          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-orange-500/30 to-transparent"></div>
+          
+          <div className="flex justify-center items-center relative">
+            {/* Líneas diagonales */}
+            <div className="absolute left-0 w-1/4 h-px bg-gradient-to-r from-transparent to-orange-500/20 rotate-[-5deg] transform origin-left"></div>
+            <div className="absolute right-0 w-1/4 h-px bg-gradient-to-l from-transparent to-orange-500/20 rotate-[5deg] transform origin-right"></div>
+            
+            {/* Elemento central */}
+            <div className="relative flex items-center justify-center w-16 h-16">
+              <div className="absolute inset-0 border border-orange-500/20 rounded-full rotate-45 animate-pulse" style={{animationDuration: '3s'}}></div>
+              <div className="absolute inset-4 border border-orange-500/30 rounded-full"></div>
+              <div className="w-1.5 h-1.5 bg-orange-400/80 rounded-full animate-ping" style={{animationDuration: '2s'}}></div>
+            </div>
+          </div>
+        </div>
+
         {/* Sección Por qué elegir SparkFound - Mejorada */}
-        <div className="relative mb-20 mt-10">
+        <div className="relative mb-20">
           {/* Efectos de fondo cibernéticos */}
           <div className="absolute inset-0 -z-10 opacity-10">
             <div className="absolute top-[10%] left-[15%] w-40 h-40 border border-orange-400/30 rounded-md rotate-45 animate-pulse" 
@@ -484,6 +418,16 @@ const About: React.FC = () => {
             </div>
           </div>
 
+          {/* Separador fino antes del título */}
+          <div className="relative mb-10 flex justify-center overflow-hidden">
+            <div className="w-24 h-px bg-gradient-to-r from-transparent via-orange-400/30 to-transparent"></div>
+            <div className="absolute left-1/2 top-0 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4">
+              <div className="w-full h-full border border-orange-400/30 rounded-full animate-pulse"></div>
+              <div className="absolute inset-1 border border-orange-400/20 rounded-full"></div>
+              <div className="absolute inset-[5px] w-1 h-1 bg-orange-400/50 rounded-full"></div>
+            </div>
+          </div>
+          
           {/* Título con efecto futurista */}
           <motion.div 
             className="relative z-10 mb-16"
@@ -511,6 +455,13 @@ const About: React.FC = () => {
               </div>
             </div>
           </motion.div>
+          
+          {/* Separador fino antes del grid */}
+          <div className="relative py-6 flex justify-center mb-6">
+            <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-yellow-500/30 to-transparent"></div>
+            <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-yellow-500/30 rounded-full"></div>
+            <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-yellow-500/10 rounded-full animate-pulse"></div>
+          </div>
           
           {/* Grid de ventajas con efectos mejorados y elementos cyber */}
           <div className="grid md:grid-cols-2 gap-8 lg:gap-10 mb-12">

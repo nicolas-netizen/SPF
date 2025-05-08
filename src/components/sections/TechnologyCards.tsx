@@ -271,36 +271,102 @@ const TechnologyCards: React.FC = () => {
           ))}
         </div>
         
-        {/* Glowing base light */}
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-blue-500/10 to-transparent"></div>
+        {/* Espacio sin gradiente en la base */}
       </div>
       
       {/* Main content */}
       <div ref={sectionRef} className="technology-cards-section container mx-auto px-4 relative z-10 max-w-6xl">
         {/* Section header */}
-        <div className="text-center mb-10">
-          <h2 className="text-4xl font-bold relative inline-block">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-blue-400 to-orange-400">
-              SparkProtect: El núcleo de nuestra defensa inteligente
-            </span>
-            <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent"></span>
-          </h2>
-          <p className="text-white/70 mt-6 max-w-3xl mx-auto">
-          La ciberseguridad moderna exige velocidad, visibilidad y respuesta automática.
-          SparkProtect combina tres tecnologías clave en una única solución gestionada:
-          </p>
+        <div className="text-center mb-16">
+          {/* Decorador superior - efecto hexagonal cyber */}
+          <div className="flex justify-center mb-8">
+            <div className="relative">
+              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
+              <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-transparent">
+                <div className="absolute w-full h-full border border-blue-400/40 rotate-45 animate-pulse"></div>
+                <div className="absolute inset-1 border border-orange-400/30 rotate-45"></div>
+                <div className="absolute inset-[5px] w-1 h-1 bg-blue-400/70 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex flex-col items-center">
+            <h2 className="text-5xl md:text-6xl font-extrabold relative">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-blue-400 to-orange-400">
+                SparkProtect
+              </span>
+              {/* Línea inferior con efecto pulsante */}
+              <div className="absolute -bottom-3 left-0 right-0 flex justify-center"> 
+                <div className="relative w-full">
+                  <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-500/80 to-transparent"></div>
+                  <div className="absolute left-1/2 -bottom-1 transform -translate-x-1/2 w-3 h-3">
+                    <div className="absolute w-full h-full rounded-full border border-blue-500/50 animate-ping" style={{animationDuration: '3s'}}></div>
+                    <div className="absolute inset-1 rounded-full border border-blue-400/20"></div>
+                    <div className="absolute inset-[5px] w-1 h-1 bg-blue-400/80 rounded-full"></div>
+                  </div>
+                </div>
+              </div>
+            </h2>
+            
+            <h3 className="text-2xl md:text-3xl font-semibold text-white/90 mt-6 mb-4">
+              El núcleo de nuestra defensa inteligente
+            </h3>
+            
+            <p className="text-white/70 mt-6 max-w-3xl mx-auto">
+              La ciberseguridad moderna exige velocidad, visibilidad y respuesta automática.
+              SparkProtect combina tres tecnologías clave en una única solución gestionada:
+            </p>
+          </div>
+        </div>
+        
+        {/* Separador tecnológico antes de las cards */}
+        <div className="relative py-6 flex justify-center mb-10">
+          <div className="relative">
+            {/* Doble línea para efecto de corte tecnológico */}
+            <div className="w-36 h-[1px] bg-gradient-to-r from-transparent via-orange-500/40 to-transparent"></div>
+            <div className="w-24 h-[1px] mt-1 bg-gradient-to-r from-transparent via-blue-400/40 to-transparent mx-auto"></div>
+            
+            {/* Elementos decorativos laterales */}
+            <div className="absolute -left-10 top-0 transform -translate-y-1/2 w-6 h-[1px] bg-gradient-to-r from-blue-500/30 to-transparent"></div>
+            <div className="absolute -right-10 top-0 transform -translate-y-1/2 w-6 h-[1px] bg-gradient-to-l from-blue-500/30 to-transparent"></div>
+            
+            {/* Elemento central */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div className="relative flex items-center justify-center w-4 h-4">
+                <div className="absolute inset-0 border border-blue-400/40 rotate-45"></div>
+                <div className="w-1.5 h-1.5 bg-orange-400/90 animate-pulse"></div>
+              </div>
+            </div>
+          </div>
         </div>
         
         {/* Cards grid */}
         <div className="grid md:grid-cols-3 gap-8 relative">
-          {/* Connecting lines background (visible on desktop) */}
+          {/* Connecting lines background with enhanced cyber style (visible on desktop) */}
           <div className="absolute inset-0 hidden md:block pointer-events-none">
             <svg width="100%" height="100%" className="absolute inset-0">
-              <line x1="33%" y1="50%" x2="67%" y2="50%" stroke="rgba(59, 130, 246, 0.2)" strokeWidth="1" strokeDasharray="5,5" />
-              <line x1="33%" y1="30%" x2="67%" y2="30%" stroke="rgba(239, 68, 68, 0.1)" strokeWidth="1" strokeDasharray="5,5" />
-              <line x1="33%" y1="70%" x2="67%" y2="70%" stroke="rgba(249, 115, 22, 0.1)" strokeWidth="1" strokeDasharray="5,5" />
-              <circle cx="33%" cy="50%" r="2" fill="rgba(59, 130, 246, 0.5)" />
-              <circle cx="67%" cy="50%" r="2" fill="rgba(59, 130, 246, 0.5)" />
+              {/* Líneas principales con efecto pulsante */}
+              <line x1="33%" y1="50%" x2="67%" y2="50%" stroke="rgba(59, 130, 246, 0.3)" strokeWidth="1.5" strokeDasharray="5,5" className="animate-pulse" style={{animationDuration: '3s'}} />
+              <line x1="33%" y1="30%" x2="67%" y2="30%" stroke="rgba(239, 68, 68, 0.2)" strokeWidth="1" strokeDasharray="5,5" className="animate-pulse" style={{animationDuration: '4s'}} />
+              <line x1="33%" y1="70%" x2="67%" y2="70%" stroke="rgba(249, 115, 22, 0.2)" strokeWidth="1" strokeDasharray="5,5" className="animate-pulse" style={{animationDuration: '4.5s'}} />
+              
+              {/* Nodos de conexión con efecto pulsante */}
+              <circle cx="33%" cy="50%" r="3" fill="rgba(59, 130, 246, 0.2)" className="animate-ping" style={{animationDuration: '3s'}} />
+              <circle cx="33%" cy="50%" r="2" fill="rgba(59, 130, 246, 0.6)" />
+              <circle cx="67%" cy="50%" r="3" fill="rgba(59, 130, 246, 0.2)" className="animate-ping" style={{animationDuration: '3s'}} />
+              <circle cx="67%" cy="50%" r="2" fill="rgba(59, 130, 246, 0.6)" />
+              
+              {/* Nodos secundarios */}
+              <circle cx="33%" cy="30%" r="1.5" fill="rgba(239, 68, 68, 0.5)" />
+              <circle cx="67%" cy="30%" r="1.5" fill="rgba(239, 68, 68, 0.5)" />
+              <circle cx="33%" cy="70%" r="1.5" fill="rgba(249, 115, 22, 0.5)" />
+              <circle cx="67%" cy="70%" r="1.5" fill="rgba(249, 115, 22, 0.5)" />
+              
+              {/* Líneas adicionales para efecto de red */}
+              <line x1="33%" y1="30%" x2="33%" y2="50%" stroke="rgba(99, 102, 241, 0.15)" strokeWidth="1" strokeDasharray="3,3" />
+              <line x1="67%" y1="30%" x2="67%" y2="50%" stroke="rgba(99, 102, 241, 0.15)" strokeWidth="1" strokeDasharray="3,3" />
+              <line x1="33%" y1="50%" x2="33%" y2="70%" stroke="rgba(99, 102, 241, 0.15)" strokeWidth="1" strokeDasharray="3,3" />
+              <line x1="67%" y1="50%" x2="67%" y2="70%" stroke="rgba(99, 102, 241, 0.15)" strokeWidth="1" strokeDasharray="3,3" />
             </svg>
           </div>
           
@@ -316,11 +382,65 @@ const TechnologyCards: React.FC = () => {
             />
           ))}
         </div>
-        <p className="text-white/100 mt-20 max-w-3xl mx-auto text-center">
-        Todo esto gestionado por nuestro equipo de expertos 24/7, desde el NG-NSOC de SparkFound.
-          </p>
+        
+        {/* Separador cyber entre cards y texto final */}
+        <div className="relative py-12 my-4">
+          <div className="flex justify-center">
+            {/* Patrón de línea futurista */}
+            <div className="relative">
+              {/* Líneas centrales */}
+              <div className="w-64 h-px bg-gradient-to-r from-transparent via-blue-500/40 to-transparent"></div>
+              <div className="w-32 h-px bg-gradient-to-r from-transparent via-orange-400/30 to-transparent mt-2 mx-auto"></div>
+              
+              {/* Divisores en forma de diamante */}
+              <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+                <div className="relative w-5 h-5">
+                  <div className="absolute w-full h-full rotate-45 border border-blue-400/40"></div>
+                  <div className="absolute inset-1 rotate-45 border border-orange-400/30"></div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-1.5 h-1.5 bg-blue-400/80 rounded-full animate-pulse"></div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Líneas diagonales */}
+              <div className="absolute -left-14 top-0 w-12 h-px transform -rotate-30 bg-gradient-to-r from-blue-500/20 to-transparent"></div>
+              <div className="absolute -right-14 top-0 w-12 h-px transform rotate-30 bg-gradient-to-l from-blue-500/20 to-transparent"></div>
+              
+              {/* Puntos conectores */}
+              <div className="absolute -left-16 top-0 w-1.5 h-1.5 bg-blue-400/50 rounded-full"></div>
+              <div className="absolute -right-16 top-0 w-1.5 h-1.5 bg-blue-400/50 rounded-full"></div>
+            </div>
+          </div>
+        </div>
+        
+        <p className="text-white/100 mt-8 max-w-3xl mx-auto text-center">
+          Todo esto gestionado por nuestro equipo de expertos 24/7, desde el NG-NSOC de SparkFound.
+        </p>
+        
+        {/* Separador inferior */}
+        <div className="relative py-8 my-4 overflow-hidden">
+          <div className="w-full max-w-xs mx-auto h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent"></div>
+          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="w-3 h-3">
+              <div className="absolute w-full h-full border border-blue-400/30 rounded-full animate-pulse"></div>
+              <div className="absolute inset-1 border border-orange-400/20 rounded-full"></div>
+            </div>
+          </div>
+          
+          {/* Patrón de puntos para reforzar el corte */}
+          <div className="absolute bottom-2 left-0 right-0 flex justify-center">
+            <div className="flex space-x-2">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={`dot-${i}`} className="w-1 h-1 bg-blue-400/50 rounded-full" 
+                     style={{ opacity: i === 2 ? 0.7 : 0.3 - Math.abs(2-i) * 0.1 }}></div>
+              ))}
+            </div>
+          </div>
+        </div>
+        
         {/* Bottom decorative elements */}
-        <div className="flex justify-center mt-16 space-x-4">
+        <div className="flex justify-center mt-4 space-x-4">
           <div className="w-3 h-3 rounded-full bg-orange-500 opacity-70 animate-pulse"></div>
           <div className="w-3 h-3 rounded-full bg-blue-500 opacity-70 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
           <div className="w-3 h-3 rounded-full bg-red-500 opacity-70 animate-pulse" style={{ animationDelay: '1s' }}></div>

@@ -50,7 +50,15 @@ const Section: React.FC<SectionProps> = ({
       <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-radial from-blue-500/5 to-transparent rounded-full blur-2xl"></div>
       <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-radial from-cyan-500/5 to-transparent rounded-full blur-3xl"></div>
       
-      {withSeparator && <SectionSeparator type="cyber-grid" color="blue" className="absolute top-0 left-0 w-full" />}
+      {withSeparator && (
+        <>
+          {/* Separador superior */}
+          <SectionSeparator type="security-pulse" color="orange" className="absolute top-0 left-0 w-full" />
+          
+          {/* Separador inferior */}
+          <SectionSeparator type="data-flow" color="cyan" className="absolute bottom-0 left-0 w-full" />
+        </>
+      )}
       
       <div className="container mx-auto px-4">
         {title && (
