@@ -38,9 +38,19 @@ const Section: React.FC<SectionProps> = ({
   return (
     <section 
       id={id} 
-      className={`relative py-16 ${alternate ? 'bg-gradient-to-b from-cyber-dark-blue/40 to-cyber-dark' : 'bg-cyber-dark'} ${className}`}
+      className={`relative py-16 ${alternate ? 'bg-gradient-to-b from-cyber-dark-blue/40 to-cyber-dark' : 'bg-cyber-dark'} ${className} overflow-hidden`}
     >
-      {withSeparator && <SectionSeparator type="gradient" className="absolute top-0 left-0 w-full" />}
+      {/* Efectos de difuminado en los bordes */}
+      <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/20 to-transparent pointer-events-none opacity-40"></div>
+      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/20 to-transparent pointer-events-none opacity-40"></div>
+      <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-black/20 to-transparent pointer-events-none opacity-30"></div>
+      <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-black/20 to-transparent pointer-events-none opacity-30"></div>
+      
+      {/* Efectos luminosos en las esquinas */}
+      <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-radial from-blue-500/5 to-transparent rounded-full blur-2xl"></div>
+      <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-radial from-cyan-500/5 to-transparent rounded-full blur-3xl"></div>
+      
+      {withSeparator && <SectionSeparator type="cyber-grid" color="blue" className="absolute top-0 left-0 w-full" />}
       
       <div className="container mx-auto px-4">
         {title && (

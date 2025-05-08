@@ -24,6 +24,9 @@ export default {
         'slide-in': 'slide-in 1s ease-out forwards',
         'fade-in': 'fade-in 1.5s ease-out forwards',
         'data-flow': 'data-flow 15s linear infinite',
+        'dataFlow': 'dataFlow 2.5s ease-in-out infinite',
+        'dataPacket': 'dataPacket 6s ease-in-out infinite',
+        'scrollY': 'scrollY 20s linear infinite',
       },
       keyframes: {
         'beam-rotate': {
@@ -71,6 +74,21 @@ export default {
         'data-flow': {
           '0%': { strokeDashoffset: 1000 },
           '100%': { strokeDashoffset: 0 },
+        },
+        'dataFlow': {
+          '0%': { opacity: 0, transform: 'translateY(-100%)' },
+          '50%': { opacity: 1 },
+          '100%': { opacity: 0, transform: 'translateY(100%)' },
+        },
+        'dataPacket': {
+          '0%': { transform: 'translateX(-200px)', opacity: 0 },
+          '10%': { opacity: 1 },
+          '90%': { opacity: 1 },
+          '100%': { transform: 'translateX(200px)', opacity: 0 },
+        },
+        'scrollY': {
+          '0%': { transform: 'translateY(0)' },
+          '100%': { transform: 'translateY(-50%)' },
         },
       },
       backgroundImage: {

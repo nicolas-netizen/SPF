@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, memo } from 'react';
-import { Send, CheckCircle, XCircle, ArrowRight, Lock } from 'lucide-react';
+import { Send, CheckCircle, XCircle, ArrowRight, Lock, Play } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ContactForm: React.FC = () => {
@@ -199,14 +199,14 @@ const ContactForm: React.FC = () => {
         </motion.h2>
         
         <motion.div 
-          className="bg-black/20 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-xl"
+          className="bg-black/40 backdrop-blur-md rounded-2xl border border-white/10 overflow-hidden shadow-x4"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <div className="grid md:grid-cols-2 gap-0">
+          <div className="grid md:grid-cols-5 gap-0 md:gap-4">
             {/* Columna izquierda: Formulario */}
-            <div className="p-8 md:p-10">
+            <div className="p-8 md:p-10 md:col-span-2">
               <div className="animated-form" style={{ animationDelay: '0.1s', animationPlayState: formVisible ? 'running' : 'paused' }}>
                 <h3 className="text-2xl font-bold mb-6 text-white">
                   <span className="text-orange-400">¿Listo</span> para mejorar tu seguridad?
@@ -358,43 +358,68 @@ const ContactForm: React.FC = () => {
               </div>
             </div>
             
-            {/* Columna derecha: Video y logos */}
-            <div className="bg-[#070b14] relative overflow-hidden">
+            {/* Columna derecha: Video y logos - AMPLIADA */}
+            <div className="bg-[#070b14] relative overflow-hidden md:col-span-3">
               <div className="p-8 md:p-10 h-full flex flex-col animated-form" style={{ animationDelay: '0.3s', animationPlayState: formVisible ? 'running' : 'paused' }}>
                 <h3 className="text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">
                   ¿Querés saber cómo podemos ayudarte?
                 </h3>
                 
-                <div className="aspect-video bg-black/30 rounded-xl overflow-hidden mb-4 hover:shadow-lg hover:shadow-blue-900/30 transition-all border border-blue-500/10">
-                  <video 
-                    className="w-full h-full object-cover"
-                    src="/nsoc.mp4" 
-                    title="Sparkfound Video"
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                  ></video>
-                </div>
-                
-                <p className="text-sm text-white/70 mb-6 leading-relaxed">
-                  En este breve video, te mostramos cómo SparkFound puede ayudarte a prevenir ataques cibernéticos sofisticados.
-                  <span className="block mt-2 text-blue-400 font-medium">🌐 Soluciones para empresas modernas.</span>
-                </p>
-                
-                {/* Minicard con llamado a la acción */}
-                <div className="p-4 bg-blue-900/20 rounded-lg border border-blue-500/20 mb-8 hover:bg-blue-900/30 transition-all">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-blue-500/20 rounded-lg">
-                      <ArrowRight size={16} className="text-blue-400" />
+                {/* VIDEO MEJORADO - Comenzar con animación de resplandor */}
+                <div className="relative group mb-6">
+                  {/* Efecto de resplandor animado detrás del video */}
+                  <div className="absolute -inset-2 bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-600 rounded-xl opacity-70 blur-xl animate-pulse z-0"></div>
+                  
+                  {/* Video con bordes y efectos mejorados - Tamaño ULTRA MAXIMIZADO */}
+                  <div className="relative z-10 rounded-xl overflow-hidden border-2 border-blue-400/50 shadow-[0_0_30px_rgba(59,130,246,0.6)] hover:shadow-[0_0_40px_rgba(59,130,246,0.8)] transition-all duration-300 w-full">
+                    <div className="relative" style={{ paddingBottom: '56.25%' }}>
+                      <video
+                        className="absolute top-0 left-0 w-full h-full object-contain"
+                        src="/nsoc.mp4"
+                        title="Sparkfound Video"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        controls
+                        style={{ filter: 'contrast(1.15) brightness(1.15)' }}
+                      ></video>
                     </div>
-                    <p className="text-xs text-white/80">
-                      <span className="text-blue-400 font-medium">Agenda una demostración</span> y descubre cómo protegemos empresas como la tuya.
-                    </p>
+                    
+                    {/* Overlay gradients para mejorar la profundidad y visibilidad */}
+                    <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-blue-900/60 to-transparent pointer-events-none"></div>
+                    <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-blue-900/60 to-transparent pointer-events-none"></div>
+                    
+                    {/* Indicador de reproducción */}
+                    <div className="absolute bottom-4 right-4 bg-blue-500/80 text-white text-xs font-bold py-1.5 px-3 rounded-full backdrop-blur-sm flex items-center gap-1.5 shadow-lg shadow-blue-500/30 animate-pulse" style={{animationDuration: '3s'}}>
+                      <Play size={12} className="fill-white" />
+                      <span>REPRODUCIENDO</span>
+                    </div>
+                    
+                    {/* Overlay para efecto de brillo en hover */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/0 to-cyan-500/0 opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none"></div>
                   </div>
                 </div>
                 
-                {/* La sección de logos de clientes ha sido eliminada */}
+                {/* Descripción del video con mejor contraste */}
+                <div className="bg-white/5 backdrop-blur-sm p-3 rounded-lg border border-blue-500/20 mb-4">
+                  <p className="text-xs md:text-sm text-white/90 leading-relaxed">
+                    En este video, te mostramos cómo <span className="font-semibold text-blue-300">SparkFound</span> puede ayudarte a prevenir ataques cibernéticos.
+                    <span className="block mt-1 text-blue-400 font-medium">🌐 Soluciones para empresas modernas</span>
+                  </p>
+                </div>
+                
+                {/* Minicard con llamado a la acción mejorado */}
+                <div className="p-4 bg-blue-900/30 rounded-lg border border-blue-500/30 mb-6 hover:bg-blue-900/40 transition-all hover:border-blue-500/50 transform hover:-translate-y-1 duration-300">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-blue-500/30 rounded-lg">
+                      <ArrowRight size={18} className="text-blue-300" />
+                    </div>
+                    <p className="text-sm text-white/90">
+                      <span className="text-blue-300 font-semibold">Agenda una demostración</span> y descubre cómo protegemos empresas como la tuya.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
