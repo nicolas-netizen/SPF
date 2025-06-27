@@ -1,17 +1,24 @@
 import React, { useRef, useEffect, useState } from 'react';
-import Model3DViewer from '../Model3DViewer';
 import AnimatedText from '../AnimatedText';
 import { ArrowRight, Eye, Shield, Activity } from 'lucide-react';
 import GlassCard from '../ui/GlassCard';
 import NeonButton from '../ui/NeonButton';
 import DynamicBackground from '../DynamicBackground';
 
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 const Hero: React.FC = () => {
   const particleRef = useRef<HTMLDivElement>(null);
   
   // Efecto para animación de partículas - versión mejorada
   useEffect(() => {
-    if (!particleRef.current) return;
+    if (!particleRef.current || prefersReducedMotion()) return;
+    
+    const PARTICLE_COUNT = 8; // Menos partículas iniciales
+    const PARTICLE_INTERVAL = 1200; // Intervalo más largo
+    let animationFrameId: number;
+    let lastParticleTime = Date.now();
     
     const createParticle = () => {
       const particle = document.createElement('div');
@@ -82,19 +89,22 @@ const Hero: React.FC = () => {
     document.head.appendChild(styleSheet);
     
     // Crear partículas cada cierto tiempo
-    const particleInterval = setInterval(() => {
-      if (particleRef.current) {
-        createParticle();
-      }
-    }, 800);
-    
-    // Crear algunas partículas iniciales
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
       createParticle();
     }
     
+    const animateParticles = () => {
+      const now = Date.now();
+      if (now - lastParticleTime > PARTICLE_INTERVAL) {
+        createParticle();
+        lastParticleTime = now;
+      }
+      animationFrameId = requestAnimationFrame(animateParticles);
+    };
+    animationFrameId = requestAnimationFrame(animateParticles);
+    
     return () => {
-      clearInterval(particleInterval);
+      cancelAnimationFrame(animationFrameId);
       // Eliminar el estilo al desmontar
       document.head.removeChild(styleSheet);
     };
@@ -287,8 +297,14 @@ function detectThreats() {
               
               {/* Modelo 3D */}
               <div className="relative z-10 w-full h-full flex items-center justify-center fade-in-up p-2">
-                <div className="w-full max-w-md">
-                  <Model3DViewer height="450px" width="100%" />
+                <div className="w-full flex items-center justify-center" style={{ minHeight: 420 }}>
+                  {/* Gif animado más grande, sin fondo y con bordes más limpios */}
+                  <img 
+                    src="/Export animación logo.gif" 
+                    alt="Animación Logo SPF" 
+                    className="w-full max-w-2xl h-[600px] object-contain rounded-xl shadow-xl border border-white/10"
+                    style={{ background: 'transparent' }}
+                  />
                 </div>
               </div>
             </GlassCard>

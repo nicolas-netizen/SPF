@@ -134,7 +134,13 @@ const About: React.FC = () => {
   }, []);
 
   return (
-    <section id="about-section" className="pt-24 pb-32 relative overflow-hidden" style={{background: 'none', margin: '0', padding: 0, position: 'relative', zIndex: 2}}>
+    <section id="about-section" className="pt-10 pb-12 relative overflow-hidden" style={{
+      background: 'linear-gradient(180deg, #18122B 0%, #1B1A55 40%, #18122B 100%)',
+      margin: 0,
+      padding: 0,
+      position: 'relative',
+      zIndex: 2
+    }}>
       {/* Estilos para animaciones */}
       <style dangerouslySetInnerHTML={{ __html: starAnimations }} />
   
@@ -178,7 +184,7 @@ const About: React.FC = () => {
         <div className="absolute inset-0 opacity-20">
           <div className="absolute inset-0 bg-[#1e0b4c] bg-[length:30px_30px]"></div>
           <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-radial from-indigo-600/30 to-transparent blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-1/2 h-1/3 bg-gradient-radial from-violet-500/20 to-transparent blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-radial from-violet-500/20 to-transparent blur-3xl"></div>
           
           {/* Patrón grid */}
           <div className="absolute inset-0 overflow-hidden">
