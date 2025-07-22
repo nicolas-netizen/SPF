@@ -93,10 +93,18 @@ const Landing: React.FC = () => {
         <motion.div variants={heroAnim} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
           <Hero />
         </motion.div>
+        {/* Separador fuerte antes de Quiénes somos */}
+        <div className="w-full flex flex-col items-center my-12">
+          <div className="w-2/3 h-1 rounded-full bg-gradient-to-r from-transparent via-orange-400/60 to-transparent blur-sm opacity-80"></div>
+        </div>
         {/* Quiénes Somos con animación slide-up */}
         <motion.div variants={slideUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
           <Seguridad360 />
         </motion.div>
+        {/* Separador sutil */}
+        <div className="w-full flex flex-col items-center my-8 mt-24">
+          <div className="w-1/2 h-1 rounded-full bg-gradient-to-r from-transparent via-blue-900/60 to-transparent blur-sm opacity-70"></div>
+        </div>
         {/* Partners Showcase con animación alternada */}
         <motion.div variants={partnersAnim('left')} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
           <PartnersShowcase />

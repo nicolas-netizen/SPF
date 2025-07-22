@@ -13,14 +13,14 @@ const logos = [
 ];
 
 const positions = [
-  { top: '5%', left: '6%' },      // top-left
-  { top: '40%', left: '2%' },    // mid-left
-  { bottom: '8%', left: '10%' }, // bottom-left
-  { top: '5%', right: '6%' },    // top-right
-  { top: '40%', right: '2%' },   // mid-right
-  { bottom: '8%', right: '10%' },// bottom-right
-  { top: '2%', left: '50%', transform: 'translateX(-50%)' }, // top-center
-  { bottom: '2%', left: '50%', transform: 'translateX(-50%)' }, // bottom-center
+  { top: '6%', left: '12%' },      // top-left
+  { top: '6%', left: '50%', transform: 'translateX(-50%)' }, // top-center
+  { top: '6%', right: '12%' },     // top-right
+  { top: '40%', left: '2%' },      // mid-left
+  { top: '40%', right: '2%' },     // mid-right
+  { bottom: '6%', left: '12%' },   // bottom-left
+  { bottom: '6%', left: '50%', transform: 'translateX(-50%)' }, // bottom-center
+  { bottom: '6%', right: '12%' },  // bottom-right
 ];
 
 export default function PartnersShowcase() {
@@ -46,7 +46,7 @@ export default function PartnersShowcase() {
           />
         ))}
       </div>
-      {/* Logos en posiciones fijas en los costados y centro */}
+      {/* Logos en posiciones fijas simétricas */}
       <div className="absolute inset-0 pointer-events-none select-none overflow-visible" style={{ zIndex: 2 }}>
         {logos.map((src, i) => (
           <motion.div
