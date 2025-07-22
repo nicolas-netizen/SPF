@@ -3,6 +3,9 @@ import Hero from '../components/sections/Hero.tsx';
 import Seguridad360 from '../components/sections/Seguridad360';
 import TechnologyCards from '../components/sections/TechnologyCards';
 import ContactForm from '../components/sections/ContactForm.tsx';
+import LatentNews from '../components/sections/LatentNews';
+import PartnersShowcase from '../components/sections/PartnersShowcase';
+import { motion } from 'framer-motion';
 
 /**
  * Estilos de animación para la landing page
@@ -55,25 +58,61 @@ const animationStyles = `
   .delay-500 { animation-delay: 500ms; }
 `;
 
+const heroAnim = {
+  hidden: { opacity: 0, scale: 0.96 },
+  show: { opacity: 1, scale: 1, transition: { duration: 0.9, type: 'spring' } }
+};
+const slideUp = {
+  hidden: { opacity: 0, y: 60 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, type: 'spring' } }
+};
+const partnersAnim = (dir = 'left') => ({
+  hidden: { opacity: 0, x: dir === 'left' ? -80 : 80 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.9, type: 'spring' } }
+});
+const fadeStagger = {
+  hidden: { opacity: 0, y: 40 },
+  show: { opacity: 1, y: 0, transition: { staggerChildren: 0.18, duration: 0.8, type: 'spring' } }
+};
+const slideRight = {
+  hidden: { opacity: 0, x: 80 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.8, type: 'spring' } }
+};
+const blurFade = {
+  hidden: { opacity: 0, filter: 'blur(12px)' },
+  show: { opacity: 1, filter: 'blur(0px)', transition: { duration: 0.9, type: 'spring' } }
+};
+
 const Landing: React.FC = () => {
-  
   return (
     <div className="landing-page relative overflow-hidden">
       {/* Estilos CSS mínimos para animaciones básicas */}
       <style dangerouslySetInnerHTML={{ __html: animationStyles }} />
-      
       <main>
         {/* Hero Section - Bloque 1 */}
-        <Hero />
-
-        {/* Seguridad360 Section - Bloque 2 */}
-        <Seguridad360 />
-
-        {/* Technology Cards Section - Bloque 4 */}
-        <TechnologyCards />
-
-        {/* Contact Form with Video - Bloque 5 */}
-        <ContactForm />
+        <motion.div variants={heroAnim} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
+          <Hero />
+        </motion.div>
+        {/* Quiénes Somos con animación slide-up */}
+        <motion.div variants={slideUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
+          <Seguridad360 />
+        </motion.div>
+        {/* Partners Showcase con animación alternada */}
+        <motion.div variants={partnersAnim('left')} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
+          <PartnersShowcase />
+        </motion.div>
+        {/* Latent News con fade-in y staggered */}
+        <motion.div variants={fadeStagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
+          <LatentNews />
+        </motion.div>
+        {/* Technology Cards Section - slide-in desde la derecha */}
+        <motion.div variants={slideRight} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
+          <TechnologyCards />
+        </motion.div>
+        {/* Contact Form with Video - fade-in + blur */}
+        <motion.div variants={blurFade} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
+          <ContactForm />
+        </motion.div>
       </main>
     </div>
   );

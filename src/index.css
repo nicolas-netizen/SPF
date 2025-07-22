@@ -650,3 +650,9 @@ html {
   width: 100%;
   height: 100%;
 }
+
+.clip-hexagon {
+  clip-path: polygon(
+    25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%
+  );
+}

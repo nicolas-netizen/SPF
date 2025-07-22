@@ -1,6 +1,7 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 import Navbar from './components/Navbar.tsx';
 
+
 // Importar componentes pesados con lazy loading
 const Landing = lazy(() => import('./pages/Landing.tsx'));
 const DynamicBackground = lazy(() => import('./components/DynamicBackground'));
@@ -41,6 +42,7 @@ const App: React.FC = () => {
       {/* Contenido principal */}
       <div className="relative z-10">
         <Navbar />
+
         <Suspense fallback={
           <div className="flex items-center justify-center h-screen">
             <div className="w-12 h-12 border-t-2 border-b-2 border-neon-cyan rounded-full animate-spin"></div>
