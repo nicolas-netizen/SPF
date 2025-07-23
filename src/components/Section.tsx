@@ -91,4 +91,31 @@ const Section: React.FC<SectionProps> = ({
   );
 };
 
+// Nuevo componente reutilizable para encabezados de sección
+interface SectionHeaderProps {
+  title: string;
+  subtitle?: string;
+  separatorType?: 'gradient' | 'wave' | 'line' | 'cyber-grid' | 'security-pulse' | 'data-flow';
+  color?: 'blue' | 'cyan' | 'orange';
+  className?: string;
+}
+
+export const SectionHeader: React.FC<SectionHeaderProps> = ({
+  title,
+  subtitle,
+  separatorType = 'gradient',
+  color = 'orange',
+  className = ''
+}) => (
+  <div className={`mb-8 text-center ${className}`}>
+    <h2 className="text-4xl md:text-5xl font-bold text-orange-400 drop-shadow-[0_2px_12px_rgba(255,160,0,0.6)] mb-2">
+      {title}
+    </h2>
+    {subtitle && <div className="text-blue-100 text-lg mb-2">{subtitle}</div>}
+    <div className="flex justify-center mb-4">
+      <SectionSeparator type={separatorType} color={color} className="w-24" />
+    </div>
+  </div>
+);
+
 export default Section;

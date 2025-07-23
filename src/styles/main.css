@@ -22,15 +22,6 @@ body {
   background: linear-gradient(to bottom, #000000, #1a1a2e);
 }
 
-section {
-  position: relative;
-  padding: 5rem 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
-  border-radius: 1rem;
-  margin: 2rem 0;
-}
-
 .container {
   max-width: 1200px;
   margin: 0 auto;

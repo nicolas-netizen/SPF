@@ -25,7 +25,7 @@ const positions = [
 
 export default function PartnersShowcase() {
   return (
-    <section className="relative py-40 flex items-center justify-center overflow-visible" style={{ minHeight: 600 }}>
+    <section className="relative py-40 flex flex-col items-center justify-center overflow-visible" style={{ minHeight: 600 }}>
       {/* Fondo espacial/partículas animadas */}
       <div className="absolute inset-0 pointer-events-none z-0">
         {[...Array(24)].map((_, i) => (
@@ -46,8 +46,48 @@ export default function PartnersShowcase() {
           />
         ))}
       </div>
-      {/* Logos en posiciones fijas simétricas */}
-      <div className="absolute inset-0 pointer-events-none select-none overflow-visible" style={{ zIndex: 2 }}>
+      {/* Texto principal */}
+      <div className="relative z-10 flex flex-col items-center text-center w-full max-w-2xl mx-auto">
+        <h2 className="text-3xl md:text-5xl font-bold mb-4">Trabajando juntos para proteger tu nube</h2>
+        <p className="text-lg md:text-xl text-blue-100 mb-2">Nos aliamos con los principales partners tecnológicos para ofrecer la cobertura y visibilidad más completa de riesgos en la nube.</p>
+        {/* Grid de hexágonos solo en mobile */}
+        <div className="block md:hidden grid grid-cols-2 gap-4 mt-8 w-full max-w-xs mx-auto">
+          {logos.map((logo, i) => (
+            <div
+              key={i}
+              className="clip-hexagon bg-[#18122B]/80 shadow-lg flex items-center justify-center"
+              style={{
+                width: '110px',
+                height: '110px',
+                margin: '0 auto',
+                minWidth: '90px',
+                minHeight: '90px',
+                maxWidth: '120px',
+                maxHeight: '120px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#18122B',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.18)'
+              }}
+            >
+              <img
+                src={logo}
+                alt={`Partner logo ${i + 1}`}
+                className="object-contain w-12 h-12"
+                style={{ maxWidth: '60%', maxHeight: '60%' }}
+              />
+            </div>
+          ))}
+        </div>
+        {/* Botones u otros elementos debajo */}
+        <div className="flex justify-center gap-4 mt-8">
+          <button className="bg-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:bg-blue-700 transition">Ver Partners</button>
+          <button className="bg-[#18122B] text-white font-bold py-3 px-6 rounded-xl shadow-md hover:bg-blue-900 transition">Ver Integraciones</button>
+        </div>
+      </div>
+      {/* Layout absoluto solo en desktop */}
+      <div className="hidden md:block absolute inset-0 pointer-events-none select-none overflow-visible" style={{ zIndex: 2 }}>
         {logos.map((src, i) => (
           <motion.div
             key={src + i}
@@ -66,30 +106,6 @@ export default function PartnersShowcase() {
             </motion.div>
           </motion.div>
         ))}
-      </div>
-      {/* Contenido central */}
-      <div className="relative z-10 flex flex-col items-center text-center px-4 pt-32 pb-28">
-        <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">
-          Trabajando juntos para proteger tu nube
-        </h2>
-        <p className="text-lg md:text-xl text-blue-100 mb-8 max-w-2xl">
-          Nos aliamos con los principales partners tecnológicos para ofrecer la cobertura y visibilidad más completa de riesgos en la nube.
-        </p>
-        <div className="flex gap-4 justify-center">
-          <motion.a
-            href="#partners"
-            whileHover={{ scale: 1.06, boxShadow: "0 0 24px #6366f1cc" }}
-            className="px-7 py-3 rounded-lg bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-semibold shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all text-lg"
-          >
-            Ver Partners
-          </motion.a>
-          <a
-            href="#integraciones"
-            className="px-7 py-3 rounded-lg bg-[#181a2b] text-blue-100 font-semibold border border-[#23235b] shadow focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-all text-lg"
-          >
-            Ver Integraciones
-          </a>
-        </div>
       </div>
       <style>{`
         .clip-hexagon {
