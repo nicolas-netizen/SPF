@@ -15,8 +15,8 @@ const Hero: React.FC = () => {
   useEffect(() => {
     if (!particleRef.current || prefersReducedMotion()) return;
     
-    const PARTICLE_COUNT = 8; // Menos partículas iniciales
-    const PARTICLE_INTERVAL = 1200; // Intervalo más largo
+    const PARTICLE_COUNT = 20; // Menos partículas iniciales
+    const PARTICLE_INTERVAL = 500; // Intervalo más largo
     let animationFrameId: number;
     let lastParticleTime = Date.now();
     
@@ -263,20 +263,7 @@ function detectThreats() {
                 >
                   Agenda tu reunión
                 </NeonButton>
-                
-                {/* Botón secundario */}
-                <div className="mt-4 ml-1">
-                  <NeonButton 
-                    color="cyan" 
-                    size="sm" 
-                    href="#about"
-                    onClick={() => {
-                      document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                  >
-                    Conoce nuestra tecnología
-                  </NeonButton>
-                </div>
+                {/* Eliminado: Botón secundario 'Conoce nuestra tecnología' */}
               </div>
             </div>
           </div>

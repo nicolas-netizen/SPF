@@ -138,19 +138,7 @@ const TechnologyCards: React.FC = () => {
   ];
   
   useEffect(() => {
-    // Animation for connecting lines between cards
-    const animateConnectingLines = () => {
-      const section = sectionRef.current;
-      if (!section) return;
-      
-      const cards = section.querySelectorAll('.technology-card');
-      if (cards.length < 2) return;
-      
-      // Add this to set it up if needed, would be better with canvas for actual connecting lines
-      // This is a placeholder for where you would add connecting line animation logic
-    };
-    
-    // Animate particles orbiting around cards
+    // Solo mantener animaciones de partículas y estilos, eliminar IntersectionObserver y lógica de aparición
     const setupOrbitAnimations = () => {
       const style = document.createElement('style');
       style.textContent = `
@@ -159,58 +147,31 @@ const TechnologyCards: React.FC = () => {
           0% { transform: translateX(-50%) translateY(-50%) rotate(0deg) translateX(50px) rotate(0deg); }
           100% { transform: translateX(-50%) translateY(-50%) rotate(360deg) translateX(50px) rotate(-360deg); }
         }
-        
         @keyframes orbit2 {
           0% { transform: translateX(-50%) translateY(-50%) rotate(0deg) translateX(35px) rotate(0deg); }
           100% { transform: translateX(-50%) translateY(-50%) rotate(-360deg) translateX(35px) rotate(360deg); }
         }
-        
         @keyframes orbit3 {
           0% { transform: translateX(-50%) translateY(-50%) rotate(0deg) translateX(25px) rotate(0deg); }
           100% { transform: translateX(-50%) translateY(-50%) rotate(360deg) translateX(25px) rotate(-360deg); }
         }
-        
         .orbit-particle-1 {
           top: 50%;
           left: 50%;
           transform-origin: center;
           animation: orbit1 8s linear infinite;
         }
-        
         .orbit-particle-2 {
           top: 50%;
           left: 50%;
           transform-origin: center;
           animation: orbit2 6s linear infinite;
         }
-        
         .orbit-particle-3 {
           top: 50%;
           left: 50%;
           transform-origin: center;
           animation: orbit3 10s linear infinite;
-        }
-        
-        .technology-cards-section {
-          opacity: 0;
-          transform: translateY(30px);
-          transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-        
-        .technology-cards-section.visible {
-          opacity: 1;
-          transform: translateY(0);
-        }
-        
-        .technology-card {
-          opacity: 0;
-          transform: translateY(20px);
-          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        
-        .technology-cards-section.visible .technology-card {
-          opacity: 1;
-          transform: translateY(0);
         }
         @keyframes borderGlow {
           0% { background-position: 0% 50%; }
@@ -219,38 +180,13 @@ const TechnologyCards: React.FC = () => {
         }
       `;
       document.head.appendChild(style);
-      
       return () => {
         document.head.removeChild(style);
       };
     };
-    
-    // Intersection Observer to trigger animations when section comes into view
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    };
-    
     const cleanupOrbit = setupOrbitAnimations();
-    animateConnectingLines();
-    
-    // Setup intersection observer
-    const observer = new IntersectionObserver(handleIntersection, {
-      threshold: 0.1
-    });
-    
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    
     return () => {
       cleanupOrbit();
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
     };
   }, []);
   

@@ -35,6 +35,7 @@ const Footer: React.FC = () => {
             <img
               src="/SPF.png"
               alt="SPF Logo"
+              loading="lazy"
               className="h-20 w-auto"
             />
           </motion.div>

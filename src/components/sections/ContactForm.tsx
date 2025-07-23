@@ -112,7 +112,7 @@ const ContactForm: React.FC = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Aquí se haría el fetch real a la API
-      console.log('Form submitted:', formData);
+      // console.log('Form submitted:', formData);
       
       // Cambiar estado a éxito y resetear el formulario
       setSubmitStatus('success');
@@ -131,7 +131,7 @@ const ContactForm: React.FC = () => {
       }, 3000);
       
     } catch (error) {
-      console.error('Error al enviar el formulario:', error);
+      // console.error('Error al enviar el formulario:', error);
       setSubmitStatus('error');
     }
   };

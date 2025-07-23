@@ -56,7 +56,7 @@ const Navbar: React.FC = memo(() => {
                 <img 
                   src="/SPF.png" 
                   alt="SPF Logo" 
-                  style={{ transform: `scale(${logoScale})` }}
+                  loading="lazy"
                   className="h-20 sm:h-24 md:h-28 w-auto transition-all duration-200 group-hover:scale-105 relative z-10" 
                 />
                 <div className="absolute -inset-1 bg-gradient-to-r from-[#FF6B00]/0 via-[#FF6B00]/20 to-[#0066CC]/10 rounded-full group-hover:opacity-75 opacity-0 transition-opacity duration-200 z-0"></div>

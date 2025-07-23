@@ -6,7 +6,7 @@ import Navbar from './components/Navbar.tsx';
 const Landing = lazy(() => import('./pages/Landing.tsx'));
 const DynamicBackground = lazy(() => import('./components/DynamicBackground'));
 const Footer = lazy(() => import('./components/Footer.tsx'));
-const ChatBot = lazy(() => import('./components/ChatBot'));
+// const ChatBot = lazy(() => import('./components/ChatBot'));
 
 // Importar variables CSS globales
 import './styles/variables.css';
@@ -55,9 +55,9 @@ const App: React.FC = () => {
         </Suspense>
         
         {/* Chatbot flotante */}
-        <Suspense fallback={<></>}>
+        {/* <Suspense fallback={<></>}>
           <ChatBot />
-        </Suspense>
+        </Suspense> */}
       </div>
     </div>
   );

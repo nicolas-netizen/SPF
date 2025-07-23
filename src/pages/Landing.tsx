@@ -4,7 +4,6 @@ import Seguridad360 from '../components/sections/Seguridad360';
 import TechnologyCards from '../components/sections/TechnologyCards';
 import ContactForm from '../components/sections/ContactForm.tsx';
 import LatentNews from '../components/sections/LatentNews';
-import PartnersShowcase from '../components/sections/PartnersShowcase';
 import { motion } from 'framer-motion';
 
 /**
@@ -90,37 +89,28 @@ const Landing: React.FC = () => {
       <style dangerouslySetInnerHTML={{ __html: animationStyles }} />
       <main>
         {/* Hero Section - Bloque 1 */}
-        <motion.div variants={heroAnim} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
-          <Hero />
-        </motion.div>
+        <Hero />
         {/* Separador fuerte antes de Quiénes somos */}
-        <div className="w-full flex flex-col items-center my-12">
+        {/* Eliminado: Separador y sección ¿Quiénes somos? */}
+        {/* <div className="w-full flex flex-col items-center my-12">
           <div className="w-2/3 h-1 rounded-full bg-gradient-to-r from-transparent via-orange-400/60 to-transparent blur-sm opacity-80"></div>
         </div>
-        {/* Quiénes Somos con animación slide-up */}
         <motion.div variants={slideUp} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
           <Seguridad360 />
-        </motion.div>
+        </motion.div> */}
         {/* Separador sutil */}
         <div className="w-full flex flex-col items-center my-8 mt-24">
           <div className="w-1/2 h-1 rounded-full bg-gradient-to-r from-transparent via-blue-900/60 to-transparent blur-sm opacity-70"></div>
         </div>
         {/* Partners Showcase con animación alternada */}
-        <motion.div variants={partnersAnim('left')} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
-          <PartnersShowcase />
-        </motion.div>
-        {/* Latent News con fade-in y staggered */}
-        <motion.div variants={fadeStagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
+        {/* Eliminado: Latent News */}
+        {/* <motion.div variants={fadeStagger} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
           <LatentNews />
-        </motion.div>
+        </motion.div> */}
         {/* Technology Cards Section - slide-in desde la derecha */}
-        <motion.div variants={slideRight} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
-          <TechnologyCards />
-        </motion.div>
+        <TechnologyCards />
         {/* Contact Form with Video - fade-in + blur */}
-        <motion.div variants={blurFade} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.4 }}>
-          <ContactForm />
-        </motion.div>
+        <ContactForm />
       </main>
     </div>
   );
