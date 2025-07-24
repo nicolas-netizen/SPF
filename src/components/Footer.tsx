@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
             transition={{ duration: 0.3, delay: 0.1 }}
           >
             <motion.a
-              href="https://linkedin.com/company/sparkfound"
+              href="https://www.linkedin.com/company/sparkfound/posts/?feedView=all"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gray-800/50 p-2 rounded-full text-gray-400 hover:text-[#FF6B00] hover:bg-gray-800 transition-colors duration-300"
@@ -56,17 +56,7 @@ const Footer: React.FC = () => {
               <Linkedin size={16} />
             </motion.a>
             <motion.a
-              href="https://github.com/sparkfound"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-gray-800/50 p-2 rounded-full text-gray-400 hover:text-[#FF6B00] hover:bg-gray-800 transition-colors duration-300"
-              aria-label="GitHub"
-              {...hoverAnimation}
-            >
-              <Github size={16} />
-            </motion.a>
-            <motion.a
-              href="https://instagram.com/sparkfound"
+              href="https://www.instagram.com/sparkfound/"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gray-800/50 p-2 rounded-full text-gray-400 hover:text-[#FF6B00] hover:bg-gray-800 transition-colors duration-300"

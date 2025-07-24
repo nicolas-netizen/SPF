@@ -91,14 +91,6 @@ const Navbar: React.FC = memo(() => {
             >
               Contacto
             </a>
-
-            <button
-              onClick={() => setIsMenuOpen(prev => !prev)}
-              className="text-white p-1 focus:outline-none active:scale-90 transition-transform"
-              aria-label="Menú"
-            >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
           </div>
         </div>
       </div>
