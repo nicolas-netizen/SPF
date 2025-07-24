@@ -71,3 +71,25 @@ npm run dev
 ## Licencia
 
 Distribuido bajo la Licencia MIT. Ver `LICENSE` para más información.
+
+# Recomendaciones de Optimización de Imágenes
+
+Para mejorar la performance de la landing:
+
+- Convierte imágenes pesadas (por ejemplo, `Export animación logo.gif`, `Soc.jpg`, `shield-logo.png`, `SPF.png`) a formatos modernos como WebP o AVIF.
+- Usa el utilitario `generateSrcSet` de `src/utils/optimizeImages.ts` para servir imágenes responsivas según el tamaño de pantalla.
+- Reemplaza los `<img src="...">` por `<img srcSet="...">` donde sea posible.
+- Para videos, considera comprimirlos o usar un CDN si el tráfico es alto.
+
+**Ejemplo de uso de srcSet:**
+```tsx
+<img
+  srcSet={generateSrcSet('/assets/SPF', [320, 640, 1280], 'webp')}
+  src="/assets/SPF-640.webp"
+  alt="Logo SPF"
+  width={320}
+  height={320}
+/>
+```
+
+Esto ayuda a reducir el tiempo de carga y mejora el puntaje de Lighthouse.

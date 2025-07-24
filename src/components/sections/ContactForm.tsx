@@ -219,10 +219,13 @@ const ContactForm: React.FC = () => {
                   <span className="text-orange-400">¿Listo</span> para mejorar tu seguridad?
                 </h3>
                 
-                <form onSubmit={handleSubmit} className="space-y-5" ref={formRef}>
+                <form onSubmit={handleSubmit} className="space-y-5" ref={formRef} aria-live="polite">
                   <p className="text-sm text-white/70 mb-4">Complete el formulario y un especialista se comunicará contigo.</p>
                   
                   <div className="relative">
+                    <label htmlFor="name" className="block text-sm font-medium text-white/80 mb-1 flex items-center">
+                      Nombre
+                    </label>
                     <input
                       type="text"
                       id="name"
@@ -233,19 +236,18 @@ const ContactForm: React.FC = () => {
                       onBlur={handleBlur}
                       className={`w-full px-4 py-3 bg-white/10 backdrop-blur-md border rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-white placeholder:text-white/60 transition-all ${validation.name.touched ? (validation.name.valid ? 'border-green-500/50' : 'border-red-500/50') : 'border-white/10'}`}
                       placeholder="Tu nombre"
+                      aria-invalid={!validation.name.valid && validation.name.touched}
+                      aria-describedby="name-error"
                     />
-                    {validation.name.touched && (
-                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                        {validation.name.valid ? (
-                          <CheckCircle size={16} className="text-green-500" />
-                        ) : (
-                          <XCircle size={16} className="text-red-500" />
-                        )}
-                      </div>
+                    {validation.name.touched && !validation.name.valid && (
+                      <span id="name-error" className="text-red-500 text-xs mt-1 block" aria-live="polite">{validation.name.message}</span>
                     )}
                   </div>
                   
                   <div className="relative">
+                    <label htmlFor="email" className="block text-sm font-medium text-white/80 mb-1 flex items-center">
+                      Email
+                    </label>
                     <input
                       type="email"
                       id="email"
@@ -256,19 +258,18 @@ const ContactForm: React.FC = () => {
                       onBlur={handleBlur}
                       className={`w-full px-4 py-3 bg-white/10 backdrop-blur-md border rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-white placeholder:text-white/60 transition-all ${validation.email.touched ? (validation.email.valid ? 'border-green-500/50' : 'border-red-500/50') : 'border-white/10'}`}
                       placeholder="Tu email"
+                      aria-invalid={!validation.email.valid && validation.email.touched}
+                      aria-describedby="email-error"
                     />
-                    {validation.email.touched && (
-                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                        {validation.email.valid ? (
-                          <CheckCircle size={16} className="text-green-500" />
-                        ) : (
-                          <XCircle size={16} className="text-red-500" />
-                        )}
-                      </div>
+                    {validation.email.touched && !validation.email.valid && (
+                      <span id="email-error" className="text-red-500 text-xs mt-1 block" aria-live="polite">{validation.email.message}</span>
                     )}
                   </div>
                   
                   <div className="relative">
+                    <label htmlFor="company" className="block text-sm font-medium text-white/80 mb-1 flex items-center">
+                      Empresa
+                    </label>
                     <input
                       type="text"
                       id="company"
@@ -279,15 +280,11 @@ const ContactForm: React.FC = () => {
                       onBlur={handleBlur}
                       className={`w-full px-4 py-3 bg-white/10 backdrop-blur-md border rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-white placeholder:text-white/60 transition-all ${validation.company.touched ? (validation.company.valid ? 'border-green-500/50' : 'border-red-500/50') : 'border-white/10'}`}
                       placeholder="Empresa"
+                      aria-invalid={!validation.company.valid && validation.company.touched}
+                      aria-describedby="company-error"
                     />
-                    {validation.company.touched && (
-                      <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                        {validation.company.valid ? (
-                          <CheckCircle size={16} className="text-green-500" />
-                        ) : (
-                          <XCircle size={16} className="text-red-500" />
-                        )}
-                      </div>
+                    {validation.company.touched && !validation.company.valid && (
+                      <span id="company-error" className="text-red-500 text-xs mt-1 block" aria-live="polite">{validation.company.message}</span>
                     )}
                   </div>
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import Hero from '../components/sections/Hero.tsx';
-import Seguridad360 from '../components/sections/Seguridad360';
 import TechnologyCards from '../components/sections/TechnologyCards';
 import ContactForm from '../components/sections/ContactForm.tsx';
-import LatentNews from '../components/sections/LatentNews';
 import { motion } from 'framer-motion';
+import '../styles/landing-animations.css';
+import { Helmet } from 'react-helmet';
 
 /**
  * Estilos de animación para la landing page
@@ -85,8 +85,14 @@ const blurFade = {
 const Landing: React.FC = () => {
   return (
     <div className="landing-page relative overflow-hidden">
+      <Helmet>
+        <title>SparkFound | Ciberseguridad Gestionada 24/7</title>
+        <meta name="description" content="Protege tu empresa con soluciones de ciberseguridad gestionada, monitoreo 24/7 y tecnología avanzada. Agenda tu reunión con SparkFound." />
+        <meta property="og:title" content="SparkFound | Ciberseguridad Gestionada 24/7" />
+        <meta property="og:description" content="Protege tu empresa con soluciones de ciberseguridad gestionada, monitoreo 24/7 y tecnología avanzada. Agenda tu reunión con SparkFound." />
+        <meta property="og:type" content="website" />
+      </Helmet>
       {/* Estilos CSS mínimos para animaciones básicas */}
-      <style dangerouslySetInnerHTML={{ __html: animationStyles }} />
       <main>
         {/* Hero Section - Bloque 1 */}
         <Hero />
