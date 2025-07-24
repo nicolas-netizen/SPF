@@ -190,12 +190,19 @@ const ContactForm: React.FC = () => {
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         {/* Título principal centrado con animación */}
         <motion.h2 
-          className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] bg-clip-text text-transparent"
+          className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] bg-clip-text text-transparent flex flex-col items-center justify-center relative"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
+          {/* Líneas laterales */}
+          <span className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-0.5 bg-gradient-to-r from-transparent via-[#FF6B00]/60 to-transparent"></span>
+          <span className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-0.5 bg-gradient-to-l from-transparent via-[#0066CC]/60 to-transparent"></span>
+          {/* Puntos decorativos */}
+          <span className="absolute -left-4 top-6 w-2 h-2 rounded-full bg-[#FF6B00]/70 animate-pulse"></span>
+          <span className="absolute -right-4 top-6 w-2 h-2 rounded-full bg-[#0066CC]/70 animate-pulse"></span>
           Contáctanos
+          <span className="block w-16 h-1 mt-3 bg-gradient-to-r from-[#FF6B00] via-[#FF8C40] to-[#0066CC] rounded-full animate-pulse"></span>
         </motion.h2>
         
         <motion.div 
